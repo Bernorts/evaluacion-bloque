@@ -1,25 +1,15 @@
-# README
+Crear Bases de Datos
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Desarrollo
 
-Things you may want to cover:
+CREATE DATABASE bloque_development_db;
+CREATE ROLE bloque_development_admin WITH LOGIN PASSWORD 'bloque_admin_password';
+GRANT ALL PRIVILEGES ON DATABASE bloque_development_db TO bloque_development_admin;
+ALTER USER bloque_development_admin CREATEDB;
 
-* Ruby version
+Tests
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-# evaluacion-bloque
+CREATE DATABASE bloque_test_db;
+CREATE ROLE bloque_test_admin WITH LOGIN PASSWORD 'bloque_test_password';
+GRANT ALL PRIVILEGES ON DATABASE bloque_test_db TO bloque_test_admin;
+ALTER USER bloque_test_admin CREATEDB;
