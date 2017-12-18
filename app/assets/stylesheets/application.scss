@@ -16,3 +16,50 @@
 @import "font-awesome";
 @import "navbar";
 @import "footer";
+
+
+#grid{
+	padding:0;
+}
+
+.gallery-5 {
+  padding: 5rem 0; }
+  .gallery-5 .carousel-item {
+    margin-bottom: 180px; }
+    .gallery-5 .carousel-item img {
+      width: 100%; }
+    .gallery-5 .carousel-item .carousel-caption {
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      padding-top: 2.5rem;
+      padding-bottom: 2.5rem;
+      text-align: center;
+      background: none;
+      height: 180px;
+      bottom: -180px; }
+    .gallery-5 .carousel-item h3 {
+      color: #46484a; }
+    .gallery-5 .carousel-item p {
+      color: #696b6e;
+      width: 80%;
+      margin: 0 auto; }
+  .gallery-5 .carousel-inner {
+    overflow: scroll; }
+  .gallery-5 .carousel-control-prev,
+  .gallery-5 .carousel-control-next {
+    margin-top: -180px;
+     }
+  .gallery-5 .carousel-indicators {
+    bottom: 200px; }
+  @media screen and (max-width: 768px) {
+    .gallery-5 .carousel-item {
+      margin-bottom: 0; }
+    .gallery-5 .carousel-caption {
+      display: none; }
+    .gallery-5 .carousel-control-prev,
+    .gallery-5 .carousel-control-next {
+      margin-top: 0; }
+    .gallery-5 .carousel-indicators {
+      bottom: 20px; } }
