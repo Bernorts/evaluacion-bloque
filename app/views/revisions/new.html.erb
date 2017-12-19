@@ -1,0 +1,86 @@
+<br><br>
+<div class="row justify-content-center">
+	<div class="col-md-8 ">
+		<div class="card mx-auto revision-card">
+			<div class="card-block">
+			    <h2 class="card-title">Nueva Revisión</h2>
+			    <ol>
+			    	<li>Selecciona el nivel que consideras que has logrado en las competencias que deseas que se evalúen.</li>
+			    	<li>Escoge las evidencias que quieras que se revisen para evaluar cada competencia.</li>
+			    </ol>
+
+				<%= form_for @revision, url: {action: "create"}, html: {class: "md-form"} do |f| %>
+				<%= f.hidden_field :date, class:"create-type", :value => '20-12-2017' %>
+				    <div role="tablist" aria-multiselectable="true">
+				    	<% @competences.each do |c| %>
+						  <div class="card" id="comp-<%= c.id %>" data-comp="<%= c.id %>">
+						    <div class="card-header" role="tab" id="headingOne">
+						    	<div class="row">
+						    		<div class="col-md-4">
+						    			<h5 class="mb-0">
+									        <p class="competence-name" data-parent="#accordion" aria-expanded="true" aria-controls="collapse">
+									         <%= c.name %>
+									        </p>
+									    </h5>
+						    		</div>
+						    		<div class="col-md-4 offset-md-4">
+						    			<select id="level_select-<%= c.id %>" class="form-control level-select" data-level_select="<%= c.id %>">
+					                      <option value='0'>No evaluar</option>
+					                      <% @levels.each do |l| %>
+						                      <% if l.name != "No conoce la fuerza" then %>
+						                      	<option value=<%= l.id %>> <%= l.name %> </option>
+						                      <% end %>
+					                      <% end %>
+					                    </select>
+						    		</div>
+						    	</div>
+						    </div>
+
+						    <div id="collapse-<%= c.id %>" class="collapse" role="tabpanel" aria-labelledby="heading">
+						      <div class="card-block competence-content">
+						      	<h5>Evidencias</h5>
+						      	<div class="container">
+							      	<% @levels.each do |l| %>
+										<%= check_box_tag 'revision[evidences][' + c.id.to_s + '][]', l.id, false, class: 'accept_tos' %>
+										<%= label_tag 'evidence-', 'Evidencia ' + l.id.to_s %>
+										<br>
+									<% end %>
+								</div>
+						      </div>
+						    </div>
+						  </div>
+					  <% end %>
+					</div>
+
+				<br><br>
+
+				<div class="row">
+					<div class="col-md-12 text-center">
+						<%= f.submit "Registrar", class: 'btn btn-success' %>
+					</div>
+				</div>
+				<% end %>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!--
+					      	<div class="row">
+					      		<div class="col-md-4">
+					      			<select class="form-control instrument-select" name="instruments[]" id="instrument-0">
+				                    	<option selected disabled>Seleccione una evidencia</option>
+				                    	<%# @competences.each do |c| %>
+				                        	<option value=<%#= c.id %>><%#= c.name-%></option>
+				                      	<%# end %>
+				                    </select>
+					      		</div>
+					      	</div>
+					      	<br>
+				      		<div class="row">
+				      			<div class="col-md-4">
+				      				<button type="button" class="link" id="plus-evidence"><i class="fa fa-plus-circle" aria-hidden="true"></i><span class="span-text"><u> Agregar una evidencia</u></span> </button>
+				      			</div>
+				      		</div>
+				      		-->

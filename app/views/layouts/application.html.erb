@@ -10,11 +10,34 @@
 
   <body>
     <%= render 'layouts/navbar' %>
+
     <div class="container-fluid">
+
+      <!-- Flash info -->
+      <div id="flashInfo" class="container">
+        <% flash.each do |message_type, message| %>
+           <br>
+            <% if (message_type == "error") %>
+              <div class="alert alert-danger alert-dismissible" role="alert">
+            <% elsif (message_type == "success") %>
+              <div class="alert alert-success alert-dismissible" role="alert">
+            <% elsif (message_type == "info") %>
+              <div class="alert alert-info alert-dismissible" role="alert">
+            <% end %>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong><%= t message_type %>: </strong><%= message %>
+              </div>
+        <% end %>
+      </div>
+
+      <!-- Content -->
       <%= yield %>
+      <%= debug(params) if Rails.env.development? %>
     </div>
   </body>
+
   <br><br>
+
   <footer>
      <%= render 'layouts/footer' %>
   </footer>
