@@ -33,7 +33,7 @@
       right: 0;
       bottom: 0;
       width: 100%;
-      padding-top: 2.5rem;
+      padding-top: 2rem;
       padding-bottom: 2.5rem;
       text-align: center;
       background: none;
@@ -63,3 +63,7 @@
       margin-top: 0; }
     .gallery-5 .carousel-indicators {
       bottom: 20px; } }
+   @media screen and (max-width: 1300px) {
+    .gallery-5 .carousel-item img {
+      max-height: 610px;
+      width: 100%; } }
