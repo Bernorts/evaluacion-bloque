@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col-md-12">
+    <h6>Usuario:<%= @user.name + ' ' + @user.last_name %></h6>
+    <h6>Correo: <%= @user.email  %> </h6>
+    <h6><%= @user.role.name %></h6>
+    <%= link_to 'Editar mi contraseña', edit_user_path(@user), class: 'btn btn-primary' %>
+  </div>
+
+</div>
+
+
+<div class="row">
+  <div class="col-md-12">
+    <span class="selector">Revisiones</span>
+    <span class="selector">Evidencias</span>
+  </div>
+</div>
+
+
+<div class="evidencias">
+  <button type="button" class="btn-primary" >Agregar evidencia</button>
+</div>

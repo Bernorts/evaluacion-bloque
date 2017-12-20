@@ -1,0 +1,24 @@
+<% provide(:title, 'Crear Usuario') %>
+<h1>Editar usuario</h1>
+
+<div class="row">
+  <div class="col-md-12 col-xs-12">
+    <%= form_for @user, url: update_user_path(@user), html: { method: :patch } do |f| %>
+    <%= render 'shared/user_error_messages' %>
+  </div>
+  <div class="col-md-5">
+    <%= f.label :password, "Contraseña" %>
+    <%= f.password_field :password, class: 'form-control' %>
+
+    <%= f.label :password_confirmation, 'Confirma tu contraseña'%>
+    <%= f.password_field :password_confirmation, class: 'form-control'%>
+  </div>
+
+  <div class="col-md-12">
+    <br>
+    <%= f.submit "Actualizar contraseña", class: "btn btn-primary" %>
+  </div>
+
+  <% end %>
+
+</div>

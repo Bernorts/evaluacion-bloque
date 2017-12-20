@@ -22,7 +22,7 @@ gem 'coffee-rails', '~> 4.2'
 # gem 'therubyracer', platforms: :ruby
 #
 gem 'haml'
-
+gem 'byebug'
 gem 'paperclip', '~> 5.0'
 gem 'aws-sdk', '~> 2.3.0'
 gem 'rubyzip'

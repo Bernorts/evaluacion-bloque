@@ -1,0 +1,35 @@
+<% provide(:title, 'Crear Usuario') %>
+<h1>Crear usuario</h1>
+
+<div class="row">
+  <div class="col-md-12 col-xs-12">
+    <%= form_for @user, url: users_path(@user), html: { method: :post } do |f| %>
+    <%= render 'shared/user_error_messages' %>
+  </div>
+  <div class="col-md-5">
+    <%= f.label :name, 'Nombre'%>
+    <%= f.text_field :name, class: 'form-control'%>
+
+    <%= f.label :last_name, "Apellido" %>
+    <%= f.text_field :last_name, class: 'form-control' %>
+  </div>
+
+  <div class="col-md-5">
+    <%= f.label :email, "Correo" %>
+    <%= f.email_field :email, class: 'form-control' %>
+
+    <%= f.label :email, "Rol" %>
+    <br>
+    <%= f.collection_select(:role_id, Role.all, :id, :name) %>
+
+  </div>
+
+
+  <div class="col-md-12">
+    <br>
+    <%= f.submit "Crear usuario", class: "btn btn-primary" %>
+  </div>
+
+  <% end %>
+
+</div>
