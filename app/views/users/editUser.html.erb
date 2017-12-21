@@ -1,9 +1,9 @@
 <% provide(:title, 'Crear Usuario') %>
-<h1>Crear usuario</h1>
+<h1>Modificar usuario</h1>
 
 <div class="row">
   <div class="col-md-12 col-xs-12">
-    <%= form_for @user, url: edit_user_data_path(@user), html: { method: :patch } do |f| %>
+    <%= form_for @user, url: update_user_data_path(@user), html: { method: :put } do |f| %>
     <%= render 'shared/user_error_messages' %>
   </div>
   <div class="col-md-5">
