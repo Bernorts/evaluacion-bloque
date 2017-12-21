@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171220171314) do
+ActiveRecord::Schema.define(version: 20171221213706) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,23 @@ ActiveRecord::Schema.define(version: 20171220171314) do
     t.integer  "desLevel"
     t.integer  "achLevel"
     t.text     "retro"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "evidence_revisions", force: :cascade do |t|
+    t.integer  "evidence_id"
+    t.integer  "revision_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["evidence_id"], name: "index_evidence_revisions_on_evidence_id", using: :btree
+    t.index ["revision_id"], name: "index_evidence_revisions_on_revision_id", using: :btree
+  end
+
+  create_table "evidences", force: :cascade do |t|
+    t.string   "name"
+    t.string   "url"
+    t.datetime "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

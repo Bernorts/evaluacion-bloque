@@ -3,8 +3,7 @@ class CreateEvidences < ActiveRecord::Migration[5.0]
     create_table :evidences do |t|
       t.string :name
       t.string :url
-      t.string :date
-      t.string :string
+      t.datetime :date
 
       t.timestamps
     end
