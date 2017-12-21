@@ -1,16 +1,16 @@
 <br><br>
 <div class="row justify-content-center">
 	<div class="col-md-8 ">
-		<div class="card mx-auto revision-card">
+		<div class="card mx-auto evaluation-card">
 			<div class="card-block">
-			    <h2 class="card-title">Nueva Revisión</h2>
+			    <h2 class="card-title">Nueva Solicitud de Evaluación</h2>
 			    <ol>
 			    	<li>Selecciona el nivel que consideras que has logrado en las competencias que deseas que se evalúen.</li>
 			    	<li>Escoge las evidencias que quieras que se revisen para evaluar cada competencia.</li>
 			    </ol>
 
-				<%= form_for @revision, url: {action: "create"}, html: {class: "md-form"} do |f| %>
-				<%= f.hidden_field :date, class:"create-type", :value => '20-12-2017' %>
+				<%= form_for @evaluation, url: {action: "create"}, html: {class: "md-form"} do |f| %>
+				<%= f.hidden_field :reqDate, class:"create-type", :value => Date.today %>
 				    <div role="tablist" aria-multiselectable="true">
 				    	<% @competences.each do |c| %>
 						  <div class="card" id="comp-<%= c.id %>" data-comp="<%= c.id %>">
@@ -24,10 +24,10 @@
 									    </h5>
 						    		</div>
 						    		<div class="col-md-4 offset-md-4">
-						    			<select id="level_select-<%= c.id %>" class="form-control level-select" data-level_select="<%= c.id %>">
+						    			<select id="level_select-<%= c.id %>" class="form-control level-select" data-level_select="<%= c.id %>" name=<%='evaluation[competences][' + c.id.to_s + '][level]'%>>
 					                      <option value='0'>No evaluar</option>
 					                      <% @levels.each do |l| %>
-						                      <% if l.name != "No conoce la fuerza" then %>
+						                      <% if l.name != "No conoce la fuerza" && l.name != "Sith" then %>
 						                      	<option value=<%= l.id %>> <%= l.name %> </option>
 						                      <% end %>
 					                      <% end %>
@@ -41,7 +41,7 @@
 						      	<h5>Evidencias</h5>
 						      	<div class="container">
 							      	<% @levels.each do |l| %>
-										<%= check_box_tag 'revision[evidences][' + c.id.to_s + '][]', l.id, false, class: 'accept_tos' %>
+										<%= check_box_tag 'evaluation[competences][' + c.id.to_s + '][evidences][]', l.id, false, class: 'accept_tos' %>
 										<%= label_tag 'evidence-', 'Evidencia ' + l.id.to_s %>
 										<br>
 									<% end %>

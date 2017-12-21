@@ -10,17 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171220023831) do
+ActiveRecord::Schema.define(version: 20171221091031) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "competence_levels", id: false, force: :cascade do |t|
-    t.text     "description"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.integer  "competence_id"
-    t.integer  "level_id"
+  create_table "competence_levels", force: :cascade do |t|
+    t.integer "competence_id"
+    t.integer "level_id"
+    t.text    "description"
+    t.index ["competence_id"], name: "index_competence_levels_on_competence_id", using: :btree
+    t.index ["level_id"], name: "index_competence_levels_on_level_id", using: :btree
   end
 
   create_table "competences", force: :cascade do |t|
@@ -31,20 +31,13 @@ ActiveRecord::Schema.define(version: 20171220023831) do
   end
 
   create_table "evaluations", force: :cascade do |t|
-    t.date     "date"
-    t.string   "desLevel"
-    t.string   "achLevel"
+    t.date     "reqDate"
+    t.date     "evalDate"
+    t.integer  "desLevel"
+    t.integer  "achLevel"
     t.text     "retro"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "revision_id"
-    t.integer  "grid_id"
-  end
-
-  create_table "grids", force: :cascade do |t|
-    t.text     "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "levels", force: :cascade do |t|
@@ -54,24 +47,19 @@ ActiveRecord::Schema.define(version: 20171220023831) do
     t.datetime "updated_at",  null: false
   end
 
-  create_table "revisions", force: :cascade do |t|
-    t.datetime "date"
-    t.boolean  "reviewed"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "roles", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "user_evaluations", id: false, force: :cascade do |t|
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+  create_table "user_evaluations", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "evaluation_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["evaluation_id"], name: "index_user_evaluations_on_evaluation_id", using: :btree
+    t.index ["user_id"], name: "index_user_evaluations_on_user_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
