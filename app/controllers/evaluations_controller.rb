@@ -10,20 +10,19 @@ class EvaluationsController < ApplicationController
 		@error = false
 		@reqDate = params[:evaluation][:reqDate]
 		@competences = params[:evaluation][:competences]
+		@interview = Interview.new(evaluated: false)
 
 		@competences.each do |key, value|
 			@competence_id = key.to_i
 			@level_id = value[:level].to_i
 			@evidences = value[:evidences]
 
-			if not @level_id === 0
-				@desLevel = CompetenceLevel.find_by(competence_id: @competence_id, level_id: @level_id).id
-			else
-				@desLevel = CompetenceLevel.last.id
+			if @level_id === 0
+				@level_id = Evaluation.where(competence_id: @competence_id).last.achLevel
 			end
 
-			@evaluation = Evaluation.new(reqDate: @reqDate, desLevel: @desLevel)
-			if !@evaluation.save
+			@evaluation = Evaluation.new(reqDate: @reqDate, competence_id: @competence_id, desLevel: 0, achLevel: @level_id, user_id: current_user.id, interview_id: @interview.id)
+			if !(@evaluation.save && @interview.save)
 				@error = true
 				break
 			elsif @evidences
@@ -38,7 +37,7 @@ class EvaluationsController < ApplicationController
 		end
 			
 		if !@error
-			flash[:success] = 'Solicitud de revisión registrada exitosamente'
+			flash[:success] = 'Solicitud de evaluación registrada exitosamente'
 			redirect_to '/malla'
 		else
 			flash[:danger] = 'Ocurrió un error al guardar tu solicitud de evaluación. Inténtalo de nuevo'
