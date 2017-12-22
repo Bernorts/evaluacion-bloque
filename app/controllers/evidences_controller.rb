@@ -16,6 +16,27 @@ class EvidencesController < ApplicationController
     end
   end
 
+  def edit
+    @evidence = Evidence.find(params[:id])
+  end
+
+  def update
+    @evidence = Evidence.find(params[:id])
+		if @evidence.update_attributes(evidence_params)
+		    flash[:success] = 'Evidencia modificada exitosamente'
+		    redirect_to show_user_path(current_user)
+  	else
+      flash[:error] = "No fue posible modificar la evidencia"
+      redirect_to show_user_path(current_user)
+  	end
+  end
+
+  def destroy
+    Evidence.find(params[:id]).destroy
+    flash[:success] = "Evidencia eliminada exitosamente"
+    redirect_to show_user_path(current_user)
+  end
+
   def evidence_params
     params.require(:evidence).permit(:name, :url)
   end

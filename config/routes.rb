@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-
+	root 'sessions#new'
 	resources :evidences
 	#grid
 	get '/malla',   to: 'grid#show', as: :show_grid

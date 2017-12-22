@@ -1,0 +1,29 @@
+<%= form_for(@evidence, url: evidence_path(@evidence), html: {method: :patch}) do |f| %>
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Modificar evidencia</h4>
+      </div>
+      <div class="modal-body">
+        <div class=" bot">
+            <div class="modal-line-spacing">
+                <div class="row">
+                    <div class="col-sm-5 col-md-5 a">
+                        <%= f.label :name, "Nombre", class:"col-sm-12 col-form-label" %>
+                        <%= f.text_field :name, autofocus: true, class:"form-control", required: true %>
+                    </div>
+                    <div clasS="col-md-1"></div>
+                    <div class="col-sm-5 col-md-5 a">
+                        <%= f.label :url, "Url", class:"col-sm-12 col-form-label" %>
+                        <%= f.text_field :url, class: "form-control", required: true %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+      <div class="modal-footer">
+            <%= f.button "Cancelar", 'data-dismiss':"modal", class: "btn btn-cancel" %>
+            <%= f.submit "Guardar", class:"btn btn-save" %>
+      </div>
+    </div>
+<%end%>

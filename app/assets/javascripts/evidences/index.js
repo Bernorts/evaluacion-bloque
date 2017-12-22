@@ -1,4 +1,38 @@
+/*global $*/
+function loadTabs() {
+  $( "#nav-po_1-tab" ).addClass("active");
+  $( "#nav-po_2-tab" ).removeClass("active");
+  $( "#evidencias" ).addClass("show");
+  $( "#evidencias" ).addClass("active");
+  $( "#revisiones" ).removeClass("show");
+  $( "#revisiones" ).removeClass("active");
+}
+window.onload = loadTabs;
+
+$('#nav-po_1-tab').on('click', function (e) {
+  e.preventDefault();
+  e.stopPropagation();
+  $( "#nav-po_1-tab" ).addClass("active");
+  $( "#nav-po_2-tab" ).removeClass("active");
+  $( "#evidencias" ).addClass("show");
+  $( "#evidencias" ).addClass("active");
+  $( "#revisiones" ).removeClass("show");
+  $( "#revisiones" ).removeClass("active");
+});
+
+$('#nav-po_2-tab').on('click', function (e) {
+  e.preventDefault();
+  e.stopPropagation();
+  $( "#nav-po_2-tab" ).addClass("active");
+  $( "#nav-po_1-tab" ).removeClass("active");
+  $( "#revisiones" ).addClass("show");
+  $( "#revisiones" ).addClass("active");
+  $( "#evidencias" ).removeClass("show");
+  $( "#evidencias" ).removeClass("active");
+});
+
 function changeSubmitToAjax(id_modal, id_form, message) {
+  console.log("entré")
   $(id_form).keypress(function(e) {
    if (e.which == '13') {
      e.preventDefault();
@@ -14,8 +48,6 @@ function changeSubmitToAjax(id_modal, id_form, message) {
       url: this.action,
       data: $(this).serialize(),
       context: this,
-      console.log(type)
-      console.log('data', data)
       success: function(data, status_code) {
         console.log(data);
 
@@ -73,59 +105,24 @@ function changeSubmitToAjax(id_modal, id_form, message) {
 
 
 
-/*global $*/
-function loadTabs() {
-  $( "#nav-po_1-tab" ).addClass("active");
-  $( "#nav-po_2-tab" ).removeClass("active");
-  $( "#nav-po_1" ).addClass("show");
-  $( "#nav-po_1" ).addClass("active");
-  $( "#nav-po_2" ).removeClass("show");
-  $( "#nav-po_2" ).removeClass("active");
-}
-window.onload = loadTabs;
-
-$('#nav-po_1-tab').on('click', function (e) {
-  e.preventDefault();
-  e.stopPropagation();
-  $( "#nav-po_1-tab" ).addClass("active");
-  $( "#nav-po_2-tab" ).removeClass("active");
-  $( "#nav-po_1" ).addClass("show");
-  $( "#nav-po_1" ).addClass("active");
-  $( "#nav-po_2" ).removeClass("show");
-  $( "#nav-po_2" ).removeClass("active");
-})
-
-$('#nav-po_2-tab').on('click', function (e) {
-  e.preventDefault();
-  e.stopPropagation();
-  $( "#nav-po_2-tab" ).addClass("active");
-  $( "#nav-po_1-tab" ).removeClass("active");
-  $( "#nav-po_2" ).addClass("show");
-  $( "#nav-po_2" ).addClass("active");
-  $( "#nav-po_1" ).removeClass("show");
-  $( "#nav-po_1" ).removeClass("active");
-})
 
 $(document).ready(function(){
-
     changeSubmitToAjax('#saveEvidence', '.new_evidence', "Creación exitosa!");
     $('#saveEvidence').on('shown.bs.modal', function () {
 
     })
 
-   $('.edit_evidence').click(function(){
-    var href = $(this).attr('href');
-
-    if(href != undefined) {
-      $('#editEvidence').find('.modal-dialog').load( href, function() {
-        changeSubmitToAjax('#editEvidence', '.edit_evidence', "Edición exitosa!");
-        $('#editEvidence').modal('show');
-      });;
-
-    }
-    return false;
-  });
-
+    $('.edit-evidence_types-link').click(function(){
+      console.log("click")
+     var href = $(this).attr('href');
+     if(href != undefined) {
+       $('#editEvidence').find('.modal-dialog').load(href, function() {
+         changeSubmitToAjax('#editEvidence', '.edit_evidence', "Edición exitosa!");
+         $('#editEvidence').modal('show');
+       });
+     }
+     return false;
+    });
 
 
 });
