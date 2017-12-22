@@ -3,7 +3,7 @@
 	<div class="col-md-8 ">
 		<div class="card mx-auto evaluation-card">
 			<div class="card-block">
-			    <h2 class="card-title">Nueva solicitud de Evaluación</h2>
+			    <h2 class="card-title">Editar solicitud de Evaluación</h2>
 			    <ol>
 			    	<li>Selecciona el nivel que consideras que has logrado en las competencias que deseas que se evalúen.</li>
 			    	<li>Escoge las evidencias que quieras que se revisen para evaluar cada competencia.</li>
@@ -13,6 +13,19 @@
 				<%= f.hidden_field :reqDate, class:"create-type", :value => Date.today %>
 				    <div role="tablist" aria-multiselectable="true">
 				    	<% @competences.each do |c| %>
+				    		<% 
+
+				    		@evaluation = @evaluations.select { |eval| eval.competence_id == c.id } 
+			    			if @evaluation.first.desLevel == 0
+			    				@levelName = "No evaluar"
+			    				@levelId = 0
+			    			else
+			    				@desLevel = Level.find(@evaluation.first.desLevel)
+			    				@levelName = @desLevel.name
+			    				@levelId = @desLevel.id
+			    			end
+
+				    		%>
 						  <div class="card" id="comp-<%= c.id %>" data-comp="<%= c.id %>">
 						    <div class="card-header" role="tab" id="headingOne">
 						    	<div class="row">
@@ -25,9 +38,12 @@
 						    		</div>
 						    		<div class="col-md-4 offset-md-4">
 						    			<select id="level_select-<%= c.id %>" class="form-control level-select" data-level_select="<%= c.id %>" name=<%='evaluation[competences][' + c.id.to_s + '][level]'%>>
-					                      <option value='0'>No evaluar</option>
+					                      <option value=<%= @levelId %>><%= @levelName %></option>
+					                      <% if @levelId != 0 then %>
+					                      	<option value='0'>No evaluar</option>
+					                      <% end %>
 					                      <% @levels.each do |l| %>
-						                      <% if l.name != "No conoce la fuerza" && l.name != "Sith" then %>
+						                      <% if l.name != "No conoce la fuerza" && l.name != "Sith" && l.name != @levelName then %>
 						                      	<option value=<%= l.id %>> <%= l.name %> </option>
 						                      <% end %>
 					                      <% end %>
@@ -64,23 +80,3 @@
 		</div>
 	</div>
 </div>
-
-
-<!--
-					      	<div class="row">
-					      		<div class="col-md-4">
-					      			<select class="form-control instrument-select" name="instruments[]" id="instrument-0">
-				                    	<option selected disabled>Seleccione una evidencia</option>
-				                    	<%# @competences.each do |c| %>
-				                        	<option value=<%#= c.id %>><%#= c.name-%></option>
-				                      	<%# end %>
-				                    </select>
-					      		</div>
-					      	</div>
-					      	<br>
-				      		<div class="row">
-				      			<div class="col-md-4">
-				      				<button type="button" class="link" id="plus-evidence"><i class="fa fa-plus-circle" aria-hidden="true"></i><span class="span-text"><u> Agregar una evidencia</u></span> </button>
-				      			</div>
-				      		</div>
-				      		-->

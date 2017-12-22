@@ -7,25 +7,32 @@ class EvaluationsController < ApplicationController
 	end
 
 	def create
+		@interview = Interview.new(evaluated: false)
+		if !(@interview.save)
+			@error = true
+		end
+		@interview.save
 		@error = false
 		@reqDate = params[:evaluation][:reqDate]
 		@competences = params[:evaluation][:competences]
-		@interview = Interview.new(evaluated: false)
 
 		@competences.each do |key, value|
 			@competence_id = key.to_i
-			@level_id = value[:level].to_i
+			@desLevel_id = value[:level].to_i
 			@evidences = value[:evidences]
 
-			if @level_id === 0
+			if @desLevel_id === 0
 				@level_id = Evaluation.where(competence_id: @competence_id).last.achLevel
+				@evaluation = Evaluation.new(reqDate: @reqDate, competence_id: @competence_id, desLevel: 0, achLevel: @level_id, user_id: current_user.id, interview_id: @interview.id)
+			else
+				@evaluation = Evaluation.new(reqDate: @reqDate, competence_id: @competence_id, desLevel: @desLevel_id, user_id: current_user.id, interview_id: @interview.id)
 			end
 
-			@evaluation = Evaluation.new(reqDate: @reqDate, competence_id: @competence_id, desLevel: 0, achLevel: @level_id, user_id: current_user.id, interview_id: @interview.id)
-			if !(@evaluation.save && @interview.save)
+			
+			if !(@evaluation.save)
 				@error = true
 				break
-			elsif @evidences
+			elsif @evidences && @desLevel_id != 0
 				@evidences.each do |e|
 					@evaluation_evidence = EvaluationEvidence.new(evaluation_id: @evaluation.id, evidence_id: e.to_i)
 					if !@evaluation_evidence.save
@@ -47,6 +54,12 @@ class EvaluationsController < ApplicationController
 
 
 	def edit
+		@interview = Interview.find(params[:id])
+		@evaluation = Evaluation.new
+		@evaluations = Evaluation.where(interview_id: @interview.id)
+		@competences = Competence.all
+		@levels = Level.all
+		@evidences = Evidence.where(user_id: current_user.id)
   	end
 
 	def update

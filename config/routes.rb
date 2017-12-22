@@ -4,8 +4,9 @@ Rails.application.routes.draw do
 	#grid
 	get '/malla',   to: 'grid#show', as: :show_grid
 
-	#revisions
+	#evaluations
 	get '/evaluaciones/nueva',   to: 'evaluations#new', as: :new_evaluation
+  get '/evaluaciones/:id/editar',   to: 'evaluations#edit', as: :edit_evaluation
 	post '/evaluaciones/crear',   to: 'evaluations#create', as: :create_evaluation
   get 'sessions/new'
 	#users
