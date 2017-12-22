@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171222020113) do
+ActiveRecord::Schema.define(version: 20171222024932) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,8 +36,10 @@ ActiveRecord::Schema.define(version: 20171222020113) do
     t.integer  "desLevel"
     t.integer  "achLevel"
     t.text     "retro"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "interview_id"
+    t.index ["interview_id"], name: "index_evaluations_on_interview_id", using: :btree
   end
 
   create_table "evaluations_evidences", id: false, force: :cascade do |t|
@@ -68,6 +70,12 @@ ActiveRecord::Schema.define(version: 20171222020113) do
     t.text     "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+  end
+
+  create_table "interviews", force: :cascade do |t|
+    t.integer  "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "levels", force: :cascade do |t|
@@ -111,6 +119,7 @@ ActiveRecord::Schema.define(version: 20171222020113) do
     t.index ["role_id"], name: "index_users_on_role_id", using: :btree
   end
 
+  add_foreign_key "evaluations", "interviews"
   add_foreign_key "evidences", "users"
   add_foreign_key "users", "roles"
 end
