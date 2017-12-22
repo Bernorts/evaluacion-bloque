@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
       log_in user
       redirect_to show_user_url(user)
     else
-      flash.now[:danger] = 'Correo o contraseña inválidos'
+      flash.now[:error] = 'Correo o contraseña inválidos'
       render 'new'
     end
   end

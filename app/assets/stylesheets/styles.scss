@@ -1,0 +1,134 @@
+#actions li {
+  display: inline;
+  margin-left: 5px;
+  padding: 0;
+}
+
+.libtn {
+  padding-right: 15px;
+}
+
+.modalClient {
+  z-index: 1041 !important;
+}
+
+.modalCompany {
+  z-index: 1042 !important;
+}
+
+.container-order {
+  width: 80%;
+  margin: auto;
+  position: relative;
+  text-align: left;
+}
+
+.header-content{
+  margin-top: 32px;
+  margin-bottom: 32px;
+}
+
+#header-with-btn {
+  margin: 0;
+  display: inline-block;
+}
+
+#btn-in-header {
+  float: right;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+}
+.container-order {
+  width: 80%;
+  margin: auto;
+
+  position: relative;
+  text-align: left;
+}
+
+.header-content{
+  margin-top: 32px;
+  margin-bottom: 32px;
+}
+.nav {
+  .pills {
+    color: black !important;
+  }
+}
+
+.tab-pane {
+  margin-top: 20px;
+}
+
+.nav-show{
+  color: black !important;
+}
+
+.title-show {
+  padding-top: 30px;
+}
+
+.PAlta {
+  background-color: red;
+}
+.right {
+    position:absolute;
+    right:0;
+}
+
+.td-components{
+  padding-top: 0rem !important;
+  padding-bottom: 0rem !important;
+}
+
+.component-card {
+    padding: 20px;
+    background-color: #F5F5F5;
+    border-color: #F5F5F5;
+    -webkit-box-shadow: -2px 3px 24px -4px rgba(43,42,43,1);
+    -moz-box-shadow: -2px 3px 24px -4px rgba(43,42,43,1);
+    box-shadow: -2px 3px 24px -4px rgba(43,42,43,1);
+    border-radius: 15px;
+}
+
+.container-components{
+  padding: 7px;
+}
+
+.search input{
+  text-align: left;
+  display: inline-block;
+  width: 75% !important;
+}
+
+#lightbox .modal-content {
+    display: inline-block;
+    text-align: center;
+}
+
+#lightbox .close {
+    opacity: 1;
+    color: rgb(255, 255, 255);
+    background-color: rgb(25, 25, 25);
+    padding: 5px 8px;
+    border-radius: 30px;
+    border: 2px solid rgb(255, 255, 255);
+    position: absolute;
+    top: -15px;
+    right: -55px;
+
+    z-index:1032;
+}
+.thumbnail>img, .thumbnail a>img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.modal-img>img {
+    max-width: 1236px !important;
+    max-height: 396px !important;
+}

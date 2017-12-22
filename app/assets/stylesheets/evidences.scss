@@ -1,0 +1,70 @@
+// Place all the styles related to the evidences controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+#actions li {
+  display: inline;
+  margin-left: 5px;
+  padding: 0;
+}
+
+.libtn {
+  padding-right: 15px;
+}
+
+.container-order {
+  width: 80%;
+  margin: auto;
+  position: relative;
+  text-align: left;
+}
+
+.header-content{
+  margin-top: 32px;
+  margin-bottom: 32px;
+}
+
+#header-with-btn {
+  margin: 0;
+  display: inline-block;
+}
+
+#btn-in-header {
+  float: right;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+}
+.container-order {
+  width: 80%;
+  margin: auto;
+
+  position: relative;
+  text-align: left;
+}
+
+.header-content{
+  margin-top: 32px;
+  margin-bottom: 32px;
+}
+.nav {
+  .pills {
+    color: black !important;
+  }
+}
+
+.tab-pane {
+  margin-top: 20px;
+}
+
+.nav-show{
+  color: black !important;
+}
+
+.title-show {
+  padding-top: 30px;
+}
+
+.right {
+    position:absolute;
+    right:0;
+}

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+	resources :evidences
 	#grid
 	get '/malla',   to: 'grid#show', as: :show_grid
 

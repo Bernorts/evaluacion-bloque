@@ -41,8 +41,17 @@ ActiveRecord::Schema.define(version: 20171221232233) do
   end
 
   create_table "evaluations_evidences", id: false, force: :cascade do |t|
-    t.integer "evidence_id",   null: false
     t.integer "evaluation_id", null: false
+    t.integer "evidence_id",   null: false
+  end
+
+  create_table "evidence_revisions", force: :cascade do |t|
+    t.integer  "evidence_id"
+    t.integer  "revision_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["evidence_id"], name: "index_evidence_revisions_on_evidence_id", using: :btree
+    t.index ["revision_id"], name: "index_evidence_revisions_on_revision_id", using: :btree
   end
 
   create_table "evidences", force: :cascade do |t|
@@ -53,11 +62,24 @@ ActiveRecord::Schema.define(version: 20171221232233) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "grids", force: :cascade do |t|
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "levels", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+  end
+
+  create_table "revisions", force: :cascade do |t|
+    t.datetime "date"
+    t.boolean  "reviewed"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "roles", force: :cascade do |t|

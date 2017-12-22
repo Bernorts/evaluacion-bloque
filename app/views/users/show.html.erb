@@ -1,3 +1,10 @@
+<% content_for :stylesheet do %>
+    <%= stylesheet_link_tag    "styles", :media => "all" %>
+<% end %>
+
+<% content_for :javascript do %>
+    <%= javascript_include_tag 'evidences.js' %>
+<% end %>
 <div class="row">
   <div class="col-md-12">
     <h6>Usuario:<%= @user.name + ' ' + @user.last_name %></h6>
@@ -11,12 +18,48 @@
 
 <div class="row">
   <div class="col-md-12">
-    <span class="selector">Revisiones</span>
     <span class="selector">Evidencias</span>
+    <span class="selector">Revisiones</span>
   </div>
 </div>
 
 
 <div class="evidencias">
-  <button type="button" class="btn-primary" >Agregar evidencia</button>
+  <button type="button" class="btn-success" data-toggle="modal" data-target="#saveEvidence" >Agregar evidencia</button>
+</div>
+
+
+<!---- Modal for evidence -->
+<div id="saveEvidence" class="modal fade modalEvidence" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <%= form_for(@evidence, url: evidences_path(@evidence), html: {method: :create}) do |f| %>
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Crear evidencia</h4>
+          </div>
+          <div class="modal-body">
+            <div class=" bot">
+                <div class="modal-line-spacing">
+                    <div class="row">
+                        <div class="col-sm-5 col-md-5 a">
+                            <%= f.label :name, "Nombre(s)", class:"col-sm-12 col-form-label" %>
+                            <%= f.text_field :name, autofocus: true, class:"form-control", required: true %>
+                        </div>
+                        <div clasS="col-md-1"></div>
+                        <div class="col-sm-5 col-md-5 a">
+                            <%= f.label :url, "Url", class:"col-sm-12 col-form-label" %>
+                            <%= f.text_field :url, class: "form-control", required: true %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+          <div class="modal-footer">
+                <%= f.button "Cancelar", 'data-dismiss':"modal", class: "btn btn-cancel" %>
+                <%= f.submit "Guardar", class:"btn btn-save" %>
+          </div>
+        </div>
+    <%end%>
+  </div>
 </div>
