@@ -9,6 +9,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @evidence = Evidence.new
+    @evidences = @user.evidences
   end
 
   def new

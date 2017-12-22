@@ -6,11 +6,13 @@ class EvidencesController < ApplicationController
   def create
     @evidence = Evidence.new(evidence_params)
     @evidence.date = DateTime.parse(Date.today.to_s).in_time_zone()+12*60*60
+    @evidence.user = current_user
     if @evidence.save
       flash[:success] = "Evidencia creada correctamente"
       redirect_to show_user_path(current_user)
     else
-      render 'new'
+      flash[:error] = "No fue posible crear la evidencia"
+      redirect_to show_user_path(current_user)
     end
   end
 

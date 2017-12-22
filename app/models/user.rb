@@ -1,5 +1,6 @@
 class User < ApplicationRecord
 	has_and_belongs_to_many :evaluations
+	has_many :evidences
   belongs_to :role
   before_save { self.email = email.downcase }
   validates :role_id, presence: true, numericality: { only_integer: true }
