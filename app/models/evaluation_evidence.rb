@@ -1,0 +1,2 @@
+class EvaluationEvidence < ApplicationRecord
+end

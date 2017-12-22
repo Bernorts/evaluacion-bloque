@@ -3,21 +3,36 @@ class EvaluationsController < ApplicationController
 		@competences = Competence.all
 		@levels = Level.all
 		@evaluation = Evaluation.new
+		@evidences = Evidence.where(user_id: current_user.id)
 	end
 
 	def create
 		@error = false
 		@reqDate = params[:evaluation][:reqDate]
 		@competences = params[:evaluation][:competences]
+
 		@competences.each do |key, value|
 			@competence_id = key.to_i
 			@level_id = value[:level].to_i
+			@evidences = value[:evidences]
+
 			if not @level_id === 0
 				@desLevel = CompetenceLevel.find_by(competence_id: @competence_id, level_id: @level_id).id
-				@evaluation = Evaluation.new(reqDate: @reqDate, desLevel: @desLevel)
-				if !@evaluation.save
-					@error = true
-					break
+			else
+				@desLevel = CompetenceLevel.last.id
+			end
+
+			@evaluation = Evaluation.new(reqDate: @reqDate, desLevel: @desLevel)
+			if !@evaluation.save
+				@error = true
+				break
+			elsif @evidences
+				@evidences.each do |e|
+					@evaluation_evidence = EvaluationEvidence.new(evaluation_id: @evaluation.id, evidence_id: e.to_i)
+					if !@evaluation_evidence.save
+						@error = true
+						break
+					end
 				end
 			end
 		end
@@ -30,6 +45,7 @@ class EvaluationsController < ApplicationController
 			render :action => 'new'
 		end
 	end
+
 
 	def edit
   	end

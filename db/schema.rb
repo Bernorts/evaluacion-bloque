@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171222024932) do
+ActiveRecord::Schema.define(version: 20171222005951) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,15 @@ ActiveRecord::Schema.define(version: 20171222024932) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "evaluation_evidences", force: :cascade do |t|
+    t.integer  "evaluation_id"
+    t.integer  "evidence_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["evaluation_id"], name: "index_evaluation_evidences_on_evaluation_id", using: :btree
+    t.index ["evidence_id"], name: "index_evaluation_evidences_on_evidence_id", using: :btree
+  end
+
   create_table "evaluations", force: :cascade do |t|
     t.date     "reqDate"
     t.date     "evalDate"
@@ -45,15 +54,6 @@ ActiveRecord::Schema.define(version: 20171222024932) do
   create_table "evaluations_evidences", id: false, force: :cascade do |t|
     t.integer "evaluation_id", null: false
     t.integer "evidence_id",   null: false
-  end
-
-  create_table "evidence_revisions", force: :cascade do |t|
-    t.integer  "evidence_id"
-    t.integer  "revision_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.index ["evidence_id"], name: "index_evidence_revisions_on_evidence_id", using: :btree
-    t.index ["revision_id"], name: "index_evidence_revisions_on_revision_id", using: :btree
   end
 
   create_table "evidences", force: :cascade do |t|
@@ -118,6 +118,7 @@ ActiveRecord::Schema.define(version: 20171222024932) do
     t.string   "password_digest"
     t.index ["role_id"], name: "index_users_on_role_id", using: :btree
   end
+
 
   add_foreign_key "evaluations", "interviews"
   add_foreign_key "evidences", "users"

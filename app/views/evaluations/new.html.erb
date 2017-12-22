@@ -40,9 +40,9 @@
 						      <div class="card-block competence-content">
 						      	<h5>Evidencias</h5>
 						      	<div class="container">
-							      	<% @levels.each do |l| %>
-										<%= check_box_tag 'evaluation[competences][' + c.id.to_s + '][evidences][]', l.id, false, class: 'accept_tos' %>
-										<%= label_tag 'evidence-', 'Evidencia ' + l.id.to_s %>
+							      	<% @evidences.each do |e| %>
+										<%= check_box_tag 'evaluation[competences][' + c.id.to_s + '][evidences][]', e.id, false, class: 'accept_tos' %>
+										<%= label_tag 'evidence-', e.name %>
 										<br>
 									<% end %>
 								</div>
