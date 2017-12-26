@@ -1,11 +1,14 @@
 <% provide(:title, "Log in") %>
-<h1></h1>
+
+<% content_for :stylesheet do %>
+    <%= stylesheet_link_tag    "evidences/styles", :media => "all" %>
+<% end %>
 
 <div class="row">
   <div class="col-md-6 col-xs-12">
-
+    <%=  image_tag "semestrei.png", class: "img-fluid", alt: "Responsive image"%>
   </div>
-  <div class="col-md-4 col-xs-12">
+  <div class="col-md-4 col-xs-12 middle">
     <%= form_for(:session, url: login_path) do |f| %>
 
       <%= f.label :email %>

@@ -24,7 +24,7 @@
                 </div>
             </li>
         </ul>
-        <a class="nav-item ml-auto" id="profile-icon" href=<%= show_user_url(current_user) %>><i class="fa fa-user-circle fa-lg" aria-hidden="true"></i> <%= current_user.name + ' ' + current_user.last_name %></a>
+        <a class="nav-item ml-auto username" id="profile-icon" href=<%= show_user_url(current_user) %>><i class="fa fa-user-circle fa-lg" aria-hidden="true"></i> <%= current_user.name + ' ' + current_user.last_name %></a>
         <%= link_to logout_path, "Cerrar sesión ", method: :delete, id: 'profile-icon', class: 'nav-item' do %>
           <i class="fa fa-power-off  fa-lg" aria-hidden="true"></i>
         <% end %>

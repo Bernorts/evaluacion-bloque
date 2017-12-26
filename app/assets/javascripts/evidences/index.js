@@ -32,7 +32,7 @@ $('#nav-po_2-tab').on('click', function (e) {
 });
 
 function changeSubmitToAjax(id_modal, id_form, message) {
-  console.log("entré")
+  console.log("entré", id_modal);
   $(id_form).keypress(function(e) {
    if (e.which == '13') {
      e.preventDefault();
@@ -108,17 +108,17 @@ function changeSubmitToAjax(id_modal, id_form, message) {
 
 $(document).ready(function(){
     changeSubmitToAjax('#saveEvidence', '.new_evidence', "Creación exitosa!");
-    $('#saveEvidence').on('shown.bs.modal', function () {
-
-    })
+    $('#saveEvidence').on('shown.bs.modal', function (e) {
+      e.preventDefault();
+    });
 
     changeSubmitToAjax('#editEvidence', '.new_evidence', "Creación exitosa!");
-    $('#editEvidence').on('shown.bs.modal', function() {
-
+    $('#editEvidence').on('shown.bs.modal', function(e) {
+      e.preventDefault();
     })
 
-    $('.edit-evidence_types-link').unbind().click(function(){
-      console.log("click")
+    $('.edit-evidence_types-link').unbind().click(function(e){
+      e.preventDefault();
      var href = $(this).attr('href');
      if(href != undefined) {
        $('#editEvidence').find('.modal-dialog').load(href, function() {

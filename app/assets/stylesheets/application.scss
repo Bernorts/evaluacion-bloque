@@ -18,6 +18,13 @@
 @import "footer";
 @import "evaluations";
 @import "sweetalert";
+@import "evidences/styles";
+@import "styles";
+
+
+.username{
+  margin-right: 30px;
+}
 
 .subtitle{
   color: gray;
