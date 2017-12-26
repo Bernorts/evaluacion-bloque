@@ -54,6 +54,7 @@ class EvaluationsController < ApplicationController
 
 	def edit
 		@interview = Interview.find(params[:id])
+		@reqDate = Evaluation.where(interview_id: @interview.id).first.reqDate
 		@evaluation = Evaluation.new
 		@evaluations = Evaluation.where(interview_id: @interview.id)
 		@competences = Competence.all
@@ -63,7 +64,7 @@ class EvaluationsController < ApplicationController
 
 	def update
 		@error = false
-		@interview = interview.find(params[:id])
+		@interview = params[:id]
 		@reqDate = params[:evaluation][:reqDate]
 		@competences = params[:evaluation][:competences]
 
@@ -72,6 +73,7 @@ class EvaluationsController < ApplicationController
 			@desLevel_id = value[:level].to_i
 			@evidences = value[:evidences]
 			@evaluation_id = value[:evaluation_id]
+			EvaluationEvidence.destroy_all(evaluation_id: @evaluation_id)
 
 			@evaluation =  Evaluation.find(@evaluation_id)
 
@@ -79,8 +81,8 @@ class EvaluationsController < ApplicationController
 				@level_id = Evaluation.where(competence_id: @competence_id).last.achLevel
 				@evaluation.update_attributes(achLevel: @level_id, desLevel: 0, reqDate: @reqDate)
 			else
-				@level_id = @desLevel
-				@evaluation.update_attributes(achLevel: nil, desLevel: 0, reqDate: @reqDate)
+				@level_id = @desLevel_id
+				@evaluation.update_attributes(achLevel: nil, desLevel: @level_id, reqDate: @reqDate)
 			end
 
 			
@@ -99,20 +101,13 @@ class EvaluationsController < ApplicationController
 		end
 			
 		if !@error
-			flash[:success] = 'Solicitud de evaluación registrada exitosamente'
+			flash[:success] = 'Solicitud de evaluación modificada exitosamente'
 			redirect_to '/malla'
 		else
-			flash[:danger] = 'Ocurrió un error al guardar tu solicitud de evaluación. Inténtalo de nuevo'
-			render :action => 'new'
+			flash[:danger] = 'Ocurrió un error al modificar tu solicitud de evaluación. Inténtalo de nuevo'
+			render :edit
 		end
 
-
-		if @evaluation.update_attributes(evaluation_params)
-		    flash[:success] = 'Solicitud de revisión modificada exitosamente'
-		    redirect_to '/malla'
-	  	else
-	    	render :edit
-	  	end
 	end
 
 	def set_evaluation
