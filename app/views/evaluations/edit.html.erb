@@ -1,11 +1,10 @@
-
 <br><br>
 <div class="row justify-content-center">
 	<div class="col-md-8 ">
 		<div class="card mx-auto evaluation-card">
 			<div class="card-block">
-			    <h2 class="card-title">Nueva solicitud de Evaluación</h2>
-			    <p class="subtitle"><%= l Date.today, :format => :long %></p>
+			    <h2 class="card-title">Editar solicitud de Evaluación</h2>
+			    <p class="subtitle">Modificado por última vez: <%= l @reqDate, :format => :long %></p>
 			    <br>
 			    <h4>Instrucciones</h4>
 			    <ol>
@@ -13,10 +12,26 @@
 			    	<li>Escoge las evidencias que quieras que se revisen para evaluar cada competencia.</li>
 			    </ol>
 
-				<%= form_for @evaluation, url: {action: "create"}, html: {class: "md-form"} do |f| %>
+				<%= form_for @evaluation, url: {action: "update"}, method: :put, html: {class: "md-form"} do |f| %>
 				<%= f.hidden_field :reqDate, class:"create-type", :value => Date.today %>
 				    <div role="tablist" aria-multiselectable="true">
 				    	<% @competences.each do |c| %>
+				    		<% 
+
+				    		@evaluation = (@evaluations.select { |eval| eval.competence_id == c.id && eval.interview_id == @interview.id }).first
+
+			    			if @evaluation.desLevel == 0
+			    				@levelName = "No evaluar"
+			    				@levelId = 0
+			    			else
+			    				@desLevel = Level.find(@evaluation.desLevel)
+			    				@levelName = @desLevel.name
+			    				@levelId = @desLevel.id
+			    			end
+
+				    		%>
+				    	<%= hidden_field_tag 'evaluation[competences][' + c.id.to_s + '][evaluation_id]', @evaluation.id %>
+
 						  <div class="card" id="comp-<%= c.id %>" data-comp="<%= c.id %>">
 						    <div class="card-header" role="tab" id="headingOne">
 						    	<div class="row">
@@ -29,9 +44,12 @@
 						    		</div>
 						    		<div class="col-md-4 offset-md-4">
 						    			<select id="level_select-<%= c.id %>" class="form-control level-select" data-level_select="<%= c.id %>" name=<%='evaluation[competences][' + c.id.to_s + '][level]'%>>
-					                      <option value='0'>No evaluar</option>
+					                      <option value=<%= @levelId %>><%= @levelName %></option>
+					                      <% if @levelId != 0 then %>
+					                      	<option value='0'>No evaluar</option>
+					                      <% end %>
 					                      <% @levels.each do |l| %>
-						                      <% if l.name != "No conoce la fuerza" && l.name != "Sith" then %>
+						                      <% if l.name != "No conoce la fuerza" && l.name != "Sith" && l.name != @levelName then %>
 						                      	<option value=<%= l.id %>> <%= l.name %> </option>
 						                      <% end %>
 					                      <% end %>
@@ -44,8 +62,15 @@
 						      <div class="card-block competence-content">
 						      	<h5>Evidencias</h5>
 						      	<div class="container">
-							      	<% @evidences.each do |e| %>
-										<%= check_box_tag 'evaluation[competences][' + c.id.to_s + '][evidences][]', e.id, false %>
+							    <% 
+							    	@eval_evidences = EvaluationEvidence.where(evaluation_id: @evaluation.id)
+
+							    	@eval_ids = @eval_evidences.map{ |e| e.evidence_id }
+							    %>
+							      	
+							    <% @evidences.each do |e| %>
+							    <% @checked = @eval_ids.include? e.id %>
+										<%= check_box_tag 'evaluation[competences][' + c.id.to_s + '][evidences][]', e.id, @checked %>
 										<%= label_tag 'evidence-', e.name %>
 										<br>
 									<% end %>
@@ -60,7 +85,7 @@
 
 				<div class="row">
 					<div class="col-md-12 text-center">
-						<%= f.submit "Registrar", class: 'btn btn-success' %>
+						<%= f.submit "Guardar", class: 'btn btn-success' %>
 					</div>
 				</div>
 				<% end %>
@@ -68,23 +93,3 @@
 		</div>
 	</div>
 </div>
-
-
-<!--
-					      	<div class="row">
-					      		<div class="col-md-4">
-					      			<select class="form-control instrument-select" name="instruments[]" id="instrument-0">
-				                    	<option selected disabled>Seleccione una evidencia</option>
-				                    	<%# @competences.each do |c| %>
-				                        	<option value=<%#= c.id %>><%#= c.name-%></option>
-				                      	<%# end %>
-				                    </select>
-					      		</div>
-					      	</div>
-					      	<br>
-				      		<div class="row">
-				      			<div class="col-md-4">
-				      				<button type="button" class="link" id="plus-evidence"><i class="fa fa-plus-circle" aria-hidden="true"></i><span class="span-text"><u> Agregar una evidencia</u></span> </button>
-				      			</div>
-				      		</div>
-				      		-->

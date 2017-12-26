@@ -9,6 +9,20 @@ Role.find_or_create_by(name: 'Administrador')
 Role.find_or_create_by(name: 'Profesor')
 Role.find_or_create_by(name: 'Estudiante')
 
+#Users
+User.find_or_create_by(name: 'Bernardo', last_name: 'Ortega', email: 'bernorts@gladio.com', password: 'studentpass', role_id: 1)
+
+#Evaluation
+Evaluation.find_or_create_by(reqDate: '21-12-2017', evalDate: '21-12-2017', desLevel: '1', achLevel: '1', competence_id: 1, user_id: 1)
+Evaluation.find_or_create_by(reqDate: '21-12-2017', evalDate: '21-12-2017', desLevel: '1', achLevel: '1', competence_id: 2, user_id: 1)
+Evaluation.find_or_create_by(reqDate: '21-12-2017', evalDate: '21-12-2017', desLevel: '1', achLevel: '1', competence_id: 3, user_id: 1)
+Evaluation.find_or_create_by(reqDate: '21-12-2017', evalDate: '21-12-2017', desLevel: '1', achLevel: '1', competence_id: 4, user_id: 1)
+Evaluation.find_or_create_by(reqDate: '21-12-2017', evalDate: '21-12-2017', desLevel: '1', achLevel: '1', competence_id: 5, user_id: 1)
+Evaluation.find_or_create_by(reqDate: '21-12-2017', evalDate: '21-12-2017', desLevel: '1', achLevel: '1', competence_id: 6, user_id: 1)
+Evaluation.find_or_create_by(reqDate: '21-12-2017', evalDate: '21-12-2017', desLevel: '1', achLevel: '1', competence_id: 7, user_id: 1)
+Evaluation.find_or_create_by(reqDate: '21-12-2017', evalDate: '21-12-2017', desLevel: '1', achLevel: '1', competence_id: 8, user_id: 1)
+Evaluation.find_or_create_by(reqDate: '21-12-2017', evalDate: '21-12-2017', desLevel: '1', achLevel: '1', competence_id: 9, user_id: 1)
+
 
 #Competences
 Competence.find_or_create_by(name: 'D1')
@@ -27,6 +41,11 @@ Level.find_or_create_by(name: 'Padawan')
 Level.find_or_create_by(name: 'Jedi')
 Level.find_or_create_by(name: 'Maestro Jedi')
 Level.find_or_create_by(name: 'Sith')
+
+#Evidences 
+Evidence.find_or_create_by(name: 'Documento de Especificación de requisitos', url: 'www.drf.com', user_id: 1)
+Evidence.find_or_create_by(name: 'Manual de Arquitectura', url: 'www.dan.com', user_id: 1)
+Evidence.find_or_create_by(name: 'Modelo Entidad Relación', url: 'www.mer.com', user_id: 1)
 
 #Competence_Level
 

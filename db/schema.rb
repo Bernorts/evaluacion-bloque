@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171226180742) do
+
+ActiveRecord::Schema.define(version: 20171222062355) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,30 +31,32 @@ ActiveRecord::Schema.define(version: 20171226180742) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "evaluation_evidences", force: :cascade do |t|
+    t.integer  "evaluation_id"
+    t.integer  "evidence_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["evaluation_id"], name: "index_evaluation_evidences_on_evaluation_id", using: :btree
+    t.index ["evidence_id"], name: "index_evaluation_evidences_on_evidence_id", using: :btree
+  end
+
   create_table "evaluations", force: :cascade do |t|
     t.date     "reqDate"
     t.date     "evalDate"
     t.integer  "desLevel"
     t.integer  "achLevel"
     t.text     "retro"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
     t.integer  "interview_id"
+    t.integer  "competence_id"
+    t.integer  "user_id"
     t.index ["interview_id"], name: "index_evaluations_on_interview_id", using: :btree
   end
 
   create_table "evaluations_evidences", id: false, force: :cascade do |t|
     t.integer "evaluation_id", null: false
     t.integer "evidence_id",   null: false
-  end
-
-  create_table "evidence_revisions", force: :cascade do |t|
-    t.integer  "evidence_id"
-    t.integer  "revision_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.index ["evidence_id"], name: "index_evidence_revisions_on_evidence_id", using: :btree
-    t.index ["revision_id"], name: "index_evidence_revisions_on_revision_id", using: :btree
   end
 
   create_table "evidences", force: :cascade do |t|
@@ -66,16 +69,10 @@ ActiveRecord::Schema.define(version: 20171226180742) do
     t.index ["user_id"], name: "index_evidences_on_user_id", using: :btree
   end
 
-  create_table "grids", force: :cascade do |t|
-    t.text     "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
   create_table "interviews", force: :cascade do |t|
-    t.integer  "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean  "evaluated"
   end
 
   create_table "levels", force: :cascade do |t|
@@ -83,13 +80,6 @@ ActiveRecord::Schema.define(version: 20171226180742) do
     t.text     "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-  end
-
-  create_table "revisions", force: :cascade do |t|
-    t.datetime "date"
-    t.boolean  "reviewed"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "roles", force: :cascade do |t|
@@ -116,6 +106,7 @@ ActiveRecord::Schema.define(version: 20171226180742) do
     t.integer  "evaluation_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.integer  "checkedBy"
     t.index ["evaluation_id"], name: "index_user_evaluations_on_evaluation_id", using: :btree
     t.index ["user_id"], name: "index_user_evaluations_on_user_id", using: :btree
   end
