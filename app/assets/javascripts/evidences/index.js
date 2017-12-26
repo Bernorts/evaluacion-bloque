@@ -58,7 +58,7 @@ function changeSubmitToAjax(id_modal, id_form, message) {
           title: message,
           type: 'success',
           confirmButtonText: 'OK',
-          timer: 1500,
+          timer: 3000,
         }).then(
         function (isConfirm) {
             if (isConfirm) {
@@ -112,7 +112,12 @@ $(document).ready(function(){
 
     })
 
-    $('.edit-evidence_types-link').click(function(){
+    changeSubmitToAjax('#editEvidence', '.new_evidence', "Creación exitosa!");
+    $('#editEvidence').on('shown.bs.modal', function() {
+
+    })
+
+    $('.edit-evidence_types-link').unbind().click(function(){
       console.log("click")
      var href = $(this).attr('href');
      if(href != undefined) {
