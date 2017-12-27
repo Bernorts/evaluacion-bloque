@@ -18,6 +18,9 @@ class EvidencesController < ApplicationController
 
   def edit
     @evidence = Evidence.find(params[:id])
+    respond_to do |format|
+        format.html { render layout: !request.xhr? } #renders naked html if ajax
+    end
   end
 
   def update

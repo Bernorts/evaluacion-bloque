@@ -106,28 +106,25 @@ function changeSubmitToAjax(id_modal, id_form, message) {
 
 
 
+
 $(document).ready(function(){
+  console.log("DOCUMENT READY")
     changeSubmitToAjax('#saveEvidence', '.new_evidence', "Creación exitosa!");
-    $('#saveEvidence').on('shown.bs.modal', function (e) {
-      e.preventDefault();
+    $('#editEvidence').modal({ show: false})
+    $(".edit-evidence_types-link").on("click", function() {
+        $.ajax({
+            url: $(this).attr("href"),
+            success: function(data) {
+              console.log("DATA", data);
+                $(data).appendTo(".modal-lg");
+                changeSubmitToAjax('#editEvidence', '.edit_evidence', "Edición exitosa!");
+                $('#editEvidence').modal('show');
+            }
+        });
     });
-
-    changeSubmitToAjax('#editEvidence', '.new_evidence', "Creación exitosa!");
-    $('#editEvidence').on('shown.bs.modal', function(e) {
-      e.preventDefault();
+    $('#editEvidence').on('hidden.bs.modal', function () {
+      $(".edit_evidence").remove();
     })
-
-    $('.edit-evidence_types-link').unbind().click(function(e){
-      e.preventDefault();
-     var href = $(this).attr('href');
-     if(href != undefined) {
-       $('#editEvidence').find('.modal-dialog').load(href, function() {
-         changeSubmitToAjax('#editEvidence', '.edit_evidence', "Edición exitosa!");
-         $('#editEvidence').modal('show');
-       });
-     }
-     return false;
-    });
 
 
 });
