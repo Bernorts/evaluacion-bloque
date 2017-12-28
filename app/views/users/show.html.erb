@@ -22,7 +22,7 @@
 
   </div>
    <br>
-  <ul class="nav nav-tabs justify-content-center" role="tablist">
+  <ul class="nav nav-tabs justify-content-left" role="tablist">
     <li class="nav-item"><a class="nav-link active pills" data-toggle="tab" href="#evidencias" role="tab">Evidencias</a></li>
     <li class="nav-item"><a class="nav-link pills" data-toggle="tab" href="#evaluaciones" role="tab">Evaluaciones</a></li>
   </ul>
@@ -59,7 +59,9 @@
 
   <div class="tab-pane fade" id="evaluaciones" role="tabpanel" aria-labelledby="evaluaciones-tab">
     <div class="row">
-      <div class="col-md-12 col-xs-12">
+      <div class="col-md-12 col-xs-12">      
+        <a class="btn btn-success pull-right" href="/evaluaciones/nueva" role="button">Solicitar evaluación</a>
+        <br><br>
         En esta sección encontrarás el historial de evaluaciones que has solicitado.
         <div class="row">
             <% @interviews.each do |inter|%>
@@ -72,8 +74,12 @@
               <div class="card mx-auto evaluation-card">
                 <div class="card-block">
                   <div class="row card-title-container align-items-center">
-                    <div class="col-md-12">
-                      <h3 class="card-title align-self-center"><%= l @reqDate, :format => :short %></h3>
+                    <div class="col-md-6">
+                      <h3 class="card-title"><%= l @reqDate, :format => :short %></h3>
+                    </div>
+                    <div class="col-md-6 text-right">
+                      <%= link_to "Editar", edit_evaluation_path(inter.id), class:"btn btn-warning"  %>
+                      <%= link_to 'Borrar', evidence_path(ev), method: :delete, data: { confirm: '¿Estás seguro de querer borrar esta evidencia?' },  class: 'btn btn-danger' %>
                     </div>
                   </div>
                       <div role="tablist" class="tablist" aria-multiselectable="true">

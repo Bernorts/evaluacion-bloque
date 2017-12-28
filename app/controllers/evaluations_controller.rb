@@ -102,7 +102,7 @@ class EvaluationsController < ApplicationController
 			
 		if !@error
 			flash[:success] = 'Solicitud de evaluación modificada exitosamente'
-			redirect_to '/malla'
+			redirect_to show_user_path(current_user)
 		else
 			flash[:danger] = 'Ocurrió un error al modificar tu solicitud de evaluación. Inténtalo de nuevo'
 			render :edit
