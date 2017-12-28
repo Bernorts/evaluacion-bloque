@@ -4,15 +4,19 @@
 	<div class="col-md-8 ">
 		<div class="card mx-auto evaluation-card">
 			<div class="card-block">
-			    <h2 class="card-title">Nueva solicitud de Evaluación</h2>
-			    <p class="subtitle"><%= l Date.today, :format => :long %></p>
-			    <br>
-			    <h4>Instrucciones</h4>
-			    <ol>
-			    	<li>Selecciona el nivel que consideras que has logrado en las competencias que deseas que se evalúen.</li>
-			    	<li>Escoge las evidencias que quieras que se revisen para evaluar cada competencia.</li>
-			    </ol>
-
+				<div class="row card-title-container align-items-center">
+					<div class="col-md-12">
+						<h2 class="card-title">Nueva solicitud de Evaluación</h2>
+					</div>
+				</div>
+				<div class="container">
+				    <p class="subtitle"><%= l Date.today, :format => :long %></p>
+				    <h4>Instrucciones</h4>
+				    <ol>
+				    	<li>Selecciona el nivel que consideras que has logrado en las competencias que deseas que se evalúen.</li>
+				    	<li>Escoge las evidencias que quieras que se revisen para evaluar cada competencia.</li>
+				    </ol>
+				</div>
 				<%= form_for @evaluation, url: {action: "create"}, html: {class: "md-form"} do |f| %>
 				<%= f.hidden_field :reqDate, class:"create-type", :value => Date.today %>
 				    <div role="tablist" aria-multiselectable="true">
@@ -56,13 +60,14 @@
 					  <% end %>
 					</div>
 
-				<br><br>
+				<br>
 
 				<div class="row">
 					<div class="col-md-12 text-center">
 						<%= f.submit "Registrar", class: 'btn btn-success' %>
 					</div>
 				</div>
+				<br>
 				<% end %>
 			</div>
 		</div>

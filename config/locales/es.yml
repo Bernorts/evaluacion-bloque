@@ -27,7 +27,7 @@ es:
     formats:
       default: "%-d/%-m/%Y"
       long: "%A %-d de %B de %Y"
-      short: "%-d de %b"
+      short: "%-d/%b/%Y "
       name_number_day: "%A %d" 
   activerecord:
 
