@@ -1,3 +1,29 @@
 // Place all the styles related to the users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+
+.evaluation-card{
+	border-style: thin;
+	border-color: #428bca;
+	padding-top: 0;
+}
+
+.tablist{
+	height: 615px;
+	overflow: scroll;
+}
+
+.card-title-container{
+	background-color: rgb(0,98,191);
+	color: white;
+	margin: 0;
+	height: 50px;
+	width: auto;
+	text-align: center;
+}
+
+.card-title{
+	margin-bottom: 0;
+}

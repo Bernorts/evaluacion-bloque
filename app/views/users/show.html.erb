@@ -18,7 +18,7 @@
 <nav class="nav nav-tabs" id="myTab" role="tablist">
   <a class="nav-item nav-link pills waves-effect waves-light active" id="nav-po_1-tab" data-toggle="tab" href="#evidencias" role="tab" aria-controls="evidencias" aria-selected="true">Evidencias</a>
   <a class="nav-item nav-link pills waves-effect waves-light" id="nav-po_2-tab" data-toggle="tab" href="#evaluaciones" role="tab" aria-controls="evaluaciones" aria-selected="false">Evaluaciones</a>
-</div>
+</nav>
 
 <div class="tab-content" id="nav-tabContent">
   <div class="tab-pane fade show active" id="evidencias" role="tabpanel" aria-labelledby="evidencias-tab">
@@ -50,16 +50,103 @@
     </div>
   </div>
 
+
   <div class="tab-pane fade" id="evaluaciones" role="tabpanel" aria-labelledby="evaluaciones-tab">
+    <br>
     <div class="row">
       <div class="col-md-12 col-xs-12">
-        <h6>Revisiones</h6>
+        <div class="row">
+            <% @interviews.each do |inter|%>
+             <div class="col-md-6 col-xs-12 evaluations-col">
+            <br>
+            <% @evaluations = Evaluation.where(interview_id: inter.id) %>
+
+            <% @reqDate = Evaluation.find_by(interview_id: inter.id).reqDate%>
+
+              <div class="card mx-auto evaluation-card">
+                <div class="card-block">
+                  <div class="row card-title-container align-items-center">
+                    <div class="col-md-12">
+                      <h3 class="card-title align-self-center"><%= l @reqDate, :format => :short %></h3>
+                    </div>
+                  </div>
+                      <div role="tablist" class="tablist" aria-multiselectable="true">
+                        <% @competences.each do |c| %>
+                          <% 
+
+                          @evaluation = (@evaluations.select { |eval| eval.competence_id == c.id && eval.interview_id == inter.id }).first
+
+                          @eval_evidences = EvaluationEvidence.where(evaluation_id: @evaluation.id)
+
+                          %>
+
+                          <% if !@eval_evidences.empty? %>
+
+                              <%
+
+                              @evidence_ids = @eval_evidences.map{ |e| e.evidence_id }
+
+                              if @evaluation.desLevel == 0
+                                @levelName = "No evaluar"
+                                @levelId = 0
+                              else
+                                @desLevel = Level.find(@evaluation.desLevel)
+                                @levelName = @desLevel.name
+                                @levelId = @desLevel.id
+                              end
+
+                              %>
+                            <div class="card evaluation-card-content" id="comp-<%= c.id %>" data-comp="<%= c.id %>">
+                              <div class="card-header" role="tab" id="headingOne">
+                                <div class="row">
+                                  <div class="col-md-2">
+                                    <h5 class="mb-0">
+                                        <p class="competence-name" data-parent="#accordion" aria-expanded="true" aria-controls="collapse">
+                                         <%= c.name %>
+                                        </p>
+                                    </h5>
+                                  </div>
+
+                                  <div class="col-md-4">
+                                    <input class="form-control" value="<%= @levelName %>" disabled></input>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div id="collapse-<%= c.id %>" role="tabpanel" aria-labelledby="heading">
+                                <div class="card-block competence-content">
+                                  <h5>Evidencias</h5>
+                                  <div class="container">
+                                  
+                                    <ul>
+                                      <% @evidence_ids.each do |e| %>
+                                      <% @evidence = Evidence.find(e) %>
+                                        <li><a href= <%= @evidence.url %> ><%= @evidence.name %></a></li>
+                                      <% end %>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          <% end %>
+
+                       <% end %>
+                    </div>
+                 
+                </div>
+              </div>
+
+               </div>
+
+            <% end %>
+
+         
+        </div>
       </div>
     </div>
   </div>
 
 </div>
-
 
 
 
