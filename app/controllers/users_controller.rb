@@ -3,7 +3,10 @@ class UsersController < ApplicationController
   before_action :correct_user,   only: [:edit]
 
   def index
+    #this should change with the semester dropdown
+    session[:semester] = 1
     @users = User.all
+    @users = Semester.find(session[:semester]).users
   end
 
   def show

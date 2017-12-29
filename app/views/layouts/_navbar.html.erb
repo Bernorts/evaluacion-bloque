@@ -1,5 +1,15 @@
 <nav class="navbar navbar-expand-sm navbar-custom">
+  <% if !logged_in?%>
     <a href="/" class="navbar-brand">El Bloque - Semestre i</a>
+
+  <% else %>
+      <% if current_user.role.id != 3  %>
+        <a class="navbar-brand" href=<%= all_semester_users_url %>>El Bloque - Semestre i</a>
+      <% else %>
+        <a class="navbar-brand" href="/malla">El Bloque - Semestre i</a>
+      <%end%>
+  <% end %>
+
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCustom">
         <i class="fa fa-bars fa-lg py-1 text-white"></i>
     </button>
