@@ -93,6 +93,7 @@
                       <% if current_user.id == @user.id %>
                       <%= link_to "Editar", edit_evaluation_path(inter.id), class:"btn btn-warning"  %>
                       <%= link_to 'Borrar', destroy_evaluation_path(inter.id), method: :delete, data: { confirm: '¿Estás seguro de querer borrar esta evaluación?' },  class: 'btn btn-danger' %>
+                      <% end %>
                     </div>
                   </div>
                       <div role="tablist" class="tablist" aria-multiselectable="true">
