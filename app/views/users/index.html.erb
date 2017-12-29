@@ -27,7 +27,7 @@
         <tbody>
           <% for user in @users do %>
           <tr>
-            <td width="20%" ><%= user.name %></td>
+            <td width="20%" > <a href=<%= show_user_url(user) %>> <%= user.name %> </a> </td>
             <td width="20%"><%= user.last_name %></td>
             <td width="20%"><%= user.email %></td>
             <td width="10%"><%= user.role.name %></td>

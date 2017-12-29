@@ -1,0 +1,54 @@
+<% provide(:title, 'Crear Semestre') %>
+<div class="container-fluid">
+
+  <div class="row content">
+    <div class="col-md-12 col-xs-12">
+      <h1>Crear Semestre</h1>
+      <%= render 'shared/semester_error_messages' %>
+    </div>
+  </div>
+  <%= form_for @semester, url: semesters_path(@semester), html: { method: :post } do |f| %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.label :name, 'Nombre'%>
+      <%= f.text_field :name, class: 'form-control'%>
+    </div>
+    <div class="col-md-3">
+      <%= f.label :start_date, "Fecha de inicio" %>
+      <%= f.date_field :start_date, class: 'form-control' %>
+    </div>
+
+
+
+    <div class="col-md-3">
+      <%= f.label :end_date, "Fecha de fin" %>
+      <%= f.date_field :end_date, class: 'form-control' %>
+    </div>
+
+  </div>
+
+    <div class="row">
+      <div class="col-md-12 col-xs-12">
+        <br>
+        <h4>Usuarios involucrados</h4>
+        <br>
+        <div class="row">
+          <%= f.collection_check_boxes :user_ids, User.all, :id, :full_name do |b| %>
+            <div class="collection-check-box col-md-3 col-xs-12">
+              <%= b.check_box %>
+              <%= b.label %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-md-12">
+      <br>
+      <%= f.submit "Crear semestre", class: "btn btn-primary" %>
+    </div>
+    <% end %>
+  </div>
+
+</div>

@@ -9,17 +9,23 @@
 <div class="container-fluid">
 
   <div class="row content">
-    <div class="col-md-6">
-      <h4>Usuario:</h4><%= @user.name + ' ' + @user.last_name %>
-      <br><br>
-      <h4>Correo: </h4><%= @user.email  %>
+    <div class="col-md-6 col-xs-12">
+      <div class="col-md-6 col-xs-12">
+        <h4>Usuario:</h4><%= @user.name + ' ' + @user.last_name %>
+        <br><br>
+        <h4>Correo: </h4><%= @user.email  %>
+      </div>
+      <div class="col-md-12 col-xs-12">
+        <h4><%= @user.role.name %></h4>
+        <% if current_user.id == @user.id %>
+        <%= link_to 'Editar mi contraseña', edit_user_path(@user), class: 'btn btn-primary' %>
+        <% end %>
+      </div>
     </div>
-    <div class="col-md-6">
-      <h4><%= @user.role.name %></h4>
-      <br><br>
-      <%= link_to 'Editar mi contraseña', edit_user_path(@user), class: 'btn btn-primary' %>
+    <div class="col-md-6 col-xs-12">
+      <br>
+      <%= image_tag "http://via.placeholder.com/450x200" %>
     </div>
-
   </div>
    <br>
   <ul class="nav nav-tabs justify-content-left" role="tablist">
@@ -31,7 +37,9 @@
     <div class="tab-pane fade show active" id="evidencias" role="tabpanel" aria-labelledby="evidencias-tab">
       <div class="row">
         <div class="col-md-12">
+          <% if current_user.id == @user.id %>
           <button type="button" class="btn btn-success pull-right divide" data-toggle="modal" data-target="#saveEvidence" >Agregar evidencia</button>
+          <% end %>
           <table class="table table-hover table-responsive">
             <thead>
               <tr>
@@ -46,8 +54,10 @@
                 <td width="20%"><%= ev.name %></td>
                 <td width="40%"> <a target="_blank" href=<%= ev.url %>><%= ev.url %></a>  </td>
                 <td width="30%">
+                  <% if current_user.id == @user.id %>
                   <%= link_to "Editar", edit_evidence_path(ev), class:"btn btn-warning edit-evidence_types-link", "data-toggle" =>"modal", "data-target"=>"#editEvidence" %>
                   <%= link_to 'Borrar', evidence_path(ev), method: :delete, data: { confirm: '¿Estás seguro de querer borrar esta evidencia?' },  class: 'btn btn-danger' %>
+                  <% end %>
                 </td>
               </tr>
               <% end %>
@@ -59,8 +69,10 @@
 
   <div class="tab-pane fade" id="evaluaciones" role="tabpanel" aria-labelledby="evaluaciones-tab">
     <div class="row">
-      <div class="col-md-12 col-xs-12">      
+      <div class="col-md-12 col-xs-12">
+        <% if current_user.id == @user.id %>
         <a class="btn btn-success pull-right" href="/evaluaciones/nueva" role="button">Solicitar evaluación</a>
+        <% end %>
         <br><br>
         En esta sección encontrarás el historial de evaluaciones que has solicitado.
         <div class="row">
@@ -78,13 +90,14 @@
                       <h3 class="card-title"><%= l @reqDate, :format => :short %></h3>
                     </div>
                     <div class="col-md-6 text-right">
+                      <% if current_user.id == @user.id %>
                       <%= link_to "Editar", edit_evaluation_path(inter.id), class:"btn btn-warning"  %>
                       <%= link_to 'Borrar', destroy_evaluation_path(inter.id), method: :delete, data: { confirm: '¿Estás seguro de querer borrar esta evaluación?' },  class: 'btn btn-danger' %>
                     </div>
                   </div>
                       <div role="tablist" class="tablist" aria-multiselectable="true">
                         <% @competences.each do |c| %>
-                          <% 
+                          <%
 
                           @evaluation = (@evaluations.select { |eval| eval.competence_id == c.id && eval.interview_id == inter.id }).first
 
@@ -132,7 +145,7 @@
                                     <ul>
                                       <% @evidence_ids.each do |e| %>
                                       <% @evidence = Evidence.find(e) %>
-                                        <li><a href= <%= @evidence.url %> ><%= @evidence.name %></a></li>
+                                        <li><a target="_blank" href= <%= @evidence.url %> ><%= @evidence.name %></a></li>
                                       <% end %>
                                     </ul>
                                   </div>
@@ -143,7 +156,7 @@
 
                        <% end %>
                     </div>
-                 
+
                 </div>
               </div>
 
