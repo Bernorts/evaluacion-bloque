@@ -1,0 +1,35 @@
+<% provide(:title, 'Usuarios') %>
+<% content_for :stylesheet do %>
+    <%= stylesheet_link_tag    "styles", :media => "all" %>
+<% end %>
+
+<div class="container-fluid ">
+  <div class="row content">
+    <div class="col-md-10 col-xs-10">
+      <h2>Semestres</h2>
+    </div>
+    <div class="col-md-2 col-xs-2">
+      <%= link_to "Crear semestre", new_semester_url, class:"btn btn-success float-right" %>
+    </div>
+  </div>
+  <div class="row">
+    <% for semester in @semesters do %>
+    <div class="col-md-4 col-xs-12">
+      <div class="card">
+        <h3 class="card-header">
+          <%= semester.name %>
+        </h3>
+        <div class="card-block">
+          <h4 class="card-title"> </h4>
+          <p class="card-text"> <%= 'Del ' + semester.start_date.strftime("%d/%m/%Y") + ' al ' + semester.end_date.strftime("%d/%m/%Y") %></p>
+          <p><%= semester.users.where(role_id: 3).count.to_s + " Estudiantes registrados" %></p>
+          <div class="col-md-7 col-xs-12 pull-right">
+            <%= link_to "Editar", edit_semester_url(semester),class:"btn btn-warning"  %>
+            <%= link_to 'Borrar', semester_url(semester), method: :delete, data: { confirm: '¿Estás seguro de querer borrar este semestre?' },  class: 'btn btn-danger' %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>
