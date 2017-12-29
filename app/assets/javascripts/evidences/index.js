@@ -9,6 +9,7 @@ function loadTabs() {
 }
 window.onload = loadTabs;
 
+
 $('#nav-po_1-tab').on('click', function (e) {
   e.preventDefault();
   e.stopPropagation();
@@ -103,10 +104,6 @@ function changeSubmitToAjax(id_modal, id_form, message) {
   });
 }
 
-
-
-
-
 $(document).ready(function(){
   console.log("DOCUMENT READY")
     changeSubmitToAjax('#saveEvidence', '.new_evidence', "Creación exitosa!");
@@ -124,7 +121,56 @@ $(document).ready(function(){
     });
     $('#editEvidence').on('hidden.bs.modal', function () {
       $(".edit_evidence").remove();
-    })
+    });
+
+
+    $('.editAchLevel').change(function(e){
+        e.preventDefault();
+        var dynamicData = {};
+        dynamicData["id"] = $(this).data('id');
+        dynamicData["achLevel"] = $(this).val();
+        var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
+        console.log(AUTH_TOKEN)
+        $.ajaxSetup({
+          headers: {
+            'X-CSRF-Token': AUTH_TOKEN
+          }
+        });
+        $.ajax({
+          url: "/evaluaciones/evaluate/" + dynamicData["id"],
+          type: "PUT",
+          data: dynamicData,
+          success: function(response) {
+            $("#successlevel-" + dynamicData["id"]).empty();
+            successmessage = 'Se ha calificado exitosamente!';
+            $("#successlevel-"+ dynamicData["id"]).text(successmessage).css("color", "green");
+          },
+        });
+    });
+
+    $('.editRetro').change(function(e){
+        e.preventDefault();
+        var dynamicData = {};
+        dynamicData["id"] = $(this).data('id');
+        dynamicData["retro"] = $(this).val();
+        var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
+        console.log(AUTH_TOKEN)
+        $.ajaxSetup({
+          headers: {
+            'X-CSRF-Token': AUTH_TOKEN
+          }
+        });
+        $.ajax({
+          url: "/evaluaciones/feedback/" + dynamicData["id"],
+          type: "PUT",
+          data: dynamicData,
+          success: function(response) {
+            $("#successretro-" + dynamicData["id"]).empty();
+            successmessage = 'Retroalimentación registrada!';
+            $("#successretro-"+ dynamicData["id"]).text(successmessage).css("color", "green");
+          },
+        });
+    });
 
 
 });

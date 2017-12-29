@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   get '/evaluaciones/:id/editar',   to: 'evaluations#edit', as: :edit_evaluation
 	post '/evaluaciones/crear',   to: 'evaluations#create', as: :create_evaluation
   put '/evaluaciones/:id', to: 'evaluations#update', as: :update_evaluation
+	put '/evaluaciones/evaluate/:id', to: 'evaluations#evaluate', as: :evaluate_evaluation
+	put '/evaluaciones/feedback/:id', to: 'evaluations#feedback', as: :feedback_evaluation
   delete '/evaluaciones/:id', to: 'evaluations#destroy', as: :destroy_evaluation
 
 	#users

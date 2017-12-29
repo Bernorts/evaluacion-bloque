@@ -6,6 +6,30 @@ class EvaluationsController < ApplicationController
 		@evidences = Evidence.where(user_id: current_user.id)
 	end
 
+	def evaluate
+    evaluation = Evaluation.find(params[:id])
+    evaluation.achLevel = params[:achLevel]
+		evaluation.evalDate = DateTime.parse(Date.today.to_s)
+    evaluation.save
+    if request.xhr?
+      render json: {'status': 'ok'}
+    else
+			flash[:error] = "No se pudo calificar correctamente"
+    end
+  end
+
+	def feedback
+		evaluation = Evaluation.find(params[:id])
+    evaluation.retro = params[:retro]
+		puts evaluation.retro
+		evaluation.save
+    if request.xhr?
+      render json: {'status': 'ok'}
+    else
+			flash[:error] = "No se pudo calificar correctamente"
+    end
+	end
+
 	def create
 		@error = false
 		@interview = Interview.new(evaluated: false)
@@ -27,7 +51,7 @@ class EvaluationsController < ApplicationController
 				@evaluation = Evaluation.new(reqDate: @reqDate, competence_id: @competence_id, desLevel: @desLevel_id, user_id: current_user.id, interview_id: @interview.id)
 			end
 
-			
+
 			if !(@evaluation.save)
 				@error = true
 				break
@@ -41,7 +65,7 @@ class EvaluationsController < ApplicationController
 				end
 			end
 		end
-			
+
 		if !@error
 			flash[:success] = 'Solicitud de evaluación registrada exitosamente'
 			redirect_to show_user_path(current_user, :anchor => "evaluaciones")
@@ -85,7 +109,7 @@ class EvaluationsController < ApplicationController
 				@evaluation.update_attributes(achLevel: nil, desLevel: @level_id, reqDate: @reqDate)
 			end
 
-			
+
 			if !(@evaluation.save)
 				@error = true
 				break
@@ -99,7 +123,7 @@ class EvaluationsController < ApplicationController
 				end
 			end
 		end
-			
+
 		if !@error
 			flash[:success] = 'Solicitud de evaluación modificada exitosamente'
 			redirect_to show_user_path(current_user, :anchor => "evaluaciones")
