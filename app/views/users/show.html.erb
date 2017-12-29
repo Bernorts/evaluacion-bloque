@@ -79,7 +79,7 @@
                     </div>
                     <div class="col-md-6 text-right">
                       <%= link_to "Editar", edit_evaluation_path(inter.id), class:"btn btn-warning"  %>
-                      <%= link_to 'Borrar', evidence_path(ev), method: :delete, data: { confirm: '¿Estás seguro de querer borrar esta evidencia?' },  class: 'btn btn-danger' %>
+                      <%= link_to 'Borrar', destroy_evaluation_path(inter.id), method: :delete, data: { confirm: '¿Estás seguro de querer borrar esta evaluación?' },  class: 'btn btn-danger' %>
                     </div>
                   </div>
                       <div role="tablist" class="tablist" aria-multiselectable="true">

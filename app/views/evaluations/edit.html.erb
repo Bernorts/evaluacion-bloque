@@ -88,7 +88,10 @@
 
 				<br>
 				<div class="row">
-					<div class="col-md-12 text-center">
+					<div class="col-md-2 text-center offset-md-4">
+						<%= link_to '<button id="cancel_new" class="btn btn-danger">Cancelar</button>'.html_safe, show_user_path(current_user, :anchor => "evaluaciones") %>
+					</div>
+					<div class="col-md-2 text-center">
 						<%= f.submit "Guardar", class: 'btn btn-success' %>
 					</div>
 				</div>

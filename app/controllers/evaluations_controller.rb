@@ -44,7 +44,7 @@ class EvaluationsController < ApplicationController
 			
 		if !@error
 			flash[:success] = 'Solicitud de evaluación registrada exitosamente'
-			redirect_to '/malla'
+			redirect_to show_user_path(current_user, :anchor => "evaluaciones")
 		else
 			flash[:danger] = 'Ocurrió un error al guardar tu solicitud de evaluación. Inténtalo de nuevo'
 			render :action => 'new'
@@ -102,7 +102,7 @@ class EvaluationsController < ApplicationController
 			
 		if !@error
 			flash[:success] = 'Solicitud de evaluación modificada exitosamente'
-			redirect_to show_user_path(current_user)
+			redirect_to show_user_path(current_user, :anchor => "evaluaciones")
 		else
 			flash[:danger] = 'Ocurrió un error al modificar tu solicitud de evaluación. Inténtalo de nuevo'
 			render :edit
@@ -119,7 +119,23 @@ class EvaluationsController < ApplicationController
 	end
 
 	def destroy
-		@evaluation = evaluation.find(params[:id]).destroy
-		redirect_to '/malla'
+		@error = false
+		@interview = Interview.find(params[:id])
+		@evaluations = Evaluation.where(interview_id: @interview.id)
+		@evaluations.each do |eval|
+			if !(EvaluationEvidence.destroy_all(evaluation_id: eval.id) && eval.destroy)
+				@error = true
+				break
+			end
+		end
+		if !@interview.destroy
+			@error = true
+		end
+		if !@error
+			flash[:success] = 'Evaluación eliminada exitosamente'
+		else
+			flash[:danger] = 'Ocurrió un error al eliminar tu evaluación. Inténtalo de nuevo'
+		end
+		redirect_to show_user_path(current_user, :anchor => "evaluaciones")
 	end
 end

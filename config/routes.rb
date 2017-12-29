@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   get '/evaluaciones/:id/editar',   to: 'evaluations#edit', as: :edit_evaluation
 	post '/evaluaciones/crear',   to: 'evaluations#create', as: :create_evaluation
   put '/evaluaciones/:id', to: 'evaluations#update', as: :update_evaluation
-  get 'sessions/new'
+  delete '/evaluaciones/:id', to: 'evaluations#destroy', as: :destroy_evaluation
 
 	#users
   get '/usuario/:id', to: 'users#show', as: :show_user
@@ -21,8 +21,10 @@ Rails.application.routes.draw do
   patch '/usuario/:id', to: 'users#update', as: :update_user
   delete '/usuario/:id', to: 'users#destroy', as: :destroy_user
   get '/usuarios/', to: 'users#index', as: :all_semester_users
+
 	#sessions
   get    '/login',   to: 'sessions#new', as: :login
   post   '/login',   to: 'sessions#create', as: :session_create
   delete '/logout',  to: 'sessions#destroy', as: :logout
+  get 'sessions/new'
 end
