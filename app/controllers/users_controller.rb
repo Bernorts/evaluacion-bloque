@@ -35,6 +35,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     @user.password = 'semestrei'
     @user.password_confirmation = 'semestrei'
+    @user.semesters << current_semester
     if @user.save
       flash[:success] = "Usuario creado correctamente"
       redirect_to show_user_path(@user)

@@ -22,7 +22,7 @@
 
       <%= f.label :email, "Rol" %>
       <br>
-      <%= f.collection_select(:role_id, Role.all, :id, :name) %>
+      <%= f.collection_select(:role_id, Role.all, :id, :name, {}, {class: 'form-control'}) %>
 
     </div>
 

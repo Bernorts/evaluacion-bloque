@@ -11,6 +11,10 @@ module SessionsHelper
     @current_user ||= User.find_by(id: session[:user_id])
   end
 
+  def current_semester
+    @current_semester ||= Semester.find_by(id: session[:semester])
+  end
+
   def logged_in?
     !current_user.nil?
   end

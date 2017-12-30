@@ -10,7 +10,11 @@ Role.find_or_create_by(name: 'Profesor')
 Role.find_or_create_by(name: 'Estudiante')
 
 #Users
-User.find_or_create_by(name: 'Bernardo', last_name: 'Ortega', email: 'bernorts@gladio.com', password: 'studentpass', role_id: 1)
+u = User.find_or_create_by(name: 'Bernardo', last_name: 'Ortega', email: 'bernorts@gladio.com', password: 'studentpass', role_id: 1)
+
+#Semesters
+s = Semester.find_or_create_by(name: "Semestre Enero-Mayo 2018", start_date: "08-01-2018", end_date: "08-05-2018")
+u.semesters << s
 
 #Evaluation
 Evaluation.find_or_create_by(reqDate: '21-12-2017', evalDate: '21-12-2017', desLevel: '1', achLevel: '1', competence_id: 1, user_id: 1)

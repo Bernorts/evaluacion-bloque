@@ -71,10 +71,9 @@
     <div class="row">
       <div class="col-md-12 col-xs-12">
         <% if current_user.id == @user.id %>
-        <a class="btn btn-success pull-right" href="/evaluaciones/nueva" role="button">Solicitar evaluación</a>
+          <a class="btn btn-success pull-right" href="/evaluaciones/nueva" role="button">Solicitar evaluación</a>
+          <br><br>
         <% end %>
-        <br><br>
-        En esta sección encontrarás el historial de evaluaciones que has solicitado.
         <div class="row">
             <% @interviews.each do |inter|%>
              <div class="col-md-6 col-xs-12 evaluations-col">
@@ -121,6 +120,12 @@
                                 @levelId = @desLevel.id
                               end
 
+                              @achLevel = "No evaluado"
+
+                              if @evaluation.achLevel != nil
+                                @achLevel = Level.find(@evaluation.achLevel).name
+                              end
+
                               %>
                             <div class="card evaluation-card-content" id="comp-<%= c.id %>" data-comp="<%= c.id %>">
                               <div class="card-header" role="tab" id="headingOne">
@@ -133,14 +138,17 @@
                                     </h5>
                                   </div>
 
-                                  <div class="col-md-4">
+                                  <div class="col-md-5">
+                                    <label>Nivel deseado:</label>
                                     <input class="form-control" value="<%= @levelName %>" disabled></input>
                                   </div>
-                                  <div class="col-md-4 selector">
+                                  <div class="col-md-5 selector">
+                                    <label>Nivel logrado:</label>
                                     <% if current_user.role_id == 2 %>
-                                    <p>Nivel logrado:</p>
-                                    <span id=<%= 'successlevel-' + @evaluation.id.to_s %>></span>
-                                    <%= select_tag :achLevel, options_for_select(@levels.collect{ |l| [l.name, l .id] }, @evaluation.achLevel), class: "editAchLevel col-md-12", 'data-id': @evaluation.id %>
+                                      <span id=<%= 'successlevel-' + @evaluation.id.to_s %>></span>
+                                      <%= select_tag :achLevel, options_for_select(@levels.collect{ |l| [l.name, l .id] }, @evaluation.achLevel), class: "editAchLevel col-md-12 form-control", 'data-id': @evaluation.id %>
+                                    <% else %>
+                                      <input class="form-control" value="<%= @achLevel %>" disabled></input>
                                     <% end %>
                                   </div>
                                 </div>
