@@ -15,7 +15,7 @@
     </button>
     <div class="navbar-collapse collapse" id="navbarCustom">
       <% if logged_in? %>
-        <ul class="navbar-nav">
+        <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
                 <a class="nav-link" href="/malla"><i class="fa fa-list-alt" aria-hidden="true"></i> Malla</a>
             </li>
@@ -31,6 +31,21 @@
                 </div>
             </li>
         </ul>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item dropdown navbar-right">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <%= current_semester.name %>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                  <% getSemesters.each do |semester|%>
+                    <% if semester != current_semester %>
+                      <a class="dropdown-item" data-semester-id="<%= semester.id %>" href=<%="/semestres/#{semester.id}/cambiar"%>><%= semester.name %></a>
+                    <% end %>
+                  <% end %>
+              </div>
+          </li>
+        </ul>
+
         <a class="nav-item ml-auto username" id="profile-icon" href=<%= show_user_url(current_user) %>><i class="fa fa-user-circle fa-lg" aria-hidden="true"></i> <%= current_user.name + ' ' + current_user.last_name %></a>
         <%= link_to logout_path, "Cerrar sesión ", method: :delete, id: 'profile-icon', class: 'nav-item' do %>
           <i class="fa fa-power-off  fa-lg" aria-hidden="true"></i>

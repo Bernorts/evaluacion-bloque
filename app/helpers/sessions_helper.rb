@@ -7,6 +7,11 @@ module SessionsHelper
     session[:semester] = semester
   end
 
+  def set_semester_url
+    session[:semester] = params[:id]
+    redirect_to :back
+  end
+
   def current_user
     @current_user ||= User.find_by(id: session[:user_id])
   end

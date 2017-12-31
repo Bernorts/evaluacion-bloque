@@ -30,4 +30,7 @@ Rails.application.routes.draw do
   post   '/login',   to: 'sessions#create', as: :session_create
   delete '/logout',  to: 'sessions#destroy', as: :logout
   get 'sessions/new'
+
+  #semesters
+  get '/semestres/:id/cambiar' , to: 'application#set_semester_url', as: :set_semester_url
 end

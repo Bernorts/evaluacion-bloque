@@ -4,7 +4,6 @@ class UsersController < ApplicationController
 
   def index
     #this should change with the semester dropdown
-    session[:semester] = 1
     @users = User.all
     @users = Semester.find(session[:semester]).users
   end
@@ -24,6 +23,7 @@ class UsersController < ApplicationController
     @evaluation = Evaluation.new
     @competences = Competence.all
     @levels = Level.all
+    puts 'Current Semester' + current_semester.id.to_s
   end
 
   def new
