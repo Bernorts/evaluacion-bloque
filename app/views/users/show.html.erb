@@ -1,3 +1,4 @@
+<%= javascript_include_tag "https://www.gstatic.com/charts/loader.js" %>
 <% content_for :stylesheet do %>
     <%= stylesheet_link_tag    "styles", :media => "all" %>
 <% end %>
@@ -34,7 +35,10 @@
     </div>
     <div class="col-md-6 col-xs-12 text-center">
       <br>
-      <%= image_tag "http://via.placeholder.com/450x200" %>
+      <%= line_chart @competences.map { |competence|
+        {name: competence.name, data: Evaluation.where(competence_id: competence.id).last.achLevel }
+        } 
+      %>
     </div>
   </div>
 

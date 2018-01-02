@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180102051250) do
+ActiveRecord::Schema.define(version: 20180102035141) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 20180102051250) do
 
   create_table "evaluations", force: :cascade do |t|
     t.date     "reqDate"
-    t.date     "evalDate"
+    t.date     "eval_date"
     t.integer  "desLevel"
     t.integer  "achLevel"
     t.text     "retro"
