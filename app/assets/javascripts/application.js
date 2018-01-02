@@ -16,4 +16,6 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require sweetalert.js
+//= require Chart.bundle
+//= require chartkick
 //= require_tree .

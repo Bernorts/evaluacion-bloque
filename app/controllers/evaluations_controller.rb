@@ -9,7 +9,7 @@ class EvaluationsController < ApplicationController
 	def evaluate
     evaluation = Evaluation.find(params[:id])
     evaluation.achLevel = params[:achLevel]
-		evaluation.evalDate = DateTime.parse(Date.today.to_s)
+		evaluation.eval_date = DateTime.parse(Date.today.to_s)
     evaluation.save
     if request.xhr?
       render json: {'status': 'ok'}

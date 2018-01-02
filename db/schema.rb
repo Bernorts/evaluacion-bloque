@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 20180102051250) do
 
   create_table "evaluations", force: :cascade do |t|
     t.date     "reqDate"
-    t.date     "evalDate"
+    t.date     "eval_date"
     t.integer  "desLevel"
     t.integer  "achLevel"
     t.text     "retro"
@@ -103,6 +103,16 @@ ActiveRecord::Schema.define(version: 20180102051250) do
   create_table "semesters_users", id: false, force: :cascade do |t|
     t.integer "semester_id", null: false
     t.integer "user_id",     null: false
+  end
+
+  create_table "user_evaluations", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "evaluation_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "checkedBy"
+    t.index ["evaluation_id"], name: "index_user_evaluations_on_evaluation_id", using: :btree
+    t.index ["user_id"], name: "index_user_evaluations_on_user_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|

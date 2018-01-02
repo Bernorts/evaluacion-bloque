@@ -10,6 +10,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @user_evaluations = Evaluation.where(user_id: @user.id)
     @interviews = []
     @inter_evaluations = Evaluation.where(user_id: @user.id).select("DISTINCT ON (interview_id) *")
     @interviews_ids = (@inter_evaluations.map{ |eval| eval.interview_id }).reverse
