@@ -35,9 +35,21 @@
     </div>
     <div class="col-md-6 col-xs-12 text-center">
       <br>
+      <%
+      obj = {}
+      @user_evaluations.where(competence_id: 1).order(:updated_at).each do |ev|
+        obj[ev.updated_at] = ev.achLevel
+      end
+      puts "Obj = #{obj}"
+
+        %>
       <%= line_chart @competences.map { |competence|
-        {name: competence.name, data: Evaluation.where(competence_id: competence.id).last.achLevel }
-        } 
+        obj = {}
+        @user_evaluations.where(competence_id: competence.id).order(:updated_at).each do |ev|
+          obj[ev.created_at] = ev.achLevel
+        end
+        {name: competence.name, data: obj}
+        } , xtitle: "Fecha", ytitle: "Nivel"
       %>
     </div>
   </div>
