@@ -17,15 +17,15 @@ s = Semester.find_or_create_by(name: "Semestre Enero-Mayo 2018", start_date: "08
 u.semesters << s
 
 #Evaluation
-Evaluation.find_or_create_by(reqDate: '21-12-2017', evalDate: '21-12-2017', desLevel: '1', achLevel: '1', competence_id: 1, user_id: 1)
-Evaluation.find_or_create_by(reqDate: '21-12-2017', evalDate: '21-12-2017', desLevel: '1', achLevel: '1', competence_id: 2, user_id: 1)
-Evaluation.find_or_create_by(reqDate: '21-12-2017', evalDate: '21-12-2017', desLevel: '1', achLevel: '1', competence_id: 3, user_id: 1)
-Evaluation.find_or_create_by(reqDate: '21-12-2017', evalDate: '21-12-2017', desLevel: '1', achLevel: '1', competence_id: 4, user_id: 1)
-Evaluation.find_or_create_by(reqDate: '21-12-2017', evalDate: '21-12-2017', desLevel: '1', achLevel: '1', competence_id: 5, user_id: 1)
-Evaluation.find_or_create_by(reqDate: '21-12-2017', evalDate: '21-12-2017', desLevel: '1', achLevel: '1', competence_id: 6, user_id: 1)
-Evaluation.find_or_create_by(reqDate: '21-12-2017', evalDate: '21-12-2017', desLevel: '1', achLevel: '1', competence_id: 7, user_id: 1)
-Evaluation.find_or_create_by(reqDate: '21-12-2017', evalDate: '21-12-2017', desLevel: '1', achLevel: '1', competence_id: 8, user_id: 1)
-Evaluation.find_or_create_by(reqDate: '21-12-2017', evalDate: '21-12-2017', desLevel: '1', achLevel: '1', competence_id: 9, user_id: 1)
+Evaluation.find_or_create_by(reqDate: '21-12-2017', eval_date: '21-12-2017', desLevel: '1', achLevel: '1', competence_id: 1, user_id: 1)
+Evaluation.find_or_create_by(reqDate: '21-12-2017', eval_date: '21-12-2017', desLevel: '1', achLevel: '1', competence_id: 2, user_id: 1)
+Evaluation.find_or_create_by(reqDate: '21-12-2017', eval_date: '21-12-2017', desLevel: '1', achLevel: '1', competence_id: 3, user_id: 1)
+Evaluation.find_or_create_by(reqDate: '21-12-2017', eval_date: '21-12-2017', desLevel: '1', achLevel: '1', competence_id: 4, user_id: 1)
+Evaluation.find_or_create_by(reqDate: '21-12-2017', eval_date: '21-12-2017', desLevel: '1', achLevel: '1', competence_id: 5, user_id: 1)
+Evaluation.find_or_create_by(reqDate: '21-12-2017', eval_date: '21-12-2017', desLevel: '1', achLevel: '1', competence_id: 6, user_id: 1)
+Evaluation.find_or_create_by(reqDate: '21-12-2017', eval_date: '21-12-2017', desLevel: '1', achLevel: '1', competence_id: 7, user_id: 1)
+Evaluation.find_or_create_by(reqDate: '21-12-2017', eval_date: '21-12-2017', desLevel: '1', achLevel: '1', competence_id: 8, user_id: 1)
+Evaluation.find_or_create_by(reqDate: '21-12-2017', eval_date: '21-12-2017', desLevel: '1', achLevel: '1', competence_id: 9, user_id: 1)
 
 
 #Competences
