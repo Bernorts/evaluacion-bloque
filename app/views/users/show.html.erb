@@ -168,6 +168,37 @@
                                 </div>
 
                                 <div id="collapse-<%= c.id %>" role="tabpanel" aria-labelledby="heading">
+                                  <% if current_user.role_id == 3 %>
+                                  <div class="card-block competence-content">
+                                    <% if !@evaluation.achLevel.nil? %>
+                                    <h5>Evaluado por:</h5>
+                                    <% else %>
+                                    <h5>Evaluación pendiente</h5>
+                                    <% end %>
+
+                                    <div class="container">
+                                          <div class="col-md-12 col-xs-12">
+                                            <ul>
+                                              <% for u in @evaluation.users  do %>
+                                              <li><%= u.full_name %></li>
+                                              <% end %>
+                                            </ul>
+                                          </div>
+                                    </div>
+                                  </div>
+                                  <% else %>
+                                  <div class="card-block competence-content">
+                                    <h5>Evaluado por:</h5>
+                                    <div class="container">
+                                        <%= collection_check_boxes :evaluation, :user_id, User.where(role_id: 2), :id, :full_name do |b| %>
+                                          <div class="collection-check-box col-md-12 col-xs-12">
+                                            <%= b.check_box( data: {id: @evaluation.id}, checked: @evaluation.users.include?(User.find(b.value)) , class: "incheck") %>
+                                            <%= b.label %>
+                                          </div>
+                                        <% end %>
+                                    </div>
+                                  </div>
+                                  <% end %>
                                   <div class="card-block competence-content">
                                     <h5>Evidencias</h5>
                                     <% if @eval_evidences.empty? %>

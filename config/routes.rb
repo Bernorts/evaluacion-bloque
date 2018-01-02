@@ -14,6 +14,8 @@ Rails.application.routes.draw do
 	put '/evaluaciones/evaluate/:id', to: 'evaluations#evaluate', as: :evaluate_evaluation
 	put '/evaluaciones/feedback/:id', to: 'evaluations#feedback', as: :feedback_evaluation
   delete '/evaluaciones/:id', to: 'evaluations#destroy', as: :destroy_evaluation
+	post "/evaluaciones/evaluator/:id", to: 'evaluations#add_professor', as: :add_evaluation_professor
+	delete "/evaluaciones/evaluator/:id", to: 'evaluations#delete_professor', as: :delete_evaluation_professor
 
 	#users
   get '/usuario/:id', to: 'users#show', as: :show_user
