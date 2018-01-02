@@ -30,6 +30,28 @@ class EvaluationsController < ApplicationController
     end
 	end
 
+	def add_professor
+		@evaluation = Evaluation.find(params[:evaluation_id])
+		@user = User.find(params[:user_id])
+		@evaluation.users << @user
+		if request.xhr?
+      render json: {'status': 'ok'}
+    else
+			flash[:error] = "No se pudo agregar el profesor a la evaluación correctamente"
+    end
+	end
+
+	def delete_professor
+		@evaluation = Evaluation.find(params[:evaluation_id])
+		@user = User.find(params[:user_id])
+		@evaluation.users.delete(@user)
+		if request.xhr?
+      render json: {'status': 'ok'}
+    else
+			flash[:error] = "No se pudo eliminar al profesor de la evaluación correctamente"
+    end
+	end
+
 	def create
 		@error = false
 		@minimum = false

@@ -35,9 +35,20 @@
     </div>
     <div class="col-md-6 col-xs-12 text-center">
       <br>
+      <%
+        obj = {}
+        @user_evaluations.where(competence_id: 1).order(:updated_at).each do |ev|
+          obj[ev.updated_at] = ev.achLevel
+        end
+        puts "Obj = #{obj}"
+      %>
       <%= line_chart @competences.map { |competence|
-        {name: competence.name, data: Evaluation.where(competence_id: competence.id).last.achLevel }
-        } 
+        obj = {}
+        @user_evaluations.where(competence_id: competence.id).order(:updated_at).each do |ev|
+          obj[ev.created_at] = ev.achLevel
+        end
+        {name: competence.name, data: obj}
+        } , xtitle: "Fecha", ytitle: "Nivel"
       %>
     </div>
   </div>
@@ -172,12 +183,39 @@
                                 </div>
 
                                 <div id="collapse-<%= c.id %>" role="tabpanel" aria-labelledby="heading">
+                                  <% if current_user.role_id === 3 %>
+                                    <% if !@evaluation.achLevel.nil? %>
+                                      <div class="card-block competence-content">
+                                        <h5>Evaluadores</h5>
+                                        <div class="row">
+                                          <div class="col-md-12 col-xs-12">
+                                            <ul>
+                                              <% for u in @evaluation.users  do %>
+                                              <li><%= u.full_name %></li>
+                                              <% end %>
+                                            </ul>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    <% end %>
+                                  <% else %>
+                                    <div class="card-block competence-content">
+                                      <h5>Evaluadores</h5>
+                                          <%= collection_check_boxes :evaluation, :user_id, User.where(role_id: 2), :id, :full_name do |b| %>
+                                            <div class="collection-check-box col-md-12 col-xs-12">
+                                              <%= b.check_box( data: {id: @evaluation.id}, checked: @evaluation.users.include?(User.find(b.value)) , class: "incheck") %>
+                                              <%= b.label %>
+                                            </div>
+                                          <% end %>
+                                    </div>
+                                  <% end %>
                                   <div class="card-block competence-content">
                                     <h5>Evidencias</h5>
                                     <% if @eval_evidences.empty? %>
                                       <p>Sin evidencias</p>
                                     <% end %>
-                                    <div class="container">
+                                    <div class="row">
+                                      <div class="col-md-12 col-xs-12">
                                       <ul>
                                         <% @evidence_ids.each do |e| %>
                                         <% @evidence = Evidence.find(e) %>
@@ -185,6 +223,7 @@
                                         <% end %>
                                       </ul>
                                     </div>
+                                  </div>
                                   </div>
                                   <% if current_user.role_id == 2 %>
                                   <div class="card-block competence-content">

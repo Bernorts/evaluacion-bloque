@@ -7,11 +7,7 @@ class AddAssociationTables < ActiveRecord::Migration[5.0]
       t.timestamps
     end
 
-    create_table :user_evaluations do |t|
-      t.belongs_to :user, index: true
-      t.belongs_to :evaluation, index: true
-      t.timestamps
-    end
     
+
   end
 end

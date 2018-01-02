@@ -141,9 +141,12 @@ $(document).ready(function(){
           type: "PUT",
           data: dynamicData,
           success: function(response) {
-            $("#successlevel-" + dynamicData["id"]).empty();
-            successmessage = 'Se ha calificado exitosamente!';
-            $("#successlevel-"+ dynamicData["id"]).text(successmessage).css("color", "green");
+            swal({
+              title: "Evaluación registrada exitosamente",
+              type: 'success',
+              confirmButtonText: 'OK',
+              timer: 1500,
+            });
           },
         });
     });
@@ -165,12 +168,60 @@ $(document).ready(function(){
           type: "PUT",
           data: dynamicData,
           success: function(response) {
-            $("#successretro-" + dynamicData["id"]).empty();
-            successmessage = 'Retroalimentación registrada!';
-            $("#successretro-"+ dynamicData["id"]).text(successmessage).css("color", "green");
+            swal({
+              title: "Retroalimentación registrada exitosamente",
+              type: 'success',
+              confirmButtonText: 'OK',
+              timer: 1500,
+            });
           },
         });
     });
+
+    $('.incheck').change(function(e){
+      e.preventDefault();
+      var dynamicData = {};
+      dynamicData["evaluation_id"] = $(this).data('id');
+      dynamicData["user_id"] = $(this).val();
+      var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
+      console.log(AUTH_TOKEN)
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-Token': AUTH_TOKEN
+        }
+      });
+
+      if(this.checked) {
+        $.ajax({
+          url: "/evaluaciones/evaluator/" + dynamicData["evaluation_id"],
+          type: "POST",
+          data: dynamicData,
+          success: function(response) {
+            swal({
+              title: "Profesor añadido a la evaluación correctamente",
+              type: 'success',
+              confirmButtonText: 'OK',
+              timer: 1500,
+            });
+          },
+        });
+      } else{
+        $.ajax({
+          url: "/evaluaciones/evaluator/" + dynamicData["evaluation_id"],
+          type: "DELETE",
+          data: dynamicData,
+          success: function(response) {
+            swal({
+              title: "Profesor eliminado de la evaluación correctamente",
+              type: 'success',
+              confirmButtonText: 'OK',
+              timer: 1500,
+            });
+          },
+        });
+      }
+
+    })
 
 
 });
