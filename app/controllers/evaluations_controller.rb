@@ -32,46 +32,61 @@ class EvaluationsController < ApplicationController
 
 	def create
 		@error = false
-		@interview = Interview.new(evaluated: false)
-		if !(@interview.save)
-			@error = true
-		end
-		@reqDate = params[:evaluation][:reqDate]
-		@competences = params[:evaluation][:competences]
-
-		@competences.each do |key, value|
-			@competence_id = key.to_i
-			@desLevel_id = value[:level].to_i
-			@evidences = value[:evidences]
-
-			if @desLevel_id === 0
-				@level_id = Evaluation.where(competence_id: @competence_id).last.achLevel
-				@evaluation = Evaluation.new(reqDate: @reqDate, competence_id: @competence_id, desLevel: 0, achLevel: @level_id, user_id: current_user.id, interview_id: @interview.id)
-			else
-				@evaluation = Evaluation.new(reqDate: @reqDate, competence_id: @competence_id, desLevel: @desLevel_id, user_id: current_user.id, interview_id: @interview.id)
-			end
-
-
-			if !(@evaluation.save)
+		@minimum = false
+		@competences = Competence.all
+		@levels = Level.all
+		@evidences = Evidence.where(user_id: current_user.id)
+		ActiveRecord::Base.transaction do
+			@interview = Interview.new(evaluated: false)
+			if !(@interview.save!)
 				@error = true
-				break
-			elsif @evidences && @desLevel_id != 0
-				@evidences.each do |e|
-					@evaluation_evidence = EvaluationEvidence.new(evaluation_id: @evaluation.id, evidence_id: e.to_i)
-					if !@evaluation_evidence.save
-						@error = true
-						break
+			end
+			@reqDate = params[:evaluation][:reqDate]
+			@selected_competences = params[:evaluation][:competences]
+
+
+			@selected_competences.each do |key, value|
+				@competence_id = key.to_i
+				@desLevel_id = value[:level].to_i
+				@selected_evidences = value[:evidences]
+
+				if @desLevel_id === 0
+					@level_id = Evaluation.where(competence_id: @competence_id).last.achLevel
+					@evaluation = Evaluation.new(reqDate: @reqDate, competence_id: @competence_id, desLevel: 0, achLevel: @level_id, user_id: current_user.id, interview_id: @interview.id)
+				else
+					@evaluation = Evaluation.new(reqDate: @reqDate, competence_id: @competence_id, desLevel: @desLevel_id, user_id: current_user.id, interview_id: @interview.id)
+					@minimum = true
+				end
+
+
+				if !(@evaluation.save!)
+					@error = true
+					break
+				elsif @selected_evidences && @desLevel_id != 0
+					@selected_evidences.each do |e|
+						@evaluation_evidence = EvaluationEvidence.new(evaluation_id: @evaluation.id, evidence_id: e.to_i)
+						if !@evaluation_evidence.save!
+							@error = true
+							break
+						end
 					end
 				end
 			end
-		end
 
-		if !@error
-			flash[:success] = 'Solicitud de evaluación registrada exitosamente'
-			redirect_to show_user_path(current_user, :anchor => "evaluaciones")
-		else
-			flash[:danger] = 'Ocurrió un error al guardar tu solicitud de evaluación. Inténtalo de nuevo'
-			render :action => 'new'
+			if !@error
+				if @minimum
+					flash[:success] = 'Solicitud de evaluación registrada exitosamente'
+					redirect_to show_user_path(current_user, :anchor => "evaluaciones")
+				else
+					flash[:error] = 'Debes seleccionar al menos una competencia a evaluar.'
+					render :action => 'new'
+					raise ActiveRecord::Rollback
+				end
+			else
+				flash[:error] = 'Ocurrió un error al guardar tu solicitud de evaluación. Inténtalo de nuevo'
+				render :action => 'new'
+				raise ActiveRecord::Rollback
+			end
 		end
 	end
 
@@ -128,7 +143,7 @@ class EvaluationsController < ApplicationController
 			flash[:success] = 'Solicitud de evaluación modificada exitosamente'
 			redirect_to show_user_path(current_user, :anchor => "evaluaciones")
 		else
-			flash[:danger] = 'Ocurrió un error al modificar tu solicitud de evaluación. Inténtalo de nuevo'
+			flash[:error] = 'Ocurrió un error al modificar tu solicitud de evaluación. Inténtalo de nuevo'
 			render :edit
 		end
 
@@ -158,7 +173,7 @@ class EvaluationsController < ApplicationController
 		if !@error
 			flash[:success] = 'Evaluación eliminada exitosamente'
 		else
-			flash[:danger] = 'Ocurrió un error al eliminar tu evaluación. Inténtalo de nuevo'
+			flash[:error] = 'Ocurrió un error al eliminar tu evaluación. Inténtalo de nuevo'
 		end
 		redirect_to show_user_path(current_user, :anchor => "evaluaciones")
 	end
