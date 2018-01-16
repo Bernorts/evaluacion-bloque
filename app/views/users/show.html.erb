@@ -9,6 +9,7 @@
 
 <div class="container-fluid">
 
+<% if @user.role_id === 3 %>
   <div class="row content">
     <div class="col-md-6 col-xs-12 profile-con">
       <div class="row">
@@ -250,8 +251,7 @@
   </div>
 </div>
 
-
-<!---- Modal for evidence -->
+<!-- Modal for evidence -->
 <div id="saveEvidence" class="modal fade modalEvidence" role="dialog">
   <div class="modal-dialog modal-lg">
     <%= form_for(@evidence, url: evidences_path(@evidence), html: {method: :create}) do |f| %>
@@ -291,3 +291,35 @@
 
      </div>
 </div>
+
+<% else %>
+
+<div class="row content">
+    <div class="col-md-12 col-xs-12 profile-con">
+      <div class="row">
+        <div class="col-md-4 col-xs-12">
+          <h4>Usuario:</h4><%= @user.name + ' ' + @user.last_name %>
+          <br><br>
+          <h4>Correo: </h4><%= @user.email  %>
+          <br><br>
+        </div>
+        <div class="col-md-4 col-xs-12">
+          <h4>Rol: </h4><%= @user.role.name %>
+          <br><br>
+          <h4>Semestres: </h4>
+          <ul>
+            <% @user.semesters.each do |semester| %>
+              <li><%= semester.name %></li>
+            <% end %>
+          </ul>
+        </div>
+        <div class="col-md-4 col-xs-12 text-right">
+          <% if current_user.id == @user.id %>
+            <%= link_to 'Editar mi contraseña', edit_user_path(@user), class: 'btn btn-primary' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<% end %>
