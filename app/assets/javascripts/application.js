@@ -19,3 +19,20 @@
 //= require Chart.bundle
 //= require chartkick
 //= require_tree .
+
+
+var ready;
+
+ready = function() {
+  	var url = window.location.pathname;
+  	console.log(url)
+  	if (url.includes('malla')){
+  		$("#nav-grid").addClass('active');
+  	} else if(url.includes('usuario')){
+  		$("#nav-users").addClass('active');
+  	} else{
+  		$("#nav-config").addClass('active');
+  	}
+}
+
+$(document).on('ready turbolinks:load', ready);
