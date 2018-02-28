@@ -55,6 +55,7 @@
 
   <ul class="nav nav-tabs justify-content-left" role="tablist">
     <li class="nav-item"><a class="nav-link active pills" data-toggle="tab" href="#evidencias" role="tab">Evidencias</a></li>
+    <li class="nav-item"><a class="nav-link pills" data-toggle="tab" href="#competencias" role="tab">Competencias</a></li>
     <li class="nav-item"><a class="nav-link pills" data-toggle="tab" href="#evaluaciones" role="tab">Evaluaciones</a></li>
   </ul>
 
@@ -92,6 +93,111 @@
       </div>
     </div>
 
+
+  <!-- Competencias -->
+  <div class="tab-pane fade" id="competencias" role="tabpanel" aria-labelledby="competencias-tab">
+    <div class="row">
+      <div class="col-md-12 col-xs-12">
+        <div class="card mx-auto evaluation-card">
+          <div class="card-block">
+            <%= form_for @evaluation, url: {action: "create"}, html: {class: "md-form"} do |f| %>
+            <%= f.hidden_field :reqDate, class:"create-type", :value => Date.today %>
+                <div role="tablist" aria-multiselectable="true">
+                  <% @competences.each do |c| %>
+                  <div class="card" id="comp-<%= c.id %>" data-comp="<%= c.id %>">
+                    <div class="card-header" role="tab" id="headingOne">
+                      <div class="row">
+                        <div class="col-md-4">
+                          <h5 class="mb-0">
+                              <a data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= c.id %>" aria-expanded="true" aria-controls="collapseOne">
+                               <%= c.name %>
+                              </a>
+                          </h5>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div id="collapse-<%= c.id %>" class="collapse" role="tabpanel" aria-labelledby="heading">
+                      <div class="card-block competence-content">
+                        <% 
+                        @competence_evaluations = Evaluation.where(user_id: @user.id, competence_id: c.id)
+                        %>
+
+                        <% @competence_evaluations.each do |eval| %>
+                          <h4 class="competence-name"><%= eval.reqDate%></h4>
+                          <div class="container">
+                            <div class="row">
+                              <div class="col-md-6">
+                                <h5>Nivel deseado:</h5>
+                                <input class="form-control" readonly="true" value=<%= Level.find(eval.desLevel).name %>>
+                              </div>
+                              <div class="col-md-6">
+                                <h5>Nivel logrado: </h5>
+                                <% if eval.achLevel != nil then @achLevel = Level.find(eval.achLevel)%>
+                                  <input class="form-control" readonly="true" value=<%= @achLevel.name %>>
+                                  <% else %>
+                                  <input class="form-control" readonly="true" value="Sin evaluar">
+                                  <% end %>
+                              </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                              <div class="col-md-6">
+                                <h5>Evidencias</h5>
+                                 <% @eval_evidences = EvaluationEvidence.where(evaluation_id: eval.id)%>
+                                 <% if @eval_evidences.nil? %> 
+                                   <p>No hay evidencias</p>
+                                 <% else %>
+                                   <ul>
+                                     <% @eval_evidences.each do |eval_evidence| 
+                                      @evidence = Evidence.find(eval_evidence.evidence_id)
+                                      %>
+                                      <li><%= @evidence.name %></li>
+                                     <% end %>
+                                  </ul>
+                                 <% end %>
+                               </div>
+                               <div class="col-md-6">
+                                <h5>Evaluadores</h5>
+                                <% if !eval.achLevel.nil? %> 
+                                  <table class="table table-hover">
+                                    <thead>
+                                      <tr class="tableHead">
+                                        <th>Nombre</th>
+                                        <th>Rol</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <% for u in eval.users do %>
+                                        <tr>
+                                          <td><%= u.full_name %></td>
+                                          <td></td>
+                                        </tr>
+                                      <% end %>
+                                    </tbody>
+                                  </table>
+                                <% else %>
+                                  <p>No hay evaluadores</p>
+                                <% end %>
+                              </div>
+                            </div>
+                          </div>
+                          <br>
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+    </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Evaluaciones -->
   <div class="tab-pane fade" id="evaluaciones" role="tabpanel" aria-labelledby="evaluaciones-tab">
     <div class="row">
       <div class="col-md-12 col-xs-12">
@@ -133,7 +239,6 @@
                           <% if @evaluation.desLevel != 0 %>
 
                             <% if !@eval_evidences.empty?
-
                                 @evidence_ids = @eval_evidences.map{ |e| e.evidence_id }
                               else
                                 @evidence_ids = []
