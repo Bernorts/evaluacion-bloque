@@ -2,7 +2,18 @@ class SemestersController < ApplicationController
   def index
     @semesters = Semester.all
   end
-
+  def show
+    @semester = Semester.find(params[:id])
+    @users = @semester.users
+    @users_evaluations = []
+    @competences = Competence.all
+    @users_arr = []
+    @users.each do |user|
+      @users_arr.push(user.id)
+    end
+    @users_evaluations = Evaluation.where(user_id: @users_arr).where("created_at >= ?", @semester.start_date)
+    puts @users_evaluations.inspect
+  end
 
   def new
     @semester = Semester.new
@@ -20,6 +31,59 @@ class SemestersController < ApplicationController
     else
 
       render 'new'
+    end
+  end
+
+  def grades
+    @semester = Semester.find(params[:id])
+    @students = @semester.users.where(role_id: 1).order(:email)
+    @competences = Competence.select(:id, :name)
+    @header = []
+    @header.push('Matrícula')
+    @header.push('Nombre')
+    @count_competences = Competence.all.count
+    @competences.each do |c|
+      @header.push(c.name)
+    end
+    @evaluations_user  = {}
+    @students.each do |student|
+      @temp_evals = Evaluation.where(user_id: student.id)
+      @last_competences_level = []
+      if (@temp_evals.empty?)
+        i = 0
+        until i == @count_competences
+          @last_competences_level.push("No se han registrado evaluaciones")
+          i += 1
+        end
+      else
+        @competences.each do |c|
+          @last_record = @temp_evals.where(competence_id: c.id).last
+          if @last_record.achLevel.nil?
+            prev_to_last = @temp_evals.where(competence_id: c.id)[-2]
+            if prev_to_last.nil?
+              @last_competences_level.push("Primera evaluacion pendiente")
+            else
+              temp_level = Level.find(prev_to_last.achLevel)
+              @last_competences_level.push(temp_level.name)
+            end
+
+          else
+            temp_level = Level.find(@last_record.achLevel)
+            @last_competences_level.push(temp_level.name)
+          end
+        end
+      end
+      @last_competences_level.unshift(student.name)
+      matricula = student.email.split('@')[0]
+      @last_competences_level.unshift(matricula)
+      @evaluations_user.merge!(student.id => @last_competences_level)
+    end
+    respond_to do |format|
+      format.html
+      name = @semester.name
+      format.xlsx {
+        response.headers['Content-Disposition'] = "attachment;" +  "filename=" + "#{name}.xlsx"
+      }
     end
   end
 

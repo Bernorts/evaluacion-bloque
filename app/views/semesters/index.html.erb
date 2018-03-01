@@ -17,7 +17,7 @@
     <div class="col-md-4 col-xs-12">
       <div class="card semesters-card">
         <h5 class="card-header">
-          <%= semester.name %>
+          <%=link_to semester.name, show_semester_url(semester) %>
         </h5>
         <div class="card-block">
           <h4 class="card-title"> </h4>
@@ -26,6 +26,7 @@
             <p><%= semester.users.where(role_id: 3).count.to_s + " Estudiantes registrados" %></p>
             <div class="row">
               <div class="col-md-12 col-xs-12 text-right">
+                <%= link_to "Calificaciones", semester_grades_url(semester, format: "xlsx"),class:"btn btn-success"  %>
                 <%= link_to "Editar", edit_semester_url(semester),class:"btn btn-warning"  %>
                 <%= link_to 'Borrar', semester_url(semester), method: :delete, data: { confirm: '¿Estás seguro de querer borrar este semestre?' },  class: 'btn btn-danger' %>
               </div>

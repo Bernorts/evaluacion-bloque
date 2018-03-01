@@ -1,0 +1,10 @@
+wb = xlsx_package.workbook
+
+wb.add_worksheet(name: "Calificaciones") do |sheet|
+  # this is the head row of your spreadsheet
+  sheet.add_row @header
+
+  @evaluations_user.each do |key, value|
+    sheet.add_row value
+  end
+end

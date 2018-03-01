@@ -1,13 +1,24 @@
 Rails.application.routes.draw do
 
   # Serve websocket cable requests in-process
-  #mount ActionCable.server => '/usuario/:id'
+  mount ActionCable.server => '/cable'
 
 	root 'sessions#new'
 	resources :evidences
 	resources :semesters
 	#grid
 	get '/malla',   to: 'grid#show', as: :show_grid
+
+	#interview
+	get '/entrevista/:id', to: 'interviews#show', as: :show_interview
+	post '/entrevista', to: 'interviews#create', as: :create_evaluation_user
+	put '/entrevista/:user_id/:ev_id/:level_id', to: 'interviews#update', as: :update_evaluation_user
+
+  #entrevistas
+  put '/entrevista_evaluacion/:interview_id/:user_id/rol', to: 'interviews#update_responsible', as: :inter_role_select
+  put '/entrevista_evaluacion/:interview_id/:user_id/:competence_id/level', to: 'interviews#update_level', as: :inter_level_select
+  put '/entrevista_retro/:evaluation_id/retro', to: 'interviews#update_retro', as: :inter_retro
+  put '/entrevista_final/:user_id/:ev_id/evaluation', to: 'interviews#final_evaluation', as: :final_evaluation
 
 	#evaluations
 	get '/evaluaciones/nueva',   to: 'evaluations#new', as: :new_evaluation
@@ -40,4 +51,6 @@ Rails.application.routes.draw do
 
   #semesters
   get '/semestres/:id/cambiar' , to: 'application#set_semester_url', as: :set_semester_url
+  get '/calificaciones/:id', to: 'semesters#grades', as: :semester_grades
+  get '/semestres/:id', to: 'semesters#show', as: :show_semester
 end

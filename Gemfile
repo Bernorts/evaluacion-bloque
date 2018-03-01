@@ -25,8 +25,7 @@ gem 'haml'
 gem 'byebug'
 gem 'paperclip', '~> 5.0'
 gem 'aws-sdk', '~> 2.3.0'
-gem 'rubyzip'
-
+gem 'redis', '~> 3.3'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -54,6 +53,10 @@ gem 'faker' # This gem should be later put only in development and test
 
 gem 'chartkick'
 gem 'groupdate'
+gem 'rubyzip', '= 1.0.0'
+gem 'axlsx', '= 2.0.1'
+gem 'axlsx_rails'
+
 
 group :development, :test do
   gem 'pry'

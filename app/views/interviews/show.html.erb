@@ -1,0 +1,112 @@
+<br>
+<div class="row">
+  <div class="col-md-12 col-xs-12">
+    <div class="card mx-auto evaluation-card">
+      <div class="card-block">
+        <div role="tablist" aria-multiselectable="true">
+          <% @evaluations.each do |eval| %>
+            <% @competence = Competence.find(eval.competence_id)%>
+            <div class="card" id="comp-<%= @competence.name %>" data-comp="<%= @competence.id %>">
+
+              <!-- Card header -->
+              <div class="card-header" role="tab"">
+                <div class="row">
+                  <div class="col-md-4">
+                    <h5 class="mb-0">
+                        <a data-toggle="collapse" href="#collapse-<%= @competence.id %>" aria-expanded="true" aria-controls="collapseOne">
+                         <%= @competence.name %>
+                        </a>
+                    </h5>
+                  </div>
+                </div>
+              </div>
+
+               <!-- Card content -->
+              <div id="collapse-<%= @competence.id %>" class="collapse show" role="tabpanel" aria-labelledby="heading">
+
+              <div class="card-block competence-content">
+
+                <div class="row">
+                  <div class="col-md-12">
+                    <h5>Evidencias</h5>
+                    <% @eval_evidences = EvaluationEvidence.where(evaluation_id: eval.id)%>
+                    <% if @eval_evidences.nil? %>
+                      <p>No hay evidencias</p>
+                    <% else %>
+                      <ul>
+                        <% @eval_evidences.each do |eval_evidence|
+                        @evidence = Evidence.find(eval_evidence.evidence_id)
+                        %>
+                        <li><%= @evidence.name %></li>
+                       <% end %>
+                      </ul>
+                    <% end %>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 col-xs-12">
+                    <h5>Evaluación</h5>
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th> Profesor </th>
+                          <th> Rol </th>
+                          <th> Nivel </th>
+                        </tr>
+                      </thead>
+                      <tbody class="participants" id="participants-<%= @competence.id %>">
+                        <% @inter_evaluators.each do |evaluator| %>
+                           <%
+                              @eval_user = EvaluationsUser.find_by(user_id: evaluator.id, evaluation_id: eval.id)
+                            %>
+                          <tr>
+                            <td><%= evaluator.name %></td>
+                            <td><select class='form-control inter-role-select' data-evaluation="<%= eval.id %>" data-interview="<%=@current_int%>" data-evaluator="<%= evaluator.id %>" data-comp="<%= @competence.id %>" data-select="role">
+                              <option value='true'  <% if @eval_user.responsible then %> selected <%end%> >Responsable</option>
+                              <option value='false' <% if !@eval_user.responsible then %> selected <%end%>>Evaluador</option>
+                            </select>
+                          </td>
+                          <td><select class='form-control inter-level-select' data-evaluation="<%= eval.id %>" data-interview="<%=@current_int%>" data-evaluator="<%= evaluator.id %>" data-comp="<%= @competence.id %>" data-select="level">
+                                <% @levels.each do |level| %>
+                                  <option value=<%= level.id %> <% if level.id == @eval_user.temporal_level then %> selected <% end %> ><%= level.name %></option>
+                                <% end %>
+                              </select>
+                          </td>
+                        </tr>
+                      <% end %>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="col-md-6 col-xs-12">
+                    <h5>Retroalimentación</h5>
+                    <textarea id="retro-<%= eval.id %>" data-evaluation="<%= eval.id %>" data-interview="<%=@current_int%>" data-comp="<%= @competence.id %>" class="form-control inter-retro" style="min-width: 100%; min-height: 70%"><%= eval.retro%></textarea>
+                  </div>
+               </div>
+
+              </div>
+
+              <!--
+              <div class="row">
+                <div class="col-md-12 text-center">
+                  <%#= link_to "<button id='save_inter_#{@competence.id}' class='btn btn-success btn-save-inter' data-comp='#{@competence.id}'>Guardar</button>".html_safe, show_user_path(current_user, :anchor => "evaluaciones") %>
+                </div>
+              </div>
+
+            -->
+
+            <button id='save_inter_#{@competence.id}' class='btn btn-success btn-save-inter' data-evaluation="<%= eval.id%>" data-interview="<%=@current_int%>" data-comp=<%= @competence.id %>>Guardar</button>
+
+              <br>
+
+            </div>
+
+          <% end %>
+        </div>
+
+        <br>
+
+      </div>
+    </div>
+  </div>
+</div>

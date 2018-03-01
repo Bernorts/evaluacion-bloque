@@ -1,0 +1,36 @@
+<%= javascript_include_tag "https://www.gstatic.com/charts/loader.js" %>
+<% content_for :stylesheet do %>
+    <%= stylesheet_link_tag    "styles", :media => "all" %>
+<% end %>
+
+<% content_for :javascript do %>
+    <%= javascript_include_tag 'evidences/index' %>
+<% end %>
+
+<div class="container-fluid">
+    <div class="row content">
+      <div class="col-md-6 col-xs-12 profile-con">
+        <div class="row">
+          <div class="col-md-8 col-xs-12">
+            <h4>Nombre:</h4><%= @semester.name%>
+            <ul>
+              <% @semester.users.each do |user| %>
+                <li><%= user.name %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-xs-12 text-center">
+        <br>
+        <%= line_chart @competences.map { |competence|
+          obj = {}
+          @users_evaluations.where(competence_id: competence.id).order(:updated_at).each do |ev|
+            obj[ev.created_at] = ev.achLevel
+          end
+          {name: competence.name, data: obj}
+          } , xtitle: "Fecha", ytitle: "Nivel"
+        %>
+      </div>
+    </div>
+  </div>

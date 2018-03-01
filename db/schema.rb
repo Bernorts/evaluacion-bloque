@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180102035141) do
+ActiveRecord::Schema.define(version: 20180612223252) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,9 +58,12 @@ ActiveRecord::Schema.define(version: 20180102035141) do
     t.integer "evidence_id",   null: false
   end
 
-  create_table "evaluations_users", id: false, force: :cascade do |t|
-    t.integer "evaluation_id", null: false
-    t.integer "user_id",       null: false
+  create_table "evaluations_users", force: :cascade do |t|
+    t.integer "evaluation_id",  null: false
+    t.integer "user_id",        null: false
+    t.boolean "responsible"
+    t.integer "temporal_level"
+    t.index ["user_id", "evaluation_id"], name: "index_evaluations_users_on_user_id_and_evaluation_id", unique: true, using: :btree
   end
 
   create_table "evidences", force: :cascade do |t|
@@ -103,16 +106,6 @@ ActiveRecord::Schema.define(version: 20180102035141) do
   create_table "semesters_users", id: false, force: :cascade do |t|
     t.integer "semester_id", null: false
     t.integer "user_id",     null: false
-  end
-
-  create_table "user_evaluations", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "evaluation_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.integer  "checkedBy"
-    t.index ["evaluation_id"], name: "index_user_evaluations_on_evaluation_id", using: :btree
-    t.index ["user_id"], name: "index_user_evaluations_on_user_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
