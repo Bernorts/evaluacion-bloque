@@ -18,6 +18,7 @@
 //= require sweetalert.js
 //= require Chart.bundle
 //= require chartkick
+//= require_tree ./channels
 //= require_tree .
 
 

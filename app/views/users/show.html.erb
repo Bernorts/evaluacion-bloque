@@ -121,6 +121,8 @@
                       <div class="card-block competence-content">
                         <% 
                         @competence_evaluations = Evaluation.where(user_id: @user.id, competence_id: c.id)
+
+                        @competence_evaluations = @competence_evaluations.drop(1)
                         %>
 
                         <% @competence_evaluations.each do |eval| %>
@@ -160,22 +162,11 @@
                                <div class="col-md-6">
                                 <h5>Evaluadores</h5>
                                 <% if !eval.achLevel.nil? %> 
-                                  <table class="table table-hover">
-                                    <thead>
-                                      <tr class="tableHead">
-                                        <th>Nombre</th>
-                                        <th>Rol</th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      <% for u in eval.users do %>
-                                        <tr>
-                                          <td><%= u.full_name %></td>
-                                          <td></td>
-                                        </tr>
-                                      <% end %>
-                                    </tbody>
-                                  </table>
+                                  <ul>
+                                    <% for u in eval.users do %>
+                                      <li><%= u.name %></li>
+                                     <% end %>
+                                  </ul>
                                 <% else %>
                                   <p>No hay evaluadores</p>
                                 <% end %>
