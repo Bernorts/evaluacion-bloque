@@ -1,99 +1,78 @@
-
-  <!-- Competencias -->
-  <div class="tab-pane fade" id="competencias" role="tabpanel" aria-labelledby="competencias-tab">
-    <div class="row">
-      <div class="col-md-12 col-xs-12">
-        <div class="card mx-auto evaluation-card">
-          <div class="card-block">
-            <%= form_for @evaluation, url: {action: "create"}, html: {class: "md-form"} do |f| %>
-                <div role="tablist" aria-multiselectable="true">
-                  <% @competences.each do |c| %>
-                  <div class="card" id="comp-<%= c.id %>" data-comp="<%= c.id %>">
-                    <div class="card-header" role="tab" id="headingOne">
-                      <div class="row">
-                        <div class="col-md-4">
-                          <h5 class="mb-0">
-                              <a data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= c.id %>" aria-expanded="true" aria-controls="collapseOne">
-                               <%= c.name %>
-                              </a>
-                          </h5>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div id="collapse-<%= c.id %>" class="collapse" role="tabpanel" aria-labelledby="heading">
-                      <div class="card-block competence-content">
-                        <%
-                        @competence_evaluations = Evaluation.where(user_id: @user.id, competence_id: c.id)
-
-                        @competence_evaluations = @competence_evaluations.drop(1)
-                        %>
-
-                        <% @competence_evaluations.each do |eval| %>
-                          <% if eval.desLevel != 0 %>
-                            <h4 class="competence-name"><%= eval.reqDate%></h4>
-                            <div class="container">
-                              <div class="row">
-                                <div class="col-md-6">
-                                  <h5>Nivel deseado:</h5>
-                                    <input class="form-control" readonly="true" value=<%= Level.find(eval.desLevel).name %>>
-                                </div>
-                                <div class="col-md-6">
-                                  <h5>Nivel logrado: </h5>
-                                  <% if eval.achLevel != nil then @achLevel = Level.find(eval.achLevel)%>
-                                    <input class="form-control" readonly="true" value=<%= @achLevel.name %>>
-                                    <% else %>
-                                    <input class="form-control" readonly="true" value="Sin evaluar">
-                                    <% end %>
-                                </div>
-                              </div>
-                              <br>
-                              <div class="row">
-                                <div class="col-md-6">
-                                  <h5>Evidencias</h5>
-                                   <% @eval_evidences = EvaluationEvidence.where(evaluation_id: eval.id)%>
-                                   <% if @eval_evidences.nil? %>
-                                     <p>No hay evidencias</p>
-                                   <% else %>
-                                     <ul>
-                                       <% @eval_evidences.each do |eval_evidence|
-                                        @evidence = Evidence.find(eval_evidence.evidence_id)
-                                        %>
-                                        <li><%= @evidence.name %></li>
-                                       <% end %>
-                                    </ul>
-                                   <% end %>
-                                 </div>
-                                 <div class="col-md-6">
-                                  <h5>Evaluadores</h5>
-                                  <% if !eval.achLevel.nil? %>
-                                    <ul>
-                                      <% for u in eval.users do %>
-                                        <li><%= u.name %></li>
-                                       <% end %>
-                                    </ul>
-                                  <% else %>
-                                    <p>No hay evaluadores</p>
-                                  <% end %>
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col-md-6">
-                                  <h5>Retroalimentación</h5>
-                                  <% text_area_tag 'retro', eval.retro, disabled: true, size: "25x10" %>
-                                </div>
-                              </div>
-                            </div>
-                            <br>
-                          <% end %>
-                        <% end %>
-                      </div>
-                    </div>
+<br>
+<div class="row">
+  <div class="col-md-12 col-xs-12">
+    <div class="card mx-auto evaluation-card">
+      <div class="card-block">
+        <div role="tablist" aria-multiselectable="true">
+          <% @evaluations.each do |eval| %>
+            <% @competence = Competence.find(eval.competence_id)%>
+            <div class="card" id="comp-<%= @competence.name %>" data-comp="<%= @competence.id %>">
+              
+              <!-- Card header -->
+              <div class="card-header" role="tab" id="headingOne">
+                <div class="row">
+                  <div class="col-md-4">
+                    <h5 class="mb-0">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= @competence.id %>" aria-expanded="true" aria-controls="collapseOne">
+                         <%= @competence.name %>
+                        </a>
+                    </h5>
                   </div>
-                <% end %>
+                </div>
               </div>
-          </div>
-    </div>
+
+               <!-- Card content -->
+              <div id="collapse-<%= @competence.id %>" class="collapse" role="tabpanel" aria-labelledby="heading">
+
+              <div class="card-block competence-content">
+
+                <div class="row">
+                  <div class="col-md-12">
+                    <h5>Evidencias</h5>
+                    <% @eval_evidences = EvaluationEvidence.where(evaluation_id: eval.id)%>
+                    <% if @eval_evidences.nil? %>
+                      <p>No hay evidencias</p>
+                    <% else %>
+                      <ul>
+                        <% @eval_evidences.each do |eval_evidence|
+                        @evidence = Evidence.find(eval_evidence.evidence_id)
+                        %>
+                        <li><%= @evidence.name %></li>
+                       <% end %>
+                      </ul>
+                    <% end %>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12">
+                    <h5>Evaluación</h5>
+                    <table class="table-striped">
+                      <tr>
+                        <th> Profesor </th>
+                        <th> Rol </th>
+                        <th> Nivel </th>
+                      </tr>
+                      <tr>
+                        <td>  </td>
+                        <td>  </td>
+                        <td>  </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+
+               </div>
+
+              </div>
+
+            </div>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
+</div>
+
+ 
+>>>>>>> 93330f0... Started view for interview
