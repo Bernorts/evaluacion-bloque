@@ -9,6 +9,12 @@ Rails.application.routes.draw do
 	#grid
 	get '/malla',   to: 'grid#show', as: :show_grid
 
+	#interview
+	get '/entrevista/:id', to: 'interviews#show', as: :show_interview
+	post '/entrevista', to: 'interview#create', as: :create_evaluation_user
+	put '/entrevista/:user_id/:ev_id/:level_id', to: 'interview#update', as: :update_evaluation_user
+
+
 	#evaluations
 	get '/evaluaciones/nueva',   to: 'evaluations#new', as: :new_evaluation
   get '/evaluaciones/:id/editar',   to: 'evaluations#edit', as: :edit_evaluation
