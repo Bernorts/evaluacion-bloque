@@ -1,12 +1,10 @@
-console.log("DICKS")
 App.interviews = App.cable.subscriptions.create('InterviewsChannel', {
   received: function(data) {
-    $("#interviews").removeClass('hidden')
-    return $('#interviews').append(this.renderMessage(data));
+    $(".participants").append(this.addParticipant(data));
   },
 
-  renderMessage: function(data) {
+  addParticipant: function(data) {
     console.log(data)
-    return "<p> <b>" + data + ": </b>" + data + "</p>";
+    return ( "<tr><td>" + data.evaluation_user + "</td><td>" + data.evaluation_responsible + "</td><td>" + data.evaluation_level + "</td></tr>");
   }
 });
