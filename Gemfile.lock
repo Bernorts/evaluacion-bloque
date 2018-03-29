@@ -283,7 +283,7 @@ GEM
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
     rdiscount (2.2.0.1)
-    redis (4.0.1)
+    redis (3.3.5)
     redis-namespace (1.6.0)
       redis (>= 3.0.4)
     responders (2.4.0)
@@ -440,6 +440,7 @@ DEPENDENCIES
   rails-controller-testing
   rails-i18n
   rdiscount
+  redis (~> 3.3)
   redis-namespace
   responders (~> 2.0)
   rspec-collection_matchers

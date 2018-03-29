@@ -26,7 +26,7 @@ gem 'byebug'
 gem 'paperclip', '~> 5.0'
 gem 'aws-sdk', '~> 2.3.0'
 gem 'rubyzip'
-
+gem 'redis', '~> 3.3'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder

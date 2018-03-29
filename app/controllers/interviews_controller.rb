@@ -12,7 +12,6 @@ class InterviewsController < ApplicationController
           evaluation_user: @evaluation_user.user_id,
           evaluation_responsible: @evaluation_user.responsible,
           evaluation_level: @evaluation_user.temporal_level
-        head :ok
       end
 
     end
