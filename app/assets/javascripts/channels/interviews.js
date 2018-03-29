@@ -1,10 +1,3 @@
-$(document).on('turbolinks:load', function() {
-  console.log("puto turbolinks")
-  if (App.interviews) {
-    return setTimeout(App.interviews.received(), 10000) 
-  }
-});
-
 App.interviews = App.cable.subscriptions.create('InterviewsChannel', {
   received: function(data) {
     return $(".participants").append(this.addParticipant(data));
@@ -12,6 +5,7 @@ App.interviews = App.cable.subscriptions.create('InterviewsChannel', {
 
   addParticipant: function(data) {
     console.log(data)
+    var all_levels = JSON.parse(data.all_levels);
     row = "<tr>" + 
 	    	"<td>" + data.evaluation_user + "</td>" + 
 	    	"<td>" + 
@@ -21,15 +15,13 @@ App.interviews = App.cable.subscriptions.create('InterviewsChannel', {
 			  	"</select>" + 
 		  	"</td>";
 
-	levels_select = "<td>" + "<select class='form-control'>";
+	row += "<td>" + "<select class='form-control'>";
 	
-	for(var key in data.all_levels){
-		levels_select += "<option value=" + key + ">" + data.all_levels[key] + "</option>" +
+	for(var key in all_levels){
+		row += "<option value=" + key + ">" + all_levels[key] + "</option>";
 	}
 
-	levels_select += "</select>" + "</td>";
-  	
-  	row += levels_select + "</tr>";
+	row += "</select>" + "</td>" + "</tr>";
 
     return row;
   }
