@@ -17,15 +17,19 @@ class InterviewsController < ApplicationController
       else
         @aux_responsible = 'Responsable'
       end
-
+      @levels = Level.all
+      @all_levels = {}
+      @levels.each do |l|
+        @all_levels.merge!({l.id => l.name})
+      end
       if @evaluation_user.save!
         ActionCable.server.broadcast 'interviews',
           evaluation: @evaluation_user.evaluation_id,
           evaluation_user: @user,
           evaluation_responsible: @aux_responsible,
-          evaluation_level: @level.name
+          evaluation_level: @level.name,
+          all_levels: @all_levels.to_json()
       end
-
     end
   end
 

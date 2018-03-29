@@ -1,6 +1,13 @@
+$(document).on('turbolinks:load', function() {
+  console.log("puto turbolinks")
+  if (App.interviews) {
+    return setTimeout(App.interviews.received(), 10000) 
+  }
+});
+
 App.interviews = App.cable.subscriptions.create('InterviewsChannel', {
   received: function(data) {
-    $(".participants").append(this.addParticipant(data));
+    return $(".participants").append(this.addParticipant(data));
   },
 
   addParticipant: function(data) {
