@@ -1,16 +1,12 @@
 class InterviewsController < ApplicationController
   def show
     @interview = Interview.find(params[:id])
-    @evaluations = Evaluation.where(interview_id: @interview.id)
-
-  end
-
-  def create
-    @interview = Interview.find(params[:interview_id])
-    @evaluations = Evaluation.where(interview_id: @interview.id)
+    @evaluations = Evaluation.where(interview_id: @interview.id).where.not(desLevel: 0)
     @evaluations.each do |ev|
-      @evaluation_user = new EvaluationUser(ev.id, current_user, false, 1)
-      if @evaluation_user.save
+
+      @evaluation_user = EvaluationsUser.new(evaluation_id: ev.id, user_id: current_user.id, responsible: false, temporal_level: 1)
+
+      if @evaluation_user.save!
         ActionCable.server.broadcast 'interviews',
           evaluation: @evaluation_user.evaluation_id,
           evaluation_user: @evaluation_user.user_id,
@@ -18,9 +14,10 @@ class InterviewsController < ApplicationController
           evaluation_level: @evaluation_user.temporal_level
         head :ok
       end
-    end
 
+    end
   end
+
 
   def update_responsible
     @evaluation = Evaluation.find(params[:ev_id])
