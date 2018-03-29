@@ -7,7 +7,7 @@ class InterviewsController < ApplicationController
 
       @evaluation_user = EvaluationsUser.new(evaluation_id: ev.id, user_id: current_user.id, responsible: false, temporal_level: 1)
       @user = User.find(@evaluation_user.user_id)
-      @user = @user.name.to_s + ' ' +  @user.last_name.to_s
+      @user_name = @user.name.to_s + ' ' +  @user.last_name.to_s
       @level = Level.find(@evaluation_user.temporal_level)
 
 
@@ -22,10 +22,10 @@ class InterviewsController < ApplicationController
       @levels.each do |l|
         @all_levels.merge!({l.id => l.name})
       end
-      if @evaluation_user.save! 
+      if (!EvaluationsUser.find_by(evaluation_id: ev.id, user_id: @user.id) && @evaluation_user.save!)
         ActionCable.server.broadcast 'interviews',
           evaluation: @evaluation_user.evaluation_id,
-          evaluation_user: @user,
+          evaluation_user: @user_name,
           evaluation_responsible: @aux_responsible,
           evaluation_level: @level.name,
           all_levels: @all_levels.to_json()
