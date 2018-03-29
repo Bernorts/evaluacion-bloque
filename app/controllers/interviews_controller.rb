@@ -10,6 +10,14 @@ class InterviewsController < ApplicationController
     @evaluations = Evaluation.where(interview_id: @interview.id)
     @evaluations.each do |ev|
       @evaluation_user = new EvaluationUser(ev.id, current_user, false, 1)
+      if @evaluation_user.save
+        ActionCable.server.broadcast 'interviews',
+          evaluation: @evaluation_user.evaluation_id,
+          evaluation_user: @evaluation_user.user_id,
+          evaluation_responsible: @evaluation_user.responsible,
+          evaluation_level: @evaluation_user.temporal_level
+        head :ok
+      end
     end
 
   end
