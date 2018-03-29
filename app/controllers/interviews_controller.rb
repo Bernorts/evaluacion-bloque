@@ -22,7 +22,7 @@ class InterviewsController < ApplicationController
       @levels.each do |l|
         @all_levels.merge!({l.id => l.name})
       end
-      if @evaluation_user.save!
+      if @evaluation_user.save! 
         ActionCable.server.broadcast 'interviews',
           evaluation: @evaluation_user.evaluation_id,
           evaluation_user: @user,
