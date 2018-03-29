@@ -12,6 +12,25 @@ App.interviews = App.cable.subscriptions.create('InterviewsChannel', {
 
   addParticipant: function(data) {
     console.log(data)
-    return ( "<tr><td>" + data.evaluation_user + "</td><td>" + data.evaluation_responsible + "</td><td>" + data.evaluation_level + "</td></tr>");
+    row = "<tr>" + 
+	    	"<td>" + data.evaluation_user + "</td>" + 
+	    	"<td>" + 
+	    		"<select class='form-control'>" + 
+					"<option value='responsible'>Responsable</option>" +
+					"<option value='evaluator' selected>Evaluador</option>" +
+			  	"</select>" + 
+		  	"</td>";
+
+	levels_select = "<td>" + "<select class='form-control'>";
+	
+	for(var key in data.all_levels){
+		levels_select += "<option value=" + key + ">" + data.all_levels[key] + "</option>" +
+	}
+
+	levels_select += "</select>" + "</td>";
+  	
+  	row += levels_select + "</tr>";
+
+    return row;
   }
 });
