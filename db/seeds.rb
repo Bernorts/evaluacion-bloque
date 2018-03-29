@@ -10,12 +10,14 @@ Role.find_or_create_by(name: 'Profesor')
 Role.find_or_create_by(name: 'Estudiante')
 
 #Users
-u = User.find_or_create_by(name: 'Bernardo', last_name: 'Ortega', email: 'bernorts@gladio.com', password: 'studentpass', role_id: 1)
-us = User.find_or_create_by(name: 'Martin', last_name: 'Molinero', email: 'A01204818@itesm.com', password: 'admin', role_id: 1)
+us1 = User.find_or_create_by(name: 'Bernardo', last_name: 'Ortega', email: 'bernorts@gladio.com', password: 'studentpass', role_id: 1)
+us2 = User.find_or_create_by(name: 'Martin', last_name: 'Molinero', email: 'A01204818@itesm.com', password: 'admin', role_id: 1)
+us3 = User.find_or_create_by(name: 'Claud', last_name: 'Robinson', email: 'claud@itesm.com', password: 'professorpass', role_id: 2)
 #Semesters
 s = Semester.find_or_create_by(name: "Semestre Enero-Mayo 2018", start_date: "08-01-2018", end_date: "08-05-2018")
-u.semesters << s
-us.semesters << s
+us1.semesters << s
+us2.semesters << s
+us3.semesters << s
 #Evaluation
 Evaluation.find_or_create_by(reqDate: '21-12-2017', eval_date: '21-12-2017', desLevel: '1', achLevel: '1', competence_id: 1, user_id: 1)
 Evaluation.find_or_create_by(reqDate: '21-12-2017', eval_date: '21-12-2017', desLevel: '1', achLevel: '1', competence_id: 2, user_id: 1)
