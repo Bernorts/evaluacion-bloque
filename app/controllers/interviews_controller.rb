@@ -2,9 +2,20 @@ class InterviewsController < ApplicationController
   def show
     @interview = Interview.find(params[:id])
     @evaluations = Evaluation.where(interview_id: @interview.id).where.not(desLevel: 0)
+    @past_evaluators_ids = EvaluationsUser.where(evaluation_id: @evaluations[0])
+    puts "Past evaluators ids: " + @past_evaluators_ids[0].to_s
+    @past_evaluators = []
+    @levels = Level.all
+    @all_levels = {}
+      @levels.each do |l|
+        @all_levels.merge!({l.id => l.name})
+      end
+
+    @past_evaluators_ids.each do |pe|
+      @past_evaluators.push(User.find(pe.user_id))
+    end
 
     @evaluations.each do |ev|
-
       @evaluation_user = EvaluationsUser.new(evaluation_id: ev.id, user_id: current_user.id, responsible: false, temporal_level: 1)
       @user = User.find(@evaluation_user.user_id)
       @user_name = @user.name.to_s + ' ' +  @user.last_name.to_s
@@ -17,11 +28,7 @@ class InterviewsController < ApplicationController
       else
         @aux_responsible = 'Responsable'
       end
-      @levels = Level.all
-      @all_levels = {}
-      @levels.each do |l|
-        @all_levels.merge!({l.id => l.name})
-      end
+
       if (!EvaluationsUser.find_by(evaluation_id: ev.id, user_id: @user.id) && @evaluation_user.save!)
         ActionCable.server.broadcast 'interviews',
           evaluation: @evaluation_user.evaluation_id,

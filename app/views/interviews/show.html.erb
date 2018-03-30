@@ -56,6 +56,22 @@
                         </tr>
                       </thead>
                       <tbody class="participants">
+                        <% @past_evaluators.each do |evaluator| %>
+                          <tr>
+                            <td><%= evaluator.name %></td>
+                            <td><select class='form-control'>
+                              <option value='responsible'>Responsable</option>
+                              <option value='evaluator' selected>Evaluador</option>
+                            </select>
+                          </td>
+                          <td><select class='form-control'>
+                                <% @levels.each do |level| %>
+                                  <option value=<%= level.id %>><%= level.name %></option>
+                                <% end %>
+                              </select>
+                          </td>
+                        </tr>
+                      <% end %>
                       </tbody>
                     </table>
                   </div>

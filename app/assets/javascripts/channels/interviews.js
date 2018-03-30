@@ -1,5 +1,6 @@
 App.interviews = App.cable.subscriptions.create('InterviewsChannel', {
   received: function(data) {
+  	console.log('Cable en received');
     return $(".participants").append(this.addParticipant(data));
   },
 
