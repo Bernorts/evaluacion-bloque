@@ -11,8 +11,8 @@ App.interviews = App.cable.subscriptions.create('InterviewsChannel', {
 	    	"<td>" + data.evaluation_user + "</td>" + 
 	    	"<td>" + 
 	    		"<select class='form-control'>" + 
-					"<option value='responsible'>Responsable</option>" +
-					"<option value='evaluator' selected>Evaluador</option>" +
+					"<option value='true'>Responsable</option>" +
+					"<option value='false' selected>Evaluador</option>" +
 			  	"</select>" + 
 		  	"</td>";
 

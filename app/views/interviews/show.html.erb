@@ -45,7 +45,7 @@
                 </div>
 
                 <div class="row">
-                  <div class="col-md-12">
+                  <div class="col-md-6 col-xs-12">
                     <h5>Evaluación</h5>
                     <table class="table table-striped">
                       <thead>
@@ -56,7 +56,7 @@
                         </tr>
                       </thead>
                       <tbody class="participants">
-                        <% @past_evaluators.each do |evaluator| %>
+                        <% @inter_evaluators.each do |evaluator| %>
                           <tr>
                             <td><%= evaluator.name %></td>
                             <td><select class='form-control'>
@@ -75,8 +75,10 @@
                       </tbody>
                     </table>
                   </div>
-                </div>
-
+                  <div class="col-md-6 col-xs-12">
+                    <h5>Retroalimentación</h5>
+                    <textarea class="form-control" style="min-width: 100%; min-height: 70%"></textarea>
+                  </div>
                </div>
 
               </div>
@@ -84,6 +86,20 @@
             </div>
           <% end %>
         </div>
+
+        <br>
+
+          <div class="row">
+            <div class="col-md-2 text-center offset-md-4">
+              <%= link_to '<button id="cancel_new" class="btn btn-danger">Cancelar</button>'.html_safe, show_user_path(current_user, :anchor => "evaluaciones") %>
+            </div>
+            <div class="col-md-2 text-center">
+              <%= link_to '<button id="cancel_new" class="btn btn-success">Guardar</button>'.html_safe, show_user_path(current_user, :anchor => "evaluaciones") %>
+            </div>
+          </div>
+
+          <br>
+
       </div>
     </div>
   </div>
