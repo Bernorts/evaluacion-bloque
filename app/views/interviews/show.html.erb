@@ -59,12 +59,12 @@
                         <% @inter_evaluators.each do |evaluator| %>
                           <tr>
                             <td><%= evaluator.name %></td>
-                            <td><select class='form-control' data-evaluator="<%= evaluator.id %>" data-comp="<%= @competence.id %>" data-select="role">
-                              <option value='responsible'>Responsable</option>
-                              <option value='evaluator' selected>Evaluador</option>
+                            <td><select class='form-control inter-role-select' data-evaluator="<%= evaluator.id %>" data-comp="<%= @competence.id %>" data-select="role">
+                              <option value='true'>Responsable</option>
+                              <option value='false' selected>Evaluador</option>
                             </select>
                           </td>
-                          <td><select class='form-control' data-evaluator="<%= evaluator.id %>" data-comp="<%= @competence.id %>" data-select="level">
+                          <td><select class='form-control inter-level-select' data-evaluator="<%= evaluator.id %>" data-comp="<%= @competence.id %>" data-select="level">
                                 <% @levels.each do |level| %>
                                   <option value=<%= level.id %>><%= level.name %></option>
                                 <% end %>
@@ -77,17 +77,22 @@
                   </div>
                   <div class="col-md-6 col-xs-12">
                     <h5>Retroalimentación</h5>
-                    <textarea id="retro-<%= eval.id %>" data-comp="<%= @competence.id %>" class="form-control" style="min-width: 100%; min-height: 70%"></textarea>
+                    <textarea id="retro-<%= eval.id %>" data-comp="<%= @competence.id %>" class="form-control inter-retro" style="min-width: 100%; min-height: 70%"></textarea>
                   </div>
                </div>
 
               </div>
 
+              <!--
               <div class="row">
                 <div class="col-md-12 text-center">
-                  <%= link_to "<button id='save_inter_comp_#{@competence.id}' class='btn btn-success'>Guardar</button>".html_safe, show_user_path(current_user, :anchor => "evaluaciones") %>
+                  <%#= link_to "<button id='save_inter_#{@competence.id}' class='btn btn-success btn-save-inter' data-comp='#{@competence.id}'>Guardar</button>".html_safe, show_user_path(current_user, :anchor => "evaluaciones") %>
                 </div>
               </div>
+
+            -->
+
+            <button id='save_inter_#{@competence.id}' class='btn btn-success btn-save-inter' data-comp=<%= @competence.id %>>Guardar</button>
 
               <br>
 
