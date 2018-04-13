@@ -13,6 +13,7 @@ class InterviewsController < ApplicationController
       @user = User.find(@evaluation_user.user_id)
       @user_name = @user.name.to_s + ' ' +  @user.last_name.to_s
       @level = Level.find(@evaluation_user.temporal_level)
+      @competence_id = ev.competence_id
 
 
       @aux_responsible = ''
@@ -28,6 +29,7 @@ class InterviewsController < ApplicationController
           evaluation_user: @user_name,
           evaluation_responsible: @aux_responsible,
           evaluation_level: @level.name,
+          evaluation_competence_id: @competence_id,
           all_levels: @all_levels.to_json()
       end
     end

@@ -9,11 +9,11 @@
             <div class="card" id="comp-<%= @competence.name %>" data-comp="<%= @competence.id %>">
               
               <!-- Card header -->
-              <div class="card-header" role="tab" id="headingOne">
+              <div class="card-header" role="tab"">
                 <div class="row">
                   <div class="col-md-4">
                     <h5 class="mb-0">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= @competence.id %>" aria-expanded="true" aria-controls="collapseOne">
+                        <a data-toggle="collapse" href="#collapse-<%= @competence.id %>" aria-expanded="true" aria-controls="collapseOne">
                          <%= @competence.name %>
                         </a>
                     </h5>
@@ -22,7 +22,7 @@
               </div>
 
                <!-- Card content -->
-              <div id="collapse-<%= @competence.id %>" class="collapse" role="tabpanel" aria-labelledby="heading">
+              <div id="collapse-<%= @competence.id %>" class="collapse show" role="tabpanel" aria-labelledby="heading">
 
               <div class="card-block competence-content">
 
@@ -55,16 +55,16 @@
                           <th> Nivel </th>
                         </tr>
                       </thead>
-                      <tbody class="participants">
+                      <tbody class="participants" id="participants-<%= @competence.id %>">
                         <% @inter_evaluators.each do |evaluator| %>
                           <tr>
                             <td><%= evaluator.name %></td>
-                            <td><select class='form-control'>
+                            <td><select class='form-control' data-evaluator="<%= evaluator.id %>" data-comp="<%= @competence.id %>" data-select="role">
                               <option value='responsible'>Responsable</option>
                               <option value='evaluator' selected>Evaluador</option>
                             </select>
                           </td>
-                          <td><select class='form-control'>
+                          <td><select class='form-control' data-evaluator="<%= evaluator.id %>" data-comp="<%= @competence.id %>" data-select="level">
                                 <% @levels.each do |level| %>
                                   <option value=<%= level.id %>><%= level.name %></option>
                                 <% end %>
@@ -77,28 +77,26 @@
                   </div>
                   <div class="col-md-6 col-xs-12">
                     <h5>Retroalimentación</h5>
-                    <textarea class="form-control" style="min-width: 100%; min-height: 70%"></textarea>
+                    <textarea id="retro-<%= eval.id %>" data-comp="<%= @competence.id %>" class="form-control" style="min-width: 100%; min-height: 70%"></textarea>
                   </div>
                </div>
 
               </div>
 
+              <div class="row">
+                <div class="col-md-12 text-center">
+                  <%= link_to "<button id='save_inter_comp_#{@competence.id}' class='btn btn-success'>Guardar</button>".html_safe, show_user_path(current_user, :anchor => "evaluaciones") %>
+                </div>
+              </div>
+
+              <br>
+
             </div>
+
           <% end %>
         </div>
 
         <br>
-
-          <div class="row">
-            <div class="col-md-2 text-center offset-md-4">
-              <%= link_to '<button id="cancel_new" class="btn btn-danger">Cancelar</button>'.html_safe, show_user_path(current_user, :anchor => "evaluaciones") %>
-            </div>
-            <div class="col-md-2 text-center">
-              <%= link_to '<button id="cancel_new" class="btn btn-success">Guardar</button>'.html_safe, show_user_path(current_user, :anchor => "evaluaciones") %>
-            </div>
-          </div>
-
-          <br>
 
       </div>
     </div>
