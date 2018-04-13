@@ -135,7 +135,7 @@ $( document ).ready(function() {
 	$('.btn-save-inter').on('click', function() {
 		competence_id = $(this).data("comp");
 		responsible_id = $('.inter-role-select[data-comp="' + competence_id +'"][data-responsible="true"]').data("evaluator");
-		final_level = $('.inter-level-select[data-comp="' + competence_id +'"][data-evaluator="' + 3 + '"]').val();
+		final_level = $('.inter-level-select[data-comp="' + competence_id +'"][data-evaluator="' + responsible_id + '"]').val();
 
    		console.log('Final level: ', final_level);
    		console.log('Competence_id: ', competence_id);
