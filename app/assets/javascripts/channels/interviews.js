@@ -7,17 +7,17 @@ App.interviews = App.cable.subscriptions.create('InterviewsChannel', {
   addParticipant: function(data) {
     console.log(data)
     var all_levels = JSON.parse(data.all_levels);
-    row = "<tr>" + 
-	    	"<td>" + data.evaluation_user + "</td>" + 
-	    	"<td>" + 
-	    		"<select class='form-control'>" + 
+    row = "<tr>" +
+	    	"<td>" + data.evaluation_user + "</td>" +
+	    	"<td>" +
+	    		"<select class='form-control'>" +
 					"<option value='true'>Responsable</option>" +
 					"<option value='false' selected>Evaluador</option>" +
-			  	"</select>" + 
+			  	"</select>" +
 		  	"</td>";
 
 	row += "<td>" + "<select class='form-control'>";
-	
+
 	for(var key in all_levels){
 		row += "<option value=" + key + ">" + all_levels[key] + "</option>";
 	}
@@ -51,12 +51,15 @@ $( document ).ready(function() {
 	var retro;
 	var final_level;
 	var responsible_id;
+  var interview_id;
+  var ev_id;
 
 	$('.inter-role-select').on('change', function() {
    		role = this.value;
    		competence_id = $(this).data("comp");
    		professor_id = $(this).data("evaluator");
-
+      interview_id = $(this).data("interview");
+      ev_id = $(this).data("evaluation");
    		if(role == 'true'){
    			$(this).attr('data-responsible', 'true');
    		} else{
@@ -66,20 +69,24 @@ $( document ).ready(function() {
    		console.log('Role: ', role);
    		console.log('Competence_id: ', competence_id);
    		console.log('Professor_id: ', professor_id);
-   		/*
+      console.log('interview_id: ', interview_id);
+      console.log('ev_id: ', ev_id);
+
    		$.ajax({
-			url: "/entrevista/:user_id/:ev_id/algo-rol",
+			url: '/entrevista_evaluacion/'+ interview_id +'/' + professor_id +'/rol',
 			method: "PUT",
 			data: {
 				role: role,
 				competence_id: competence_id,
-				professor_id: professor_id
+				professor_id: professor_id,
+        interview: interview_id,
+        evaluation: ev_id
 			},
 		    success: function(data) {
 		      console.log("Buen cambio rol");
 		    }
 		});
-		*/
+
    	});
 
 	$('.inter-level-select').on('change', function() {
@@ -90,9 +97,9 @@ $( document ).ready(function() {
    		console.log('Level: ', level_id);
    		console.log('Competence_id: ', competence_id);
    		console.log('Professor_id: ', professor_id);
-   		/*
+
    		$.ajax({
-			url: "/entrevista/:user_id/:ev_id/algo-nivel",
+			url: "/entrevista_evaluacion/:user_id/:ev_id/level",
 			method: "PUT",
 			data: {
 				level_id: level_id,
@@ -103,7 +110,7 @@ $( document ).ready(function() {
 		      console.log("Buen cambio nivel");
 		    }
 		});
-		*/
+
 	});
 
 	$('.inter-retro').bind('input propertychange', function() {
@@ -113,9 +120,9 @@ $( document ).ready(function() {
     	console.log('Retro: ', retro);
    		console.log('Competence_id: ', competence_id);
 
-    	/*
+
     	$.ajax({
-		url: "/entrevista/:user_id/:ev_id/algo-retro",
+		url: "/entrevista_retro/:user_id/:ev_id/retro",
 		method: "PUT",
 		data: {
 			competence_id: competence_id,
@@ -125,7 +132,6 @@ $( document ).ready(function() {
 	      console.log("Buen cambio retro");
 		    }
 		});
-		*/
 
 	    if(this.value.length){
 	    	//$("#yourBtnID").show();
@@ -141,9 +147,9 @@ $( document ).ready(function() {
    		console.log('Competence_id: ', competence_id);
    		console.log('Responsible: ', responsible_id);
 
-		/*
+
 		$.ajax({
-		url: "/entrevista/:user_id/:ev_id/algo-evaluacion",
+		url: "/entrevista_final/:user_id/:ev_id/evaluation",
 		method: "PUT",
 		data: {
 			competence_id: competence_id,
@@ -153,7 +159,7 @@ $( document ).ready(function() {
 	      console.log("Buen cambio retro");
 		    }
 		});
-		*/
+
 	});
 
 });

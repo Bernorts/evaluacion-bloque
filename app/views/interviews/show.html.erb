@@ -7,7 +7,7 @@
           <% @evaluations.each do |eval| %>
             <% @competence = Competence.find(eval.competence_id)%>
             <div class="card" id="comp-<%= @competence.name %>" data-comp="<%= @competence.id %>">
-              
+
               <!-- Card header -->
               <div class="card-header" role="tab"">
                 <div class="row">
@@ -59,12 +59,12 @@
                         <% @inter_evaluators.each do |evaluator| %>
                           <tr>
                             <td><%= evaluator.name %></td>
-                            <td><select class='form-control inter-role-select' data-evaluator="<%= evaluator.id %>" data-comp="<%= @competence.id %>" data-select="role">
+                            <td><select class='form-control inter-role-select' data-evaluation="<%= eval.id %>" data-interview="<%=@current_int%>" data-evaluator="<%= evaluator.id %>" data-comp="<%= @competence.id %>" data-select="role">
                               <option value='true'>Responsable</option>
                               <option value='false' selected>Evaluador</option>
                             </select>
                           </td>
-                          <td><select class='form-control inter-level-select' data-evaluator="<%= evaluator.id %>" data-comp="<%= @competence.id %>" data-select="level">
+                          <td><select class='form-control inter-level-select' data-evaluation="<%= eval.id %>" data-interview="<%=@current_int%>" data-evaluator="<%= evaluator.id %>" data-comp="<%= @competence.id %>" data-select="level">
                                 <% @levels.each do |level| %>
                                   <option value=<%= level.id %>><%= level.name %></option>
                                 <% end %>
@@ -77,7 +77,7 @@
                   </div>
                   <div class="col-md-6 col-xs-12">
                     <h5>Retroalimentación</h5>
-                    <textarea id="retro-<%= eval.id %>" data-comp="<%= @competence.id %>" class="form-control inter-retro" style="min-width: 100%; min-height: 70%"></textarea>
+                    <textarea id="retro-<%= eval.id %>" data-evaluation="<%= eval.id %>" data-interview="<%=@current_int%>" data-comp="<%= @competence.id %>" class="form-control inter-retro" style="min-width: 100%; min-height: 70%"></textarea>
                   </div>
                </div>
 
@@ -92,7 +92,7 @@
 
             -->
 
-            <button id='save_inter_#{@competence.id}' class='btn btn-success btn-save-inter' data-comp=<%= @competence.id %>>Guardar</button>
+            <button id='save_inter_#{@competence.id}' class='btn btn-success btn-save-inter' data-interview="<%=@current_int%>" data-comp=<%= @competence.id %>>Guardar</button>
 
               <br>
 
@@ -107,4 +107,3 @@
     </div>
   </div>
 </div>
-

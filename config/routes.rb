@@ -11,9 +11,14 @@ Rails.application.routes.draw do
 
 	#interview
 	get '/entrevista/:id', to: 'interviews#show', as: :show_interview
-	post '/entrevista', to: 'interview#create', as: :create_evaluation_user
-	put '/entrevista/:user_id/:ev_id/:level_id', to: 'interview#update', as: :update_evaluation_user
+	post '/entrevista', to: 'interviews#create', as: :create_evaluation_user
+	put '/entrevista/:user_id/:ev_id/:level_id', to: 'interviews#update', as: :update_evaluation_user
 
+  #entrevistas
+  put '/entrevista_evaluacion/:interview_id/:user_id/rol', to: 'interviews#update_responsible', as: :inter_role_select
+  put '/entrevista_evaluacion/:interview_id/:user_id/:competence_id/level', to: 'interviews#update_level', as: :inter_level_select
+  put '/entrevista_retro/:user_id/:ev_id/retro', to: 'interviews#update_retro', as: :inter_retro
+  put '/entrevista_final/:user_id/:ev_id/evaluation', to: 'interviews#final_evaluation', as: :final_evaluation
 
 	#evaluations
 	get '/evaluaciones/nueva',   to: 'evaluations#new', as: :new_evaluation

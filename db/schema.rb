@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180329224825) do
+ActiveRecord::Schema.define(version: 20180426003631) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,12 +58,11 @@ ActiveRecord::Schema.define(version: 20180329224825) do
     t.integer "evidence_id",   null: false
   end
 
-  create_table "evaluations_users", id: false, force: :cascade do |t|
+  create_table "evaluations_users", primary_key: ["user_id", "evaluation_id"], force: :cascade do |t|
     t.integer "evaluation_id",  null: false
     t.integer "user_id",        null: false
     t.boolean "responsible"
     t.integer "temporal_level"
-    t.index ["user_id", "evaluation_id"], name: "index_evaluations_users_on_user_id_and_evaluation_id", unique: true, using: :btree
   end
 
   create_table "evidences", force: :cascade do |t|
