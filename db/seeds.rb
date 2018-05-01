@@ -11,7 +11,7 @@ Role.find_or_create_by(name: 'Estudiante')
 
 #Users
 us1 = User.find_or_create_by(name: 'Bernardo', last_name: 'Ortega', email: 'bernorts@gladio.com', password: 'studentpass', role_id: 1)
-us2 = User.find_or_create_by(name: 'Martin', last_name: 'Molinero', email: 'A01204818@itesm.com', password: 'admin', role_id: 1)
+us2 = User.find_or_create_by(name: 'Martin', last_name: 'Molinero', email: 'A01204818@itesm.com', password: 'adminpass', role_id: 1)
 us3 = User.find_or_create_by(name: 'Claud', last_name: 'Robinson', email: 'claud@itesm.com', password: 'professorpass', role_id: 2)
 #Semesters
 s = Semester.find_or_create_by(name: "Semestre Enero-Mayo 2018", start_date: "08-01-2018", end_date: "08-05-2018")

@@ -55,8 +55,9 @@ class InterviewsController < ApplicationController
     @new_role = params[:role]
     @evaluation_user.responsible = @new_role
     puts @evaluation_user.inspect
-    @evaluation_user.save
     puts @evaluation_user.errors.inspect
+    @evaluation_user.save
+
 
     @evaluation_user.update(responsible: @new_role)
   end
