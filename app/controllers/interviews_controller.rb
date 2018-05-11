@@ -51,7 +51,7 @@ class InterviewsController < ApplicationController
     puts "entering update responsible"
     puts params
     @evaluation = Evaluation.find(params[:evaluation])
-    @evaluation_user = EvaluationsUser.where(evaluation_id: @evaluation.id, user_id: params[:professor_id]).first
+    @evaluation_user = EvaluationsUser.find_by(evaluation_id: @evaluation.id, user_id: params[:professor_id])
     @new_role = params[:role]
     @evaluation_user.responsible = @new_role
     puts @evaluation_user.inspect
@@ -63,7 +63,6 @@ class InterviewsController < ApplicationController
   end
 
   def update_level
-
     puts params
     @evaluation = Evaluation.find(params[:ev_id])
     @evaluation_user = EvaluationUser.where(evaluation_id: @evaluation.id, user_id: params[:user_id])

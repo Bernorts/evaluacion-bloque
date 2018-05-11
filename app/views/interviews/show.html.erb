@@ -57,11 +57,14 @@
                       </thead>
                       <tbody class="participants" id="participants-<%= @competence.id %>">
                         <% @inter_evaluators.each do |evaluator| %>
+                           <% 
+                              @eval_user = EvaluationsUser.find_by(user_id: evaluator.id, evaluation_id: eval.id)
+                            %>
                           <tr>
                             <td><%= evaluator.name %></td>
                             <td><select class='form-control inter-role-select' data-evaluation="<%= eval.id %>" data-interview="<%=@current_int%>" data-evaluator="<%= evaluator.id %>" data-comp="<%= @competence.id %>" data-select="role">
-                              <option value='true'>Responsable</option>
-                              <option value='false' selected>Evaluador</option>
+                              <option value='true'  <% if @eval_user.responsible then %> selected <%end%> >Responsable</option>
+                              <option value='false' <% if !@eval_user.responsible then %> selected <%end%>>Evaluador</option>
                             </select>
                           </td>
                           <td><select class='form-control inter-level-select' data-evaluation="<%= eval.id %>" data-interview="<%=@current_int%>" data-evaluator="<%= evaluator.id %>" data-comp="<%= @competence.id %>" data-select="level">
