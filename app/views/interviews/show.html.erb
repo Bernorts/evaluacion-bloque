@@ -69,7 +69,7 @@
                           </td>
                           <td><select class='form-control inter-level-select' data-evaluation="<%= eval.id %>" data-interview="<%=@current_int%>" data-evaluator="<%= evaluator.id %>" data-comp="<%= @competence.id %>" data-select="level">
                                 <% @levels.each do |level| %>
-                                  <option value=<%= level.id %>><%= level.name %></option>
+                                  <option value=<%= level.id %> <% if level.id == @eval_user.temporal_level then %> selected <% end %> ><%= level.name %></option>
                                 <% end %>
                               </select>
                           </td>
