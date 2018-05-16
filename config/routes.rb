@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   #entrevistas
   put '/entrevista_evaluacion/:interview_id/:user_id/rol', to: 'interviews#update_responsible', as: :inter_role_select
   put '/entrevista_evaluacion/:interview_id/:user_id/:competence_id/level', to: 'interviews#update_level', as: :inter_level_select
-  put '/entrevista_retro/:user_id/:ev_id/retro', to: 'interviews#update_retro', as: :inter_retro
+  put '/entrevista_retro/:evaluation_id/retro', to: 'interviews#update_retro', as: :inter_retro
   put '/entrevista_final/:user_id/:ev_id/evaluation', to: 'interviews#final_evaluation', as: :final_evaluation
 
 	#evaluations

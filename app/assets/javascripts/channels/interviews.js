@@ -91,20 +91,24 @@ $( document ).ready(function() {
 
 	$('.inter-level-select').on('change', function() {
    		level_id = this.value;
+      role = this.value;
    		competence_id = $(this).data("comp");
    		professor_id = $(this).data("evaluator");
+      interview_id = $(this).data("interview");
+      ev_id = $(this).data("evaluation");
 
    		console.log('Level: ', level_id);
    		console.log('Competence_id: ', competence_id);
    		console.log('Professor_id: ', professor_id);
 
    		$.ajax({
-			url: "/entrevista_evaluacion/:user_id/:ev_id/level",
+			url: "/entrevista_evaluacion/" + interview_id + "/"+ professor_id + "/" + competence_id + "/level",
 			method: "PUT",
 			data: {
 				level_id: level_id,
 				competence_id: competence_id,
-				professor_id: professor_id
+				professor_id: professor_id,
+        evaluation: ev_id
 			},
 		    success: function(data) {
 		      console.log("Buen cambio nivel");
@@ -116,17 +120,19 @@ $( document ).ready(function() {
 	$('.inter-retro').bind('input propertychange', function() {
     	retro = this.value;
     	competence_id = $(this).data("comp");
+      evaluation_id = $(this).data("evaluation")
 
     	console.log('Retro: ', retro);
    		console.log('Competence_id: ', competence_id);
 
 
     	$.ajax({
-		url: "/entrevista_retro/:user_id/:ev_id/retro",
+		url: "/entrevista_retro/"+ evaluation_id + "/retro",
 		method: "PUT",
 		data: {
 			competence_id: competence_id,
-			retro: retro
+			retro: retro,
+      evaluation: evaluation_id
 		},
 	    success: function(data) {
 	      console.log("Buen cambio retro");
@@ -140,25 +146,30 @@ $( document ).ready(function() {
 
 	$('.btn-save-inter').on('click', function() {
 		competence_id = $(this).data("comp");
+    ev_id = $(this).data("evaluation");
 		responsible_id = $('.inter-role-select[data-comp="' + competence_id +'"][data-responsible="true"]').data("evaluator");
 		final_level = $('.inter-level-select[data-comp="' + competence_id +'"][data-evaluator="' + responsible_id + '"]').val();
+ 		console.log('Final level: ', final_level);
+ 		console.log('Competence_id: ', competence_id);
+ 		console.log('Responsible: ', responsible_id);
 
-   		console.log('Final level: ', final_level);
-   		console.log('Competence_id: ', competence_id);
-   		console.log('Responsible: ', responsible_id);
-
-
-		$.ajax({
-		url: "/entrevista_final/:user_id/:ev_id/evaluation",
+		if(responsible_id != undefined){$.ajax({
+		url: "/entrevista_final/"+ responsible_id+"/" + ev_id+ "/evaluation",
 		method: "PUT",
 		data: {
 			competence_id: competence_id,
-			final_level: final_level
+			final_level: final_level,
+      evaluation: ev_id
 		},
 	    success: function(data) {
-	      console.log("Buen cambio retro");
-		    }
-		});
+	      console.log("Registro de nivel de evaluación");
+      },
+      error: function(data){
+        console.log("cannot be inserted");
+      }
+		});} else{
+      console.log("EMPTY responsible")
+    }
 
 	});
 
