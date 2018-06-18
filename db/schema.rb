@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180612223252) do
+ActiveRecord::Schema.define(version: 20180618194114) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,11 +59,20 @@ ActiveRecord::Schema.define(version: 20180612223252) do
   end
 
   create_table "evaluations_users", force: :cascade do |t|
-    t.integer "evaluation_id",  null: false
-    t.integer "user_id",        null: false
+    t.integer "evaluation_id"
+    t.integer "user_id"
     t.boolean "responsible"
     t.integer "temporal_level"
-    t.index ["user_id", "evaluation_id"], name: "index_evaluations_users_on_user_id_and_evaluation_id", unique: true, using: :btree
+    t.index ["evaluation_id", "user_id"], name: "index_evaluations_users_on_evaluation_id_and_user_id", unique: true, using: :btree
+  end
+
+  create_table "evidence_revisions", force: :cascade do |t|
+    t.integer  "evidence_id"
+    t.integer  "revision_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["evidence_id"], name: "index_evidence_revisions_on_evidence_id", using: :btree
+    t.index ["revision_id"], name: "index_evidence_revisions_on_revision_id", using: :btree
   end
 
   create_table "evidences", force: :cascade do |t|
@@ -74,6 +83,12 @@ ActiveRecord::Schema.define(version: 20180612223252) do
     t.datetime "updated_at", null: false
     t.integer  "user_id"
     t.index ["user_id"], name: "index_evidences_on_user_id", using: :btree
+  end
+
+  create_table "grids", force: :cascade do |t|
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "interviews", force: :cascade do |t|
@@ -87,6 +102,13 @@ ActiveRecord::Schema.define(version: 20180612223252) do
     t.text     "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+  end
+
+  create_table "revisions", force: :cascade do |t|
+    t.datetime "date"
+    t.boolean  "reviewed"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "roles", force: :cascade do |t|
