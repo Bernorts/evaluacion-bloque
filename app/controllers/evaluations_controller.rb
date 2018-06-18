@@ -20,7 +20,7 @@ class EvaluationsController < ApplicationController
 
 	def feedback
 		evaluation = Evaluation.find(params[:id])
-    evaluation.retro = params[:retro]
+    	evaluation.retro = params[:retro]
 		puts evaluation.retro
 		evaluation.save
     if request.xhr?
