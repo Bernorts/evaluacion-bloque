@@ -31,7 +31,8 @@ class InterviewsController < ApplicationController
           evaluation_responsible: @aux_responsible,
           evaluation_level: @level.name,
           evaluation_competence_id: @competence_id,
-          all_levels: @all_levels.to_json()
+          all_levels: @all_levels.to_json(),
+          mehtod: 'show'
       end
     end
 
@@ -51,6 +52,13 @@ class InterviewsController < ApplicationController
     @evaluation_user.responsible = @new_role
     @evaluation_user.save
     @evaluation_user.update(responsible: @new_role)
+
+     ActionCable.server.broadcast 'interviews',
+          evaluation: @evaluation_user.evaluation_id,
+          professor: @evaluation_user,
+          evaluation_role: @new_role,
+          competence: @evaluation.competence_id,
+          method: 'update_responsible'
   end
 
   def update_level
@@ -59,14 +67,13 @@ class InterviewsController < ApplicationController
     @new_level = Level.find(params[:level_id])
     @evaluation_user.temporal_level = @new_level.id
     @evaluation_user.save
-=begin
-    if (@evaluation_user.save)
-      ActionCable.server.broadcast 'interviews',
-        evaluation: @evaluation,
-        evaluation_user: @evaluation_user,
-        evaluation_leve: @new_level
-    end
-=end
+
+    ActionCable.server.broadcast 'interviews',
+          evaluation: @evaluation_user.evaluation_id,
+          professor: @evaluation_user,
+          evaluation_level: @new_level,
+          competence: @evaluation.competence_id,
+          method: 'update_level'
   end
 
   def update_retro
@@ -74,12 +81,11 @@ class InterviewsController < ApplicationController
     @retro = params[:retro]
     @evaluation.retro = @retro
     @evaluation.save
-=begin
-    if (@evaluation.save)
-      ActionCable.server.broadcast 'interviews',
-        evaluation: @evaluation
-    end
-=end
+
+    ActionCable.server.broadcast 'interviews',
+          evaluation: @evaluation.id,
+          retro: @evaluation.retro,
+          method: 'update_retro'
   end
 
   def final_evaluation

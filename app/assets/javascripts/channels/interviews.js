@@ -26,8 +26,22 @@ $( document ).ready(function() {
 
   	App.interviews = App.cable.subscriptions.create('InterviewsChannel', {
 	  		received: function(data) {
-	  		console.log('Cable en received');
-	    	return $("#participants-" + data.evaluation_competence_id).append(this.addParticipant(data));
+		  		console.log('Cable en received');
+		  		console.log(data.method);
+		  		switch(data.method){
+		  			case 'show':
+		  				return $("#participants-" + data.evaluation_competence_id).append(this.addParticipant(data));
+		  				break;
+		  			case 'update_responsible':
+		  				return this.updateRole(data);
+		  				break;
+		  			case 'update_level':
+		  				return this.updateLevel(data);
+		  				break;
+		  			case 'update_retro':
+		  				return this.updateRetro(data);
+		  				break;
+		  		}
 	  	},
 
 		addParticipant: function(data) {
@@ -51,6 +65,19 @@ $( document ).ready(function() {
 			row += "</select>" + "</td>" + "</tr>";
 
 			return row;
+		},
+
+		updateRole: function(data){
+			let role = data.evaluation_role;
+			$(`select[data-evaluation="${data.evaluation}"][data-evaluator="${data.professor.user_id}"][data-select="role"]`).val(role);
+		},
+
+		updateLevel: function(data){
+			let level = data.evaluation_level.id;
+			$(`select[data-evaluation="${data.evaluation}"][data-evaluator="${data.professor.user_id}"][data-select="level"]`).val(level);
+		},
+		updateRetro: function(data){
+			$(`#retro-${data.evaluation}`).val(data.retro);
 		}
 	});
 
@@ -79,8 +106,8 @@ $( document ).ready(function() {
 				role: role,
 				competence_id: competence_id,
 				professor_id: professor_id,
-        interview: interview_id,
-        evaluation: ev_id
+		        interview: interview_id,
+		        evaluation: ev_id
 			},
 		    success: function(data) {
 		      console.log("Buen cambio rol");
@@ -116,10 +143,10 @@ $( document ).ready(function() {
 
 	});
 
-	$('.inter-retro').bind('input propertychange', function() {
+	$('.inter-retro').focusout(function() {
     	retro = this.value;
     	competence_id = $(this).data("comp");
-      evaluation_id = $(this).data("evaluation")
+      	evaluation_id = $(this).data("evaluation")
 
     	console.log('Retro: ', retro);
    		console.log('Competence_id: ', competence_id);
