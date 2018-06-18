@@ -86,16 +86,12 @@
 
               </div>
 
-              <!--
+             
               <div class="row">
-                <div class="col-md-12 text-center">
-                  <%#= link_to "<button id='save_inter_#{@competence.id}' class='btn btn-success btn-save-inter' data-comp='#{@competence.id}'>Guardar</button>".html_safe, show_user_path(current_user, :anchor => "evaluaciones") %>
+                <div class="col-md-12 text-center btn-save-inter">
+                 <button id='save_inter_#{@competence.id}' class='btn btn-success btn-save-inter' data-evaluation="<%= eval.id%>" data-interview="<%=@current_int%>" data-comp=<%= @competence.id %>>Guardar</button>
                 </div>
               </div>
-
-            -->
-
-            <button id='save_inter_#{@competence.id}' class='btn btn-success btn-save-inter' data-evaluation="<%= eval.id%>" data-interview="<%=@current_int%>" data-comp=<%= @competence.id %>>Guardar</button>
 
               <br>
 
