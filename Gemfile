@@ -25,6 +25,10 @@ gem 'haml'
 gem 'byebug'
 gem 'paperclip', '~> 5.0'
 gem 'aws-sdk', '~> 2.3.0'
+<<<<<<< HEAD
+=======
+gem 'rubyzip'
+>>>>>>> feature/evaluar-entrevista
 gem 'redis', '~> 3.3'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
