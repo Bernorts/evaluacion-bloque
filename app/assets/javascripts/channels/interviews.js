@@ -180,21 +180,22 @@ $( document ).on('ready turbolinks:load',function() {
 				evaluation: ev_id
 			},
 			success: function(data) {
-				swal({
-          title: "Registro de nivel exitoso",
-          type: 'success',
-          confirmButtonText: 'OK',
-          timer: 3000,
-        })
-			},
-			error: function(data){
-				console.log("cannot be inserted");
-				swal({
-          title: 'Error!',
-          text: "Debe haber un responsable",
-          type: 'error',
-          confirmButtonText: 'OK'
-        });
+				if (data.success){
+					swal({
+	          title: "Registro de nivel exitoso",
+	          type: 'success',
+	          confirmButtonText: 'OK',
+	          timer: 3000,
+	        })
+				} else{
+					swal({
+	          title: 'Error!',
+	          text: "Debe haber un responsable",
+	          type: 'error',
+	          confirmButtonText: 'OK'
+	        });
+				}
+
 			}
 			});
 	});

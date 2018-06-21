@@ -97,8 +97,9 @@ class InterviewsController < ApplicationController
       @responsible = @responsibles_evaluations.first
       @evaluation.achLevel = @responsible.temporal_level
       @evaluation.save
+      render :json => { :success => true }
     else
-      flash[:error] = 'No fue posible evaluar la entrevista'
+      render :json => { :success => false }
     end
   end
 
