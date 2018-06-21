@@ -37,7 +37,13 @@ class UsersController < ApplicationController
     @user.password = 'semestrei'
     @user.password_confirmation = 'semestrei'
     @user.semesters << current_semester
+    @competences = Competence.all
+
     if @user.save
+      @competences.each do |competence|
+        @evaluation = Evaluation.new(achLevel: 1, competence_id: competence.id, user_id: @user.id)
+        @evaluation.save
+      end
       flash[:success] = "Usuario creado correctamente"
       redirect_to show_user_path(@user)
     else

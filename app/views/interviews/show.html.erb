@@ -105,7 +105,7 @@
 
               <div class="row">
                 <div class="col-md-12 text-center">
-                 <button class='btn btn-success btn-save-inter' data-evaluation="<%= eval.id%>" data-interview="<%=@current_int%>" data-comp=<%= @competence.id %>>Guardar</button>
+                 <button <% if !@eval_user.responsible then %> disabled <%end%> class='btn btn-success btn-save-inter' data-evaluation="<%= eval.id%>" data-interview="<%=@current_int%>" data-comp=<%= @competence.id %>>Guardar</button>
                 </div>
               </div>
 
