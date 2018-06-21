@@ -9,19 +9,36 @@
 
 <div class="container-fluid">
     <div class="row content">
-      <div class="col-md-6 col-xs-12 profile-con">
+      <div class="col-md-4 col-xs-12 profile-con">
         <div class="row">
-          <div class="col-md-8 col-xs-12">
-            <h4>Nombre:</h4><%= @semester.name%>
-            <ul>
-              <% @semester.users.each do |user| %>
-                <li><%= user.name %></li>
-              <% end %>
+          <div class="col-md-12 col-xs-12">
+            <h4><%= @semester.name%></h4>
+
+             <ul class="nav nav-tabs justify-content-left" role="tablist">
+              <li class="nav-item"><a class="nav-link active pills" data-toggle="tab" href="#students" role="tab">Alumnos</a></li>
+              <li class="nav-item"><a class="nav-link pills" data-toggle="tab" href="#teachers" role="tab">Maestros</a></li>
             </ul>
+
+            <div class="tab-content" id="nav-tabContent-semesters">
+               <div class="tab-pane fade show active" id="students" role="tabpanel" aria-labelledby="students-tab">
+                <ul>
+                  <% @students.each do |student| %>
+                    <li><%= student.name + ' ' + student.last_name %></li>
+                  <% end %>
+                </ul>
+              </div>
+              <div class="tab-pane fade show" id="teachers" role="tabpanel" aria-labelledby="teachers-tab">
+                <ul>
+                  <% @teachers.each do |teacher| %>
+                    <li><%= teacher.name + ' ' + teacher.last_name %></li>
+                  <% end %>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="col-md-6 col-xs-12 text-center">
+      <div class="col-md-8 col-xs-12 text-center">
         <br>
         <%= line_chart @competences.map { |competence|
           obj = {}

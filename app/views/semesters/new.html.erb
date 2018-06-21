@@ -30,25 +30,30 @@
     <div class="row">
       <div class="col-md-12 col-xs-12">
         <br>
-        <h4>Usuarios involucrados</h4>
+        <h4>Usuarios</h4>
         <br>
         <div class="row">
-          <%= f.collection_check_boxes :user_ids, User.all, :id, :full_name do |b| %>
-            <div class="collection-check-box col-md-3 col-xs-12">
-              <%= b.check_box %>
-              <%= b.label %>
-            </div>
-          <% end %>
+          <div class="col-md-12">
+            <%= f.collection_check_boxes :user_ids, User.all, :id, :full_name do |b| %>
+              <div class="collection-check-box col-md-3 col-xs-12">
+                <%= b.check_box %>
+                <%= b.label %>
+              </div>
+            <% end %>
+          </div>
         </div>
       </div>
-
     </div>
 
-    <div class="col-md-12">
-      <br>
-      <%= f.submit "Crear semestre", class: "btn btn-primary" %>
+    <br><br><br>
+    <div class="row">
+      <div class="col-md-4 offset-md-4 col-btn">
+        <br>
+        <%= f.submit "Crear semestre", class: "btn btn-success" %>
+      </div>
     </div>
     <% end %>
+
   </div>
 
 </div>

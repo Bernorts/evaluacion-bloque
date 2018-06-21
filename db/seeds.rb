@@ -10,11 +10,7 @@ Role.find_or_create_by(name: 'Profesor')
 Role.find_or_create_by(name: 'Estudiante')
 
 #Users
-<<<<<<< HEAD
-us1 = User.find_or_create_by(name: 'Bernardo', last_name: 'Ortega', email: 'bernorts@gladio.com', password: 'studentpass', role_id: 1)
-=======
 us1 = User.find_or_create_by(name: 'Bernardo', last_name: 'Ortega', email: 'bernorts@gladio.com', password: 'studentpass', role_id: 3)
->>>>>>> feature/evaluar-entrevista
 us2 = User.find_or_create_by(name: 'Martin', last_name: 'Molinero', email: 'A01204818@itesm.com', password: 'adminpass', role_id: 1)
 us3 = User.find_or_create_by(name: 'Claud', last_name: 'Robinson', email: 'claud@itesm.com', password: 'professorpass', role_id: 2)
 #Semesters

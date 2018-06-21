@@ -32,8 +32,12 @@
             <td width="20%"><%= user.email %></td>
             <td width="10%"><%= user.role.name %></td>
             <td width="20%">
-              <%= link_to "Editar", edit_user_data_path(user), class:"btn btn-warning" %>
-              <%= link_to "Borrar", { action: "destroy", id: user.id }, method: :delete, data: { confirm: "¿Estás seguro de querer borrar este usuario?" }, class: 'btn btn-danger' %>
+              <%= link_to edit_user_data_path(user),class:"btn btn-warning" do %>
+                <i class="fa fa-pencil"></i>
+              <% end %>
+              <%= link_to destroy_user_path(user), method: :delete, data: { confirm: '¿Estás seguro de querer borrar este usuario?' },  class: 'btn btn-danger' do %>
+                <i class="fa fa-trash"></i>
+              <% end %>
             </td>
           </tr>
           <% end %>

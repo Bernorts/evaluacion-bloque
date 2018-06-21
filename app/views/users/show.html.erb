@@ -9,7 +9,7 @@
 
 <div class="container-fluid">
 
-  <% if @user.role_id == 1 %>
+  <% if @user.role_id == 3 %>
     <div class="row content">
       <div class="col-md-6 col-xs-12 profile-con">
         <div class="row">
@@ -29,7 +29,9 @@
           </div>
           <div class="col-md-4 col-xs-12">
             <% if current_user.id == @user.id %>
-              <%= link_to 'Editar mi contraseña', edit_user_path(@user), class: 'btn btn-primary' %>
+              <%= link_to  edit_user_path(@user), class: 'btn btn-warning' do %>
+                <i class="fa fa-key" aria-hidden="true"></i>
+              <% end %>
             <% end %>
           </div>
         </div>
@@ -57,7 +59,7 @@
   <ul class="nav nav-tabs justify-content-left" role="tablist">
     <li class="nav-item"><a class="nav-link active pills" data-toggle="tab" href="#evidencias" role="tab">Evidencias</a></li>
     <li class="nav-item"><a class="nav-link pills" data-toggle="tab" href="#competencias" role="tab">Competencias</a></li>
-    <li class="nav-item"><a class="nav-link pills" data-toggle="tab" href="#evaluaciones" role="tab">Evaluaciones</a></li>
+    <li class="nav-item"><a class="nav-link pills" data-toggle="tab" href="#evaluaciones" role="tab">Entrevistas</a></li>
   </ul>
 
   <div class="tab-content" id="nav-tabContent">
@@ -226,7 +228,9 @@
                         <%= link_to "Editar", edit_evaluation_path(inter.id), class:"btn btn-warning"  %>
                         <%= link_to 'Borrar', destroy_evaluation_path(inter.id), method: :delete, data: { confirm: '¿Estás seguro de querer borrar esta evaluación?' },  class: 'btn btn-danger' %>
                         <% elsif  current_user.role_id == 2 %>
-                           <%= link_to "Realizar evaluación", show_interview_url(inter.id), class:"btn btn-success"  %>
+                           <%= link_to show_interview_url(inter.id), class:"btn btn-success" do %>
+                            <span><i class="fa fa-list-alt" aria-hidden="true"></i>   Evaluar</span>
+                           <% end %>
                         <% end %>
                       </div>
                   </div>
@@ -402,7 +406,9 @@
       </div>
       <div class="col-md-6 col-xs-12">
         <% if current_user.id == @user.id %>
-          <%= link_to 'Editar mi contraseña', edit_user_path(@user), class: 'btn btn-primary float-right' %>
+          <%= link_to  edit_user_path(@user), class: 'btn btn-warning float-right' do %>
+            <i class="fa fa-key" aria-hidden="true"></i>
+          <% end %>
         <% end %>
       </div>
     </div>

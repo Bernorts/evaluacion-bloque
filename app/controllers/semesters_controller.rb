@@ -5,6 +5,8 @@ class SemestersController < ApplicationController
   def show
     @semester = Semester.find(params[:id])
     @users = @semester.users
+    @teachers = @semester.users.where(role_id: 2)
+    @students = @semester.users.where(role_id: 3)
     @users_evaluations = []
     @competences = Competence.all
     @users_arr = []
