@@ -13,7 +13,7 @@ $.ajax({
 */
 
 
-$( document ).ready(function() {
+$( document ).on('ready turbolinks:load',function() {
 	var competence_id;
 	var professor_id;
 	var role;
