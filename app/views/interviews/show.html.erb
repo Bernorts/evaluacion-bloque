@@ -31,6 +31,17 @@
 
               <div class="card-block competence-content">
 
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="inline-content">
+                    <h5>Nivel deseado: </h5>
+                    <p><%= Level.find(eval.desLevel).name %></p>
+                  </div>
+                </div>
+              </div>
+
+              <br>
+
                 <div class="row">
                   <div class="col-md-12">
                     <h5>Evidencias</h5>
@@ -42,7 +53,8 @@
                         <% @eval_evidences.each do |eval_evidence|
                         @evidence = Evidence.find(eval_evidence.evidence_id)
                         %>
-                        <li><%= @evidence.name %></li>
+                        <li><a target="_blank" href= <%= @evidence.url %> ><%= @evidence.name %></a></li>
+                        
                        <% end %>
                       </ul>
                     <% end %>
