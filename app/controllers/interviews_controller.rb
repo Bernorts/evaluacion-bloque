@@ -89,17 +89,17 @@ class InterviewsController < ApplicationController
   end
 
   def final_evaluation
-    @evaluation = Evaluation.find(params[:evaluation])
-    @level  = Level.find(params[:final_level])
-    @evaluation.achLevel = @level.id
+    @evaluation = Evaluation.find(params[:ev_id])
     @evaluation.eval_date = DateTime.parse(Date.today.to_s)
-    @evaluation.save
-=begin
-    if (@evaluation.save)
-      ActionCable.server.broadcast 'interviews',
-        evaluation: @evaluation
+    @evaluations_users = EvaluationsUser.where(evaluation_id: @evaluation.id)
+    @responsibles_evaluations = @evaluations_users.where(responsible: true)
+    if !@responsibles_evaluations.empty?
+      @responsible = @responsibles_evaluations.first
+      @evaluation.achLevel = @responsible.temporal_level
+      @evaluation.save
+    else
+      flash[:error] = 'No fue posible evaluar la entrevista'
     end
-=end
   end
 
 end

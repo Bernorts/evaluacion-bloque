@@ -173,28 +173,30 @@ $( document ).on('ready turbolinks:load',function() {
 	$('.btn-save-inter').on('click', function() {
 		competence_id = $(this).data("comp");
 		ev_id = $(this).data("evaluation");
-		responsible_id = $('.inter-role-select[data-comp="' + competence_id +'"][data-responsible="true"]').data("evaluator");
-		final_level = $('.inter-level-select[data-comp="' + competence_id +'"][data-evaluator="' + responsible_id + '"]').val();
-
-		if(responsible_id != undefined){
 			$.ajax({
-			url: "/entrevista_final/"+ responsible_id+"/" + ev_id+ "/evaluation",
+			url: "/entrevista_final/"+ ev_id+ "/evaluation",
 			method: "PUT",
 			data: {
-				competence_id: competence_id,
-				final_level: final_level,
 				evaluation: ev_id
 			},
 			success: function(data) {
-			  console.log("Registro de nivel de evaluación");
+				swal({
+          title: "Registro de nivel exitoso",
+          type: 'success',
+          confirmButtonText: 'OK',
+          timer: 3000,
+        })
 			},
 			error: function(data){
-			console.log("cannot be inserted");
+				console.log("cannot be inserted");
+				swal({
+          title: 'Error!',
+          text: "Debe haber un responsable",
+          type: 'error',
+          confirmButtonText: 'OK'
+        });
 			}
 			});
-		} else{
-			console.log("EMPTY responsible")
-		}
 	});
 
 	$('.inter-role-select').on('change', function(){

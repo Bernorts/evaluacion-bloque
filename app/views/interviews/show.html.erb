@@ -54,7 +54,7 @@
                         @evidence = Evidence.find(eval_evidence.evidence_id)
                         %>
                         <li><a target="_blank" href= <%= @evidence.url %> ><%= @evidence.name %></a></li>
-                        
+
                        <% end %>
                       </ul>
                     <% end %>
@@ -102,10 +102,10 @@
                </div>
 
               </div>
-             
+
               <div class="row">
-                <div class="col-md-12 text-center btn-save-inter">
-                 <button <% if !@eval_user.responsible then %> disabled <%end%> id='save_inter_#{@competence.id}' class='btn btn-success btn-save-inter' data-evaluation="<%= eval.id%>" data-interview="<%=@current_int%>" data-comp=<%= @competence.id %>>Guardar</button>
+                <div class="col-md-12 text-center">
+                 <button <% if !@eval_user.responsible then %> disabled <%end%> class='btn btn-success btn-save-inter' data-evaluation="<%= eval.id%>" data-interview="<%=@current_int%>" data-comp=<%= @competence.id %>>Guardar</button>
                 </div>
               </div>
 
