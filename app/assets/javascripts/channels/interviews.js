@@ -22,7 +22,7 @@ $( document ).ready(function() {
 	var final_level;
 	var responsible_id;
   	var interview_id;
-  	var ev_id;
+	var ev_id;
 
   	App.interviews = App.cable.subscriptions.create('InterviewsChannel', {
 	  		received: function(data) {
@@ -196,4 +196,20 @@ $( document ).ready(function() {
 			console.log("EMPTY responsible")
 		}
 	});
+
+	$('.inter-role-select').on('change', function(){
+		let evaluation = $(this).data("evaluation");
+		let evaluator = $(this).data("evaluator");
+		let role = $(this).val();
+
+		if(role == 'true' && current_user == evaluator){
+			console.log('Role true', role);
+			$(`button[data-evaluation="${evaluation}"]`).removeAttr('disabled');
+		} else{
+			console.log('Role false', role);
+			$(`button[data-evaluation="${evaluation}"]`).attr('disabled','disabled');
+		}
+	});
+
+
 });

@@ -1,4 +1,9 @@
 <br>
+
+<%= javascript_tag do %>
+  window.current_user = '<%= @current_user.id %>';
+<% end %>
+
 <div class="row">
   <div class="col-md-12 col-xs-12">
     <div class="card mx-auto evaluation-card">
@@ -9,7 +14,7 @@
             <div class="card" id="comp-<%= @competence.name %>" data-comp="<%= @competence.id %>">
 
               <!-- Card header -->
-              <div class="card-header" role="tab"">
+              <div class="card-header" role="tab">
                 <div class="row">
                   <div class="col-md-4">
                     <h5 class="mb-0">
@@ -88,7 +93,7 @@
              
               <div class="row">
                 <div class="col-md-12 text-center btn-save-inter">
-                 <button id='save_inter_#{@competence.id}' class='btn btn-success btn-save-inter' data-evaluation="<%= eval.id%>" data-interview="<%=@current_int%>" data-comp=<%= @competence.id %>>Guardar</button>
+                 <button <% if !@eval_user.responsible then %> disabled <%end%> id='save_inter_#{@competence.id}' class='btn btn-success btn-save-inter' data-evaluation="<%= eval.id%>" data-interview="<%=@current_int%>" data-comp=<%= @competence.id %>>Guardar</button>
                 </div>
               </div>
 
