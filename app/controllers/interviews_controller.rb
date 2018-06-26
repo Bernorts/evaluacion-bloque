@@ -8,6 +8,8 @@ class InterviewsController < ApplicationController
       @levels.each do |l|
         @all_levels.merge!({l.id => l.name})
       end
+    
+    @student = @evaluations.first.user_id
 
     @evaluations.each do |ev|
       @evaluation_user = EvaluationsUser.new(evaluation_id: ev.id, user_id: current_user.id, responsible: false, temporal_level: 1)

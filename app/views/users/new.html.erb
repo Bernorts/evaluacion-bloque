@@ -1,12 +1,10 @@
 <% provide(:title, 'Crear Usuario') %>
-<div class="container-fluid">
-
+<div class="container-fluid">    
   <div class="row content">
     <div class="col-md-12 col-xs-12">
       <h1>Crear usuario</h1>
       <%= render 'shared/user_error_messages' %>
     </div>
-
   </div>
   <%= form_for @user, url: users_path(@user), html: { method: :post } do |f| %>
   <div class="row">
@@ -34,7 +32,12 @@
 
     <br><br><br>
     <div class="row">
-      <div class="col-md-4 offset-md-4 col-btn">
+     <div class="col-md-1 offset-md-5 col-btn">
+        <br>
+        <%= link_to raw("<button type=\"button\" class=\"btn btn-danger\">Cancelar</button>"),
+                   users_url%>
+      </div>
+      <div class="col-md-1 col-btn">
         <br>
         <%= f.submit "Guardar", class: "btn btn-success" %>
       </div>

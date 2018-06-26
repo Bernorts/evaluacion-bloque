@@ -38,7 +38,7 @@ class SemestersController < ApplicationController
 
   def grades
     @semester = Semester.find(params[:id])
-    @students = @semester.users.where(role_id: 1).order(:email)
+    @students = @semester.users.where(role_id: 3).order(:email)
     @competences = Competence.select(:id, :name)
     @header = []
     @header.push('Matrícula')

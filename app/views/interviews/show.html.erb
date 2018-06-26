@@ -108,17 +108,21 @@
                  <button <% if !@eval_user.responsible then %> disabled <%end%> class='btn btn-success btn-save-inter' data-evaluation="<%= eval.id%>" data-interview="<%=@current_int%>" data-comp=<%= @competence.id %>>Guardar</button>
                 </div>
               </div>
-
               <br>
-
             </div>
-
           <% end %>
         </div>
-
         <br>
-
       </div>
     </div>
+  </div>
+</div>
+</div>
+<br>
+<div class="row">
+
+  <div class="col-md-2 offset-md-5 text-center">
+    <%= link_to raw("<button type=\"button\" class=\"btn btn-primary btn-full\">Salir</button>"),
+                   show_user_url(@student)%>
   </div>
 </div>
