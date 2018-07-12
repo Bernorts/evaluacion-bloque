@@ -12,8 +12,9 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @user_evaluations = Evaluation.where(user_id: @user.id)
     @interviews = []
-    @inter_evaluations = Evaluation.where(user_id: @user.id).select("DISTINCT ON (interview_id) *")
-    @interviews_ids = (@inter_evaluations.map{ |eval| eval.interview_id }).reverse
+    @inter_evaluations = Evaluation.where(user_id: @user.id)
+    @interviews_ids = (@inter_evaluations.map{ |eval| eval.interview_id })
+    @interviews_ids = @interviews_ids.compact.uniq.reverse
     @interviews_ids.each do |id|
       if id != nil
         @interviews.push(Interview.find(id))

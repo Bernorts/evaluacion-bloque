@@ -10,6 +10,8 @@ end
 gem 'rails', '~> 5.0.1'
 # Use postgresql as the database for Active Record
 gem 'pg'
+#add mysql
+gem 'mysql2'
 # Use Puma as the app server
 gem 'puma'
 # Use SCSS for stylesheets

@@ -1,19 +1,42 @@
+#default: &default
+#  adapter: postgresql
+#  pool: 15
+#  timeout: 5000
+#  host: localhost
+#  username: <%= ENV['PG_USERNAME'] %>
+#  password: <%= ENV['PG_PASSWORD'] %>
+#  #port: 5433
+#
+#development:
+#  <<: *default
+#  database: bloque_development_db
+#
+## Warning: The database defined as "test" will be erased and
+## re-generated from your development database when you run "rake".
+## Do not set this db to the same as development or production.
+#test:
+#  <<: *default
+#  database: bloque_test_db
+#
+#production:
+#  <<: *default
+#  database: bloque_production_db
+
 default: &default
-  adapter: postgresql
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
   pool: 15
   timeout: 5000
   host: localhost
   username: <%= ENV['PG_USERNAME'] %>
   password: <%= ENV['PG_PASSWORD'] %>
+  socket: /tmp/mysql.sock
   #port: 5433
-
 development:
   <<: *default
   database: bloque_development_db
 
-# Warning: The database defined as "test" will be erased and
-# re-generated from your development database when you run "rake".
-# Do not set this db to the same as development or production.
 test:
   <<: *default
   database: bloque_test_db

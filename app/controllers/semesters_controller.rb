@@ -31,7 +31,6 @@ class SemestersController < ApplicationController
       flash[:success] = "Semestre creado correctamente"
       redirect_to semesters_path
     else
-
       render 'new'
     end
   end
