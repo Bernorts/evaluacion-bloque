@@ -77,6 +77,13 @@ group :development do
   gem 'rubocop', require: false
   gem 'brakeman', require: false
 
+  gem 'capistrano',         require: false
+  gem 'capistrano-rvm',     require: false
+  gem 'capistrano-rails',   require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano3-puma',   require: false
+
+=begin
   # Use Capistrano for deployment
   gem 'capistrano', '~> 3.8', require: false, group: :development
   # Deploy with capistrano, see config/deploy.rb
@@ -90,6 +97,7 @@ group :development do
   # gem 'capistrano-faster-assets', '~> 1.0.2', require: false
   gem 'capistrano-sidekiq', require: false
   gem 'capistrano-crono'
+=end
 end
 
 group :test do
