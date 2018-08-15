@@ -1,7 +1,7 @@
 # Change these
 server '167.99.175.83', roles: [:web, :app, :db], primary: true
 
-set :repo_url,        'git@github.com:MartinMolinero/evaluacion-bloque.git'
+set :repo_url,        'git@github.com:Bernorts/evaluacion-bloque.git'
 set :application,     'evaluacion-bloque'
 set :user,            'deploy'
 set :puma_threads,    [4, 16]
