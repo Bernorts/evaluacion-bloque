@@ -14,6 +14,7 @@ CREATE ROLE bloque_test_admin WITH LOGIN PASSWORD 'bloque_test_password';
 GRANT ALL PRIVILEGES ON DATABASE bloque_test_db TO bloque_test_admin;
 ALTER USER bloque_test_admin CREATEDB;
 
+Production
 
 CREATE DATABASE bloque_production_db; 
 CREATE ROLE bloque_production_admin WITH LOGIN PASSWORD 'bloque_production_password'; 
