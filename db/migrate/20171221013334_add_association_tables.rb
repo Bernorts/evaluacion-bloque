@@ -1,4 +1,5 @@
 class AddAssociationTables < ActiveRecord::Migration[5.0]
+=begin
   def change
 
   	create_table :evidence_revisions do |t|
@@ -10,4 +11,5 @@ class AddAssociationTables < ActiveRecord::Migration[5.0]
     
 
   end
+=end
 end
