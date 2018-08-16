@@ -1,6 +1,11 @@
-class AddFieldsToEvaluationsUser < ActiveRecord::Migration[5.0]
+class CreateEvaluationsUsers < ActiveRecord::Migration[5.0]
   def change
-    add_column :evaluations_user, :responsible, :boolean
-    add_column :evaluations_user, :temporal_level, :integer
+    create_table :evaluations_users do |t|
+      t.integer :evaluation_id
+      t.integer :user_id
+      t.boolean :responsible
+      t.integer :temporal_level
+      t.timestamps
+    end
   end
 end
