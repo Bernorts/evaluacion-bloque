@@ -19,17 +19,21 @@
             <li class="nav-item" id="nav-grid">
                 <a class="nav-link" href="/malla"><i class="fa fa-list-alt" aria-hidden="true"></i> Malla</a>
             </li>
-            <li class="nav-item" id="nav-users">
-                <a class="nav-link" href=<%= all_semester_users_url  %>><i class="fa fa-users" aria-hidden="true"></i> Usuarios</a>
-            </li>
-            <li class="nav-item dropdown" id="nav-config">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i>
-                   Configuración
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href=<%= semesters_url %>><i class="fa fa-book" aria-hidden="true"></i> Semestres</a>
-                </div>
-            </li>
+            <% if current_user.role.id != 3  %>
+              <li class="nav-item" id="nav-users">
+                  <a class="nav-link" href=<%= all_semester_users_url  %>><i class="fa fa-users" aria-hidden="true"></i> Usuarios</a>
+              </li>
+            <% end %>
+            <% if current_user.role.id == 1  %>
+              <li class="nav-item dropdown" id="nav-config">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i>
+                    Configuración
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href=<%= semesters_url %>><i class="fa fa-book" aria-hidden="true"></i> Semestres</a>
+                  </div>
+              </li>
+            <% end %>
         </ul>
         <ul class="navbar-nav ml-auto">
           <li class="nav-item dropdown navbar-right">
