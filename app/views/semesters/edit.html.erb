@@ -46,14 +46,14 @@
     </div>
     <br><br><br>
     <div class="row">
-     <div class="col-md-1 offset-md-5 col-btn">
+     <div class="col-md-2 col-sm-4 offset-md-4 offset-sm-2">
         <br>
-        <%= link_to raw("<button type=\"button\" class=\"btn btn-danger\">Cancelar</button>"),
+        <%= link_to raw("<button class=\"btn btn-danger form-btn\">Cancelar</button>"),
                    semesters_url%>
       </div>
-      <div class="col-md-1 col-btn">
+      <div class="col-md-2 col-sm-4">
         <br>
-        <%= f.submit "Guardar", class: "btn btn-success" %>
+        <%= f.submit "Guardar", class: "btn btn-success form-btn" %>
       </div>
     </div>
     <% end %>

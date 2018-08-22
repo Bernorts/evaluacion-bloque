@@ -5,6 +5,14 @@
 <% end %>
 
 <div class="row">
+  <div class="col-md-1">
+    <%= link_to raw("<button id=\"room_index\" type=\"button\" class=\"btn btn-danger btn-circle btn-lg pull-left\"><i class=\"fa fa-arrow-left\" aria-hidden=\"true\"></i></i></button>"),
+                show_user_url(@student) %>
+  </div>
+</div>
+<br>
+
+<div class="row">
   <div class="col-md-12 col-xs-12">
     <div class="card mx-auto evaluation-card">
       <div class="card-block">
@@ -104,8 +112,8 @@
               </div>
 
               <div class="row">
-                <div class="col-md-12 text-center">
-                 <button <% if !@eval_user.responsible then %> disabled <%end%> class='btn btn-success btn-save-inter' data-evaluation="<%= eval.id%>" data-interview="<%=@current_int%>" data-comp=<%= @competence.id %>>Guardar</button>
+                <div class="col-md-2 offset-md-5 text-center">
+                 <button <% if !@eval_user.responsible then %> disabled <%end%> class='btn btn-success btn-save-inter form-btn' data-evaluation="<%= eval.id%>" data-interview="<%=@current_int%>" data-comp=<%= @competence.id %>>Guardar</button>
                 </div>
               </div>
               <br>
@@ -117,12 +125,5 @@
     </div>
   </div>
 </div>
-</div>
-<br>
-<div class="row">
-  <div class="col-md-2 offset-md-5 text-center">
-    <%= link_to raw("<button type=\"button\" class=\"btn btn-primary btn-full\">Salir</button>"),
-                   show_user_url(@student)%>
-  </div>
 </div>
 <br><br>
