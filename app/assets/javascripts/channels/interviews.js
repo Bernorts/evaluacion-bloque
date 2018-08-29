@@ -1,17 +1,10 @@
-/*
+//= require action_cable
+//= require_self
+//= require_tree .
 
-$.ajax({
-    url: $(this).attr("href"),
-    success: function(data) {
-      console.log("DATA", data);
-        $(data).appendTo(".modal-lg");
-        changeSubmitToAjax('#editEvidence', '.edit_evidence', "Edición exitosa!");
-        $('#editEvidence').modal('show');
-    }
-});
+this.App = {};
 
-*/
-
+App.cable = ActionCable.createConsumer(); 
 
 $( document ).on('ready turbolinks:load',function() {
 	var competence_id;
