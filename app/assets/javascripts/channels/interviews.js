@@ -1,18 +1,3 @@
-/*
-
-$.ajax({
-    url: $(this).attr("href"),
-    success: function(data) {
-      console.log("DATA", data);
-        $(data).appendTo(".modal-lg");
-        changeSubmitToAjax('#editEvidence', '.edit_evidence', "Edición exitosa!");
-        $('#editEvidence').modal('show');
-    }
-});
-
-*/
-
-
 $( document ).on('ready turbolinks:load',function() {
 	var competence_id;
 	var professor_id;
@@ -42,7 +27,10 @@ $( document ).on('ready turbolinks:load',function() {
 		  				return this.updateRetro(data);
 		  				break;
 		  		}
-	  	},
+      },
+        connected: function(data){
+          alert("Connected");
+        },
 
 		addParticipant: function(data) {
 			console.log(data)
