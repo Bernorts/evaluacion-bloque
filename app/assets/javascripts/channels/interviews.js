@@ -6,16 +6,18 @@ $( document ).on('ready turbolinks:load',function() {
 	var retro;
 	var final_level;
 	var responsible_id;
-  	var interview_id;
-	var ev_id;
+  var interview_id;
+  var ev_id;
+  
+  $('select[data-evaluator!=' + current_user + ']').prop( "disabled", true );
 
   	App.interviews = App.cable.subscriptions.create('InterviewsChannel', {
 	  		received: function(data) {
 		  		console.log('Cable en received');
 		  		console.log(data.method);
 		  		switch(data.method){
-		  			case 'show':
-		  				return $("#participants-" + data.evaluation_competence_id).append(this.addParticipant(data));
+            case 'show':
+              return $("#participants-" + data.evaluation_competence_id).append(this.addParticipant(data));
 		  				break;
 		  			case 'update_responsible':
 		  				return this.updateRole(data);
@@ -29,7 +31,7 @@ $( document ).on('ready turbolinks:load',function() {
 		  		}
       },
         connected: function(data){
-          alert("Connected");
+          console.log("Connected");
         },
 
 		addParticipant: function(data) {
@@ -50,7 +52,7 @@ $( document ).on('ready turbolinks:load',function() {
 				row += "<option value=" + key + ">" + all_levels[key] + "</option>";
 			}
 
-			row += "</select>" + "</td>" + "</tr>";
+      row += "</select>" + "</td>" + "</tr>";
 
 			return row;
 		},
@@ -94,8 +96,8 @@ $( document ).on('ready turbolinks:load',function() {
 				role: role,
 				competence_id: competence_id,
 				professor_id: professor_id,
-		        interview: interview_id,
-		        evaluation: ev_id
+        interview: interview_id,
+        evaluation: ev_id
 			},
 		    success: function(data) {
 		      console.log("Buen cambio rol");
@@ -134,20 +136,20 @@ $( document ).on('ready turbolinks:load',function() {
 	$('.inter-retro').focusout(function() {
     	retro = this.value;
     	competence_id = $(this).data("comp");
-      	evaluation_id = $(this).data("evaluation")
+      evaluation_id = $(this).data("evaluation")
 
     	console.log('Retro: ', retro);
    		console.log('Competence_id: ', competence_id);
 
 
     	$.ajax({
-		url: "/entrevista_retro/"+ evaluation_id + "/retro",
-		method: "PUT",
-		data: {
-			competence_id: competence_id,
-			retro: retro,
-  			evaluation: evaluation_id
-		},
+        url: "/entrevista_retro/"+ evaluation_id + "/retro",
+        method: "PUT",
+        data: {
+          competence_id: competence_id,
+          retro: retro,
+          evaluation: evaluation_id
+		    },
 	    success: function(data) {
 	      console.log("Buen cambio retro");
 		    }
