@@ -217,6 +217,18 @@
             <br>
             <% @evaluations = Evaluation.where(interview_id: inter.id) %>
 
+            <% 
+              @editable = true
+              @evaluations.each do |e|
+               puts 'AAAAAAAAAAAAAAAHHHHHHH'
+                if e.eval_date != nil
+                 puts 'EEEEEEEEE'
+                  @editable = false
+                  break
+                end
+               end
+            %>
+
             <% @reqDate = Evaluation.find_by(interview_id: inter.id).reqDate%>
 
               <div class="card mx-auto evaluation-card">
@@ -226,7 +238,7 @@
                       <h3 class="card-title"><%= l @reqDate, :format => :short %></h3>
                     </div>
                       <div class="col-md-6 text-right">
-                        <% if current_user.id == @user.id %>
+                        <% if current_user.id == @user.id && @editable %>
                           <%= link_to "Editar", edit_evaluation_path(inter.id), class:"btn btn-warning"  %>
                           <%= link_to 'Borrar', destroy_evaluation_path(inter.id), method: :delete, data: { confirm: '¿Estás seguro de querer borrar esta evaluación?' },  class: 'btn btn-danger' %>
                         <% elsif  current_user.role_id != 3 %>

@@ -183,7 +183,11 @@ class EvaluationsController < ApplicationController
 		@error = false
 		@interview = Interview.find(params[:id])
 		@evaluations = Evaluation.where(interview_id: @interview.id)
-		@evaluations.each do |eval|
+    @evaluations.each do |eval|
+      if eval.achLevel != nil
+        @error = true
+				break
+      end
 			if !(EvaluationEvidence.destroy_all(evaluation_id: eval.id) && eval.destroy)
 				@error = true
 				break

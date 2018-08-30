@@ -8,8 +8,6 @@ $( document ).on('ready turbolinks:load',function() {
 	var responsible_id;
   var interview_id;
   var ev_id;
-  
-  $('select[data-evaluator!=' + current_user + ']').prop( "disabled", true );
 
   	App.interviews = App.cable.subscriptions.create('InterviewsChannel', {
 	  		received: function(data) {
@@ -32,6 +30,7 @@ $( document ).on('ready turbolinks:load',function() {
       },
         connected: function(data){
           console.log("Connected");
+          $('select[data-evaluator!=' + current_user + ']').prop( "disabled", true );
         },
 
 		addParticipant: function(data) {
