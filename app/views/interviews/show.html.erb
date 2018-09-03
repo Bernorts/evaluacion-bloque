@@ -1,7 +1,9 @@
 <br>
 
 <%= javascript_tag do %>
+  $( document ).on('ready turbolinks:load',function() {
   window.current_user = '<%= @current_user.id %>';
+  });
 <% end %>
 
 <div class="row">

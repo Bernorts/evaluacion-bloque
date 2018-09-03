@@ -30,11 +30,12 @@ class InterviewsController < ApplicationController
         ActionCable.server.broadcast 'interviews',
           evaluation: @evaluation_user.evaluation_id,
           evaluation_user: @user_name,
+          evaluation_user_id: @user.id,
           evaluation_responsible: @aux_responsible,
           evaluation_level: @level.name,
           evaluation_competence_id: @competence_id,
           all_levels: @all_levels.to_json(),
-          mehtod: 'show'
+          method: 'show'
       end
     end
 

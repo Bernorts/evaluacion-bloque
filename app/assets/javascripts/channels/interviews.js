@@ -8,6 +8,12 @@ $( document ).on('ready turbolinks:load',function() {
 	var responsible_id;
   var interview_id;
   var ev_id;
+  old_eval_user = '';
+  
+  if(!window.location.hash) {
+    window.location = window.location + '#loaded';
+    window.location.reload();
+  }
 
   	App.interviews = App.cable.subscriptions.create('InterviewsChannel', {
 	  		received: function(data) {
@@ -15,18 +21,18 @@ $( document ).on('ready turbolinks:load',function() {
 		  		console.log(data.method);
 		  		switch(data.method){
             case 'show':
-              return $("#participants-" + data.evaluation_competence_id).append(this.addParticipant(data));
-		  				break;
+              if(data.evaluation_user != old_eval_user){
+                old_eval_user = data.evaluation_user;
+                return $("#participants-" + data.evaluation_competence_id).append(this.addParticipant(data));
+              }
+              break;
 		  			case 'update_responsible':
-		  				return this.updateRole(data);
-		  				break;
+              return this.updateRole(data);
 		  			case 'update_level':
 		  				return this.updateLevel(data);
-		  				break;
 		  			case 'update_retro':
 		  				return this.updateRetro(data);
-		  				break;
-		  		}
+          }
       },
         connected: function(data){
           console.log("Connected");
@@ -34,18 +40,18 @@ $( document ).on('ready turbolinks:load',function() {
         },
 
 		addParticipant: function(data) {
-			console.log(data)
+      var disabled = !(current_user == data.evaluation_user_id);
 			var all_levels = JSON.parse(data.all_levels);
 			row = "<tr>" +
 			    	"<td>" + data.evaluation_user + "</td>" +
 			    	"<td>" +
-			    		"<select class='form-control'>" +
+			    		"<select class='form-control' disabled='" + disabled + "'>" +
 							"<option value='true'>Responsable</option>" +
 							"<option value='false' selected>Evaluador</option>" +
 					  	"</select>" +
 				  	"</td>";
 
-			row += "<td>" + "<select class='form-control'>";
+			row += "<td>" + "<select class='form-control' disabled='" + disabled + "'>";
 
 			for(var key in all_levels){
 				row += "<option value=" + key + ">" + all_levels[key] + "</option>";

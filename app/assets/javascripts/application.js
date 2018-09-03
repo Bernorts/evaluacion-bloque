@@ -14,11 +14,11 @@
 //= require popper
 //= require bootstrap-sprockets
 //= require jquery_ujs
+//= require_tree ./channels
 //= require turbolinks
 //= require sweetalert.js
 //= require Chart.bundle
 //= require chartkick
-//= require_tree ./channels
 //= require_tree .
 
 
