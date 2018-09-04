@@ -9,6 +9,7 @@ $( document ).on('ready turbolinks:load',function() {
   var interview_id;
   var ev_id;
   old_eval_user = '';
+  old_com = '';
   
   if(!window.location.hash) {
     window.location = window.location + '#loaded';
@@ -21,8 +22,9 @@ $( document ).on('ready turbolinks:load',function() {
 		  		console.log(data.method);
 		  		switch(data.method){
             case 'show':
-              if(data.evaluation_user != old_eval_user){
+              if(data.evaluation_user != old_eval_user && data.evaluation_competence_id != old_com){
                 old_eval_user = data.evaluation_user;
+                old_com = data.evaluation_competence_id;
                 return $("#participants-" + data.evaluation_competence_id).append(this.addParticipant(data));
               }
               break;
@@ -40,6 +42,7 @@ $( document ).on('ready turbolinks:load',function() {
         },
 
 		addParticipant: function(data) {
+      /*
       var disabled = !(current_user == data.evaluation_user_id);
 			var all_levels = JSON.parse(data.all_levels);
 			row = "<tr>" +
@@ -59,7 +62,13 @@ $( document ).on('ready turbolinks:load',function() {
 
       row += "</select>" + "</td>" + "</tr>";
 
-			return row;
+      
+      return row;
+      */
+     if(window.location.href.indexOf("entrevista") > -1) {
+       window.location.reload();
+   }
+
 		},
 
 		updateRole: function(data){
