@@ -142,7 +142,7 @@
                                 <div class="col-md-6">
                                   <h5>Nivel logrado: </h5>
                                   <% if eval.achLevel != nil then @achLevel = Level.find(eval.achLevel)%>
-                                    <input class="form-control" readonly="true" value=<%= @achLevel.name %>>
+                                    <input class="form-control" readonly="true" value="<%= @achLevel.name %>">
                                     <% else %>
                                     <input class="form-control" readonly="true" value="Sin evaluar">
                                     <% end %>
