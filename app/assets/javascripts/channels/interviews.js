@@ -11,10 +11,12 @@ $( document ).on('ready turbolinks:load',function() {
   old_eval_user = '';
   old_com = '';
   
-  if(!window.location.hash) {
-    window.location = window.location + '#loaded';
-    window.location.reload();
-  }
+
+
+    if(!window.location.hash && window.location.href.indexOf("entrevista") > -1) {
+      window.location = window.location + '#loaded';
+      window.location.reload();
+    }
 
   	App.interviews = App.cable.subscriptions.create('InterviewsChannel', {
 	  		received: function(data) {
@@ -67,7 +69,7 @@ $( document ).on('ready turbolinks:load',function() {
       */
      if(window.location.href.indexOf("entrevista") > -1) {
        window.location.reload();
-   }
+    }
 
 		},
 
