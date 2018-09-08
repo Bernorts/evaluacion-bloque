@@ -72,14 +72,15 @@
                 </div>
 
                 <div class="row">
-                  <div class="col-md-6 col-xs-12">
+                  <div class="col-md-12 col-xs-12">
                     <h5>Evaluación</h5>
-                    <table class="table table-striped">
+                    <table class="table table-striped interview-table">
                       <thead>
                         <tr>
                           <th> Profesor </th>
                           <th> Rol </th>
                           <th> Nivel </th>
+                          <th> Retroalimentación </th>
                         </tr>
                       </thead>
                       <tbody class="participants" id="participants-<%= @competence.id %>">
@@ -100,18 +101,16 @@
                                 <% end %>
                               </select>
                           </td>
+                          <td>
+                            <textarea id="retro-<%= eval.id %>-<%= evaluator.id %>" data-evaluation="<%= eval.id %>" data-evaluator="<%= evaluator.id %>" data-interview="<%=@current_int%>" data-comp="<%= @competence.id %>" class="form-control inter-retro" style="min-width: 100%; min-height: 70%"></textarea>
+                          </td>
                         </tr>
                       <% end %>
                       </tbody>
                     </table>
                   </div>
-                  <div class="col-md-6 col-xs-12">
-                    <h5>Retroalimentación</h5>
-                    <textarea id="retro-<%= eval.id %>" data-evaluation="<%= eval.id %>" data-interview="<%=@current_int%>" data-comp="<%= @competence.id %>" class="form-control inter-retro" style="min-width: 100%; min-height: 70%"><%= eval.retro%></textarea>
-                    <p class="note">*Haz click fuera del recuadro para guardar tus comentarios.</p>
-                  </div>
                </div>
-
+               <p class="note">*Haz click fuera del recuadro para guardar tus comentarios.</p>
               </div>
 
               <div class="row">

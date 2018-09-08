@@ -41,6 +41,7 @@ $( document ).on('ready turbolinks:load',function() {
         connected: function(data){
           console.log("Connected");
           $('select[data-evaluator!=' + current_user + ']').prop( "disabled", true );
+          $('textarea[data-evaluator!=' + current_user + ']').prop( "disabled", true );
         },
 
 		addParticipant: function(data) {
@@ -83,7 +84,7 @@ $( document ).on('ready turbolinks:load',function() {
 			$(`select[data-evaluation="${data.evaluation}"][data-evaluator="${data.professor.user_id}"][data-select="level"]`).val(level);
 		},
 		updateRetro: function(data){
-			$(`#retro-${data.evaluation}`).val(data.retro);
+			$(`#retro-${data.evaluation}-${data.evaluator}`).val(data.retro);
 		}
 	});
 
@@ -98,12 +99,6 @@ $( document ).on('ready turbolinks:load',function() {
    		} else{
    			$(this).removeAttr('data-responsible');
    		}
-
-   		console.log('Role: ', role);
-   		console.log('Competence_id: ', competence_id);
-   		console.log('Professor_id: ', professor_id);
-      	console.log('interview_id: ', interview_id);
-      	console.log('ev_id: ', ev_id);
 
    		$.ajax({
 			url: '/entrevista_evaluacion/'+ interview_id +'/' + professor_id +'/rol',
@@ -152,11 +147,11 @@ $( document ).on('ready turbolinks:load',function() {
 	$('.inter-retro').focusout(function() {
     	retro = this.value;
     	competence_id = $(this).data("comp");
-      evaluation_id = $(this).data("evaluation")
+      evaluation_id = $(this).data("evaluation");
+      evaluator_id = $(this).data("evaluator")
 
     	console.log('Retro: ', retro);
    		console.log('Competence_id: ', competence_id);
-
 
     	$.ajax({
         url: "/entrevista_retro/"+ evaluation_id + "/retro",
@@ -164,7 +159,8 @@ $( document ).on('ready turbolinks:load',function() {
         data: {
           competence_id: competence_id,
           retro: retro,
-          evaluation: evaluation_id
+          evaluation: evaluation_id,
+          evaluator: evaluator_id,
 		    },
 	    success: function(data) {
 	      console.log("Buen cambio retro");
@@ -178,12 +174,24 @@ $( document ).on('ready turbolinks:load',function() {
 
 	$('.btn-save-inter').on('click', function() {
 		competence_id = $(this).data("comp");
-		ev_id = $(this).data("evaluation");
+    ev_id = $(this).data("evaluation");
+
+    retro = '';
+
+    $(`textarea[data-evaluation="${ev_id}"]`).each(function() {
+      if($(this).val() != ''){
+        retro += $(this).val() + "\n";
+      }
+    });
+
+    console.log("Retro", retro);
+
 			$.ajax({
 			url: "/entrevista_final/"+ ev_id+ "/evaluation",
 			method: "PUT",
 			data: {
-				evaluation: ev_id
+        evaluation: ev_id,
+        retro: retro
 			},
 			success: function(data) {
 				if (data.success){

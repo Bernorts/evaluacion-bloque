@@ -81,18 +81,19 @@ class InterviewsController < ApplicationController
 
   def update_retro
     @evaluation = Evaluation.find(params[:evaluation])
+    @evaluator = User.find(params[:evaluator])
     @retro = params[:retro]
-    @evaluation.retro = @retro
-    @evaluation.save
-
+   
     ActionCable.server.broadcast 'interviews',
           evaluation: @evaluation.id,
-          retro: @evaluation.retro,
+          evaluator: @evaluator.id,
+          retro: @retro,
           method: 'update_retro'
   end
 
   def final_evaluation
     @evaluation = Evaluation.find(params[:ev_id])
+    @evaluation.retro = params[:retro]
     @evaluation.eval_date = DateTime.parse(Date.today.to_s)
     @evaluations_users = EvaluationsUser.where(evaluation_id: @evaluation.id)
     @responsibles_evaluations = @evaluations_users.where(responsible: true)
