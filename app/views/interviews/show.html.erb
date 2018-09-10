@@ -102,7 +102,7 @@
                               </select>
                           </td>
                           <td>
-                            <textarea id="retro-<%= eval.id %>-<%= evaluator.id %>" data-evaluation="<%= eval.id %>" data-evaluator="<%= evaluator.id %>" data-interview="<%=@current_int%>" data-comp="<%= @competence.id %>" class="form-control inter-retro" style="min-width: 100%; min-height: 70%"></textarea>
+                            <textarea id="retro-<%= eval.id %>-<%= evaluator.id %>" data-evaluation="<%= eval.id %>" data-evaluator="<%= evaluator.id %>" data-interview="<%=@current_int%>" data-comp="<%= @competence.id %>" class="form-control inter-retro" style="min-width: 100%; min-height: 70%"><%= @eval_user.retro %></textarea>
                           </td>
                         </tr>
                       <% end %>

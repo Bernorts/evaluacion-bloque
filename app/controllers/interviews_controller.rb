@@ -82,7 +82,13 @@ class InterviewsController < ApplicationController
   def update_retro
     @evaluation = Evaluation.find(params[:evaluation])
     @evaluator = User.find(params[:evaluator])
+    @evaluation_user = EvaluationsUser.find_by(user_id: @evaluator.id, evaluation_id: @evaluation.id)
     @retro = params[:retro]
+    @evaluation_user.update_attribute(:retro, @retro)
+    @evaluation_user.save!
+
+    puts 'AAAAAAAAAAAAAAa'
+    puts @evaluation_user.retro
    
     ActionCable.server.broadcast 'interviews',
           evaluation: @evaluation.id,
