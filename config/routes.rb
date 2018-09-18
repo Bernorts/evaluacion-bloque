@@ -53,4 +53,7 @@ Rails.application.routes.draw do
   get '/semestres/:id/cambiar' , to: 'application#set_semester_url', as: :set_semester_url
   get '/calificaciones/:id', to: 'semesters#grades', as: :semester_grades
   get '/semestres/:id', to: 'semesters#show', as: :show_semester
+
+  # competences
+  get '/semester_competences/:id', to: 'competences#semester_competences', as: :semester_competences
 end
