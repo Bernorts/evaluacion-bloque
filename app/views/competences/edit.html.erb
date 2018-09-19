@@ -1,0 +1,57 @@
+<% provide(:title, 'Malla de evaluación') %>
+<% content_for :stylesheet do %>
+    <%= stylesheet_link_tag    "styles", :media => "all" %>
+<% end %>
+
+<div class="container-fluid ">
+  <div class="row content">
+    <div class="col-md-10 col-xs-10">
+      <h2>Malla de evaluación</h2>
+    </div>
+  </div>
+  <%= form_tag(save_competences_url(current_semester)) do %>
+    <div class="row">
+      <div class="col-md-12 col-xs-12">
+        <table class="table table-hover table-responsive" id="my-table">
+          <thead>
+            <tr>
+              <th>Competencias</th>
+              <th>Evidencias</th>
+              <% @semester.competences.first.levels.each do |level| %>
+                <th><input name="levels_names[<%= level.id %>]" type='text' class="form-control" value='<%= level.name %>'></th>
+              <% end %>
+              <th><button type="button" class="btn btn-success float-right" onclick="appendColumn()">Col</button></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @semester.competences.each_with_index do |competence, i| %>
+              <tr id="row<%= i %>">
+                <td>
+                  <input name="competences_names[<%= competence.id %>]" type="text" class="form-control" value="<%= competence.name %>">
+                  <textarea name="competences_descriptions[<%= competence.id %>]" class="form-control" placeholder="Descripción"><%= if !competence.description.nil? then competence.description end %></textarea>
+                </td>
+                <td><textarea class="form-control">Evidencias</textarea></td>
+                <% competence.competence_level.order(:level_id).each do |c| %>
+                  <td><textarea name="competence_levels[<%= c.competence.id.to_s + ',' + c.level.id.to_s %>]" class="form-control" placeholder="Descripción"><%= if !c.description.nil? then c.description end %></textarea></td>
+                <% end %>
+                <td><button type="button" class="btn btn-warning" onclick="deleteRow(<%= i %>, '')">-</button></td>
+              </tr>
+            <% end %>
+            <tr>
+              <td><button type="button" class="btn btn-success float-right" onclick="appendRow()">Row</button></td>
+              <td></td>
+              <% @semester.competences.first.levels.each_with_index do |level, i| %>
+                <td id="col<%= i %>"><button type="button" class="btn btn-warning" onclick="deleteColumn(<%= i %>, '')">-</button></td>
+              <% end %>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2 col-sm-4">
+        <%= button_tag "Guardar", class: "btn btn-success form-btn"%>
+      </div>
+    </div>
+  <% end %>
+</div>
