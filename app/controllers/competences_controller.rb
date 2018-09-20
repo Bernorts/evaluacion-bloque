@@ -97,7 +97,7 @@ class CompetencesController < ApplicationController
     end
 
     # add description to competence_level for each created level (column appended)
-    unless addedLevels.empty?
+    unless addedLevels.empty?  || params[:new_levels_competences].nil?
       params[:new_levels_competences].each do |k, v|
         unless v.empty?
           lev = k.split(',')[0]
@@ -113,7 +113,7 @@ class CompetencesController < ApplicationController
     end
 
     # add description to competence_level for each created competence (row appended)
-    unless addedComps.empty?
+    unless addedComps.empty? || params[:new_competences_levels].nil?
       params[:new_competences_levels].each do |k, v|
         unless v.empty?
           comp = k.split(',')[0]

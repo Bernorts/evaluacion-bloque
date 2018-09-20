@@ -21,23 +21,27 @@
           <tr>
             <th>Competencias</th>
             <th>Evidencias</th>
-            <% @semester.competences.first.levels.each do |level| %>
-              <th><%= level.name %></th>
+            <% if @semester.competences.first != nil %>
+              <% @semester.competences.first.levels.each do |level| %>
+                <th><%= level.name %></th>
+              <% end %>
             <% end %>
           </tr>
         </thead>
         <tbody>
-          <% @semester.competences.each_with_index do |competence, i| %>
-            <tr id="row<%= i %>">
-              <td>
-                <%= competence.name %>
-                <%= if !competence.description.nil? then competence.description end %>
-              </td>
-              <td>Evidencias</td>
-              <% competence.competence_level.order(:level_id).each do |c| %>
-                <td><%= if !c.description.nil? then c.description end %></td>
-              <% end %>
-            </tr>
+          <% if @semester.competences.first != nil %>
+            <% @semester.competences.each_with_index do |competence, i| %>
+              <tr id="row<%= i %>">
+                <td>
+                  <%= competence.name %>
+                  <%= if !competence.description.nil? then competence.description end %>
+                </td>
+                <td>Evidencias</td>
+                <% competence.competence_level.order(:level_id).each do |c| %>
+                  <td><%= if !c.description.nil? then c.description end %></td>
+                <% end %>
+              </tr>
+            <% end %>
           <% end %>
         </tbody>
       </table>
