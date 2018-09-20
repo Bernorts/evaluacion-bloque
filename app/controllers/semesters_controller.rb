@@ -49,7 +49,7 @@ class SemestersController < ApplicationController
     end
     @evaluations_user  = {}
     @students.each do |student|
-      @temp_evals = Evaluation.where(user_id: student.id)
+      @temp_evals = Evaluation.where(user_id: student.id).where.not(achLevel: nil)
       @last_competences_level = []
       if (@temp_evals.empty?)
         i = 0
@@ -60,15 +60,8 @@ class SemestersController < ApplicationController
       else
         @competences.each do |c|
           @last_record = @temp_evals.where(competence_id: c.id).last
-          if @last_record.achLevel.nil?
-            prev_to_last = @temp_evals.where(competence_id: c.id)[-2]
-            if prev_to_last.nil?
-              @last_competences_level.push("Primera evaluacion pendiente")
-            else
-              temp_level = Level.find(prev_to_last.achLevel)
-              @last_competences_level.push(temp_level.name)
-            end
-
+          if @last_record.nil?
+            @last_competences_level.push('No se ha registrado evaluación')
           else
             temp_level = Level.find(@last_record.achLevel)
             @last_competences_level.push(temp_level.name)
