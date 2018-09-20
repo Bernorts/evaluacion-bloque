@@ -66,34 +66,49 @@
     <div class="tab-pane fade show active" id="evidencias" role="tabpanel" aria-labelledby="evidencias-tab">
       <div class="row">
         <div class="col-md-12">
-          <% if current_user.id == @user.id %>
-          <button type="button" class="btn btn-success pull-right divide" data-toggle="modal" data-target="#saveEvidence" >Agregar evidencia</button>
-          <% end %>
-          <table class="table table-hover table-responsive">
-            <thead>
-              <tr>
-                <th>Nombre</th>
-                <th>Url</th>
-                <% if current_user.id == @user.id %>
-                  <th>Acciones</th>
-                <% end %>
-              </tr>
-            </thead>
-            <tbody>
-              <% for ev in @evidences do %>
-              <tr>
-                <td width="20%"><%= ev.name %></td>
-                <td width="40%"> <a target="_blank" href=<%= ev.url %>><%= ev.url %></a>  </td>
-                <td width="30%">
+
+          <% if !@evidences.empty? %>
+            <% if current_user.id == @user.id %>
+              <button type="button" class="btn btn-success pull-right divide" data-toggle="modal" data-target="#saveEvidence" >Agregar evidencia</button>
+            <% end %>
+            <table class="table table-hover table-responsive">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Url</th>
                   <% if current_user.id == @user.id %>
-                    <%= link_to "Editar", edit_evidence_path(ev), class:"btn btn-warning edit-evidence_types-link", "data-toggle" =>"modal", "data-target"=>"#editEvidence" %>
-                    <%= link_to 'Borrar', evidence_path(ev), method: :delete, data: { confirm: '¿Estás seguro de querer borrar esta evidencia?' },  class: 'btn btn-danger' %>
+                    <th>Acciones</th>
                   <% end %>
-                </td>
-              </tr>
+                </tr>
+              </thead>
+              <tbody>
+                <% for ev in @evidences do %>
+                <tr>
+                  <td width="20%"><%= ev.name %></td>
+                  <td width="40%"> <a target="_blank" href=<%= ev.url %>><%= ev.url %></a>  </td>
+                  <td width="30%">
+                    <% if current_user.id == @user.id %>
+                      <%= link_to "Editar", edit_evidence_path(ev), class:"btn btn-warning edit-evidence_types-link", "data-toggle" =>"modal", "data-target"=>"#editEvidence" %>
+                      <%= link_to 'Borrar', evidence_path(ev), method: :delete, data: { confirm: '¿Estás seguro de querer borrar esta evidencia?' },  class: 'btn btn-danger' %>
+                    <% end %>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          <% else %>
+          
+            <div class="jumbotron">
+              <h1 class="display-4">No existen evidencias</h1>
+              <hr class="my-4">
+              <% if current_user.id == @user.id %>
+                <p>Comienza a agregar tus evidencias.</p>
+                <p class="lead">
+                  <button type="button" class="btn btn-success divide" data-toggle="modal" data-target="#saveEvidence" >Agregar evidencia</button>
+                </p>
               <% end %>
-            </tbody>
-          </table>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>
@@ -207,151 +222,165 @@
   <div class="tab-pane fade" id="evaluaciones" role="tabpanel" aria-labelledby="evaluaciones-tab">
     <div class="row">
       <div class="col-md-12 col-xs-12">
-        <% if current_user.id == @user.id %>
-          <a class="btn btn-success pull-right" href="/evaluaciones/nueva" role="button">Solicitar evaluación</a>
-          <br><br>
-        <% end %>
-        <div class="row">
-            <% @interviews.each do |inter|%>
-             <div class="col-md-6 col-xs-12 evaluations-col">
-            <br>
-            <% @evaluations = Evaluation.where(interview_id: inter.id) %>
 
-            <% 
-              @editable = true
-              @evaluations.each do |e|
-               puts 'AAAAAAAAAAAAAAAHHHHHHH'
-                if e.eval_date != nil
-                 puts 'EEEEEEEEE'
-                  @editable = false
-                  break
+        <% if @interviews.empty? %>
+          <div class="jumbotron">
+            <h1 class="display-4">No existen entrevistas</h1>
+            <hr class="my-4">
+            <% if current_user.id == @user.id %>
+              <p>Agenda tu primer entrevista.</p>
+              <p class="lead">
+                <a class="btn btn-success" href="/evaluaciones/nueva" role="button">Solicitar evaluación</a>
+              </p>
+            <% end %>
+          </div>
+
+        <% else %>
+
+          <% if current_user.id == @user.id %>
+            <a class="btn btn-success pull-right" href="/evaluaciones/nueva" role="button">Solicitar evaluación</a>
+            <br><br>
+          <% end %>
+          <div class="row">
+              <% @interviews.each do |inter|%>
+              <div class="col-md-6 col-xs-12 evaluations-col">
+              <br>
+              <% @evaluations = Evaluation.where(interview_id: inter.id) %>
+
+              <% 
+                @editable = true
+                @evaluations.each do |e|
+                  if e.eval_date != nil
+                    @editable = false
+                    break
+                  end
                 end
-               end
-            %>
+              %>
 
-            <% @reqDate = Evaluation.find_by(interview_id: inter.id).reqDate%>
+              <% @reqDate = Evaluation.find_by(interview_id: inter.id).reqDate%>
 
-              <div class="card mx-auto evaluation-card">
-                <div class="card-block">
-                  <div class="row card-title-container align-items-center">
-                    <div class="col-md-6">
-                      <h3 class="card-title"><%= l @reqDate, :format => :short %></h3>
-                    </div>
-                      <div class="col-md-6 text-right">
-                        <% if current_user.id == @user.id && @editable %>
-                          <%= link_to "Editar", edit_evaluation_path(inter.id), class:"btn btn-warning"  %>
-                          <%= link_to 'Borrar', destroy_evaluation_path(inter.id), method: :delete, data: { confirm: '¿Estás seguro de querer borrar esta evaluación?' },  class: 'btn btn-danger' %>
-                        <% elsif  current_user.role_id != 3 %>
-                           <%= link_to show_interview_url(inter.id), class:"btn btn-success" do %>
-                            <span><i class="fa fa-list-alt" aria-hidden="true"></i>   Evaluar</span>
-                           <% end %>
-                        <% end %>
+                <div class="card mx-auto evaluation-card">
+                  <div class="card-block">
+                    <div class="row card-title-container align-items-center">
+                      <div class="col-md-6">
+                        <h3 class="card-title"><%= l @reqDate, :format => :short %></h3>
                       </div>
-                  </div>
-                      <div role="tablist" class="tablist" aria-multiselectable="true">
-                        <% @competences.each do |c| %>
-                          <%
-
-                          @evaluation = (@evaluations.select { |eval| eval.competence_id == c.id && eval.interview_id == inter.id }).first
-
-                          @eval_evidences = EvaluationEvidence.where(evaluation_id: @evaluation.id)
-
-                          %>
-
-                          <% if @evaluation.desLevel != 0 %>
-
-                            <% if !@eval_evidences.empty?
-                                @evidence_ids = @eval_evidences.map{ |e| e.evidence_id }
-                              else
-                                @evidence_ids = []
-                              end
-
-                                if @evaluation.desLevel == 0
-                                  @levelName = "No evaluar"
-                                  @levelId = 0
-                                else
-                                  @desLevel = Level.find(@evaluation.desLevel)
-                                  @levelName = @desLevel.name
-                                  @levelId = @desLevel.id
-                                end
-
-                                @achLevel = "No evaluado"
-
-                                if @evaluation.achLevel != nil
-                                  @achLevel = Level.find(@evaluation.achLevel).name
-                                end
-
-                                %>
-                              <div class="card evaluation-card-content" id="comp-<%= c.id %>" data-comp="<%= c.id %>">
-                                <div class="card-header" role="tab" id="headingOne">
-                                  <div class="row">
-                                    <div class="col-md-2">
-                                      <h5 class="mb-0">
-                                          <p class="competence-name" data-parent="#accordion" aria-expanded="true" aria-controls="collapse">
-                                           <%= c.name %>
-                                          </p>
-                                      </h5>
-                                    </div>
-
-                                    <div class="col-md-5">
-                                      <label>Nivel deseado:</label>
-                                      <input class="form-control" value="<%= @levelName %>" disabled></input>
-                                    </div>
-                                    <div class="col-md-5 selector">
-                                      <label>Nivel logrado:</label>
-                                        <input class="form-control" value="<%= @achLevel %>" disabled></input>
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <div id="collapse-<%= c.id %>" role="tabpanel" aria-labelledby="heading">
-                                  <% if !@evaluation.achLevel.nil? %>
-                                    <div class="card-block competence-content">
-                                      <h5>Evaluadores</h5>
-                                      <div class="row">
-                                        <div class="col-md-12 col-xs-12">
-                                          <ul>
-                                            <% for u in @evaluation.users  do %>
-                                            <li><%= u.full_name %></li>
-                                            <% end %>
-                                          </ul>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  <% end %>
-                                  <div class="card-block competence-content">
-                                    <h5>Evidencias</h5>
-                                    <% if @eval_evidences.empty? %>
-                                      <p>Sin evidencias</p>
-                                    <% end %>
-                                    <div class="row">
-                                      <div class="col-md-12 col-xs-12">
-                                      <ul>
-                                        <% @evidence_ids.each do |e| %>
-                                        <% @evidence = Evidence.find(e) %>
-                                          <li><a target="_blank" href= <%= @evidence.url %> ><%= @evidence.name %></a></li>
-                                        <% end %>
-                                      </ul>
-                                    </div>
-                                  </div>
-                                  </div>
-                                  <% if current_user.role_id == 2 %>
-                                  <div class="card-block competence-content">
-                                    <h5>Retroalimentación</h5>
-                                    <label id=<%= 'successretro-' + @evaluation.id.to_s %>></label>
-                                    <div class="container">
-                                      <%= text_field :evaluation, :retro, class: "editRetro col-md-12", 'data-id': @evaluation.id, disabled: true %>
-                                    </div>
-                                  </div>
-                                  <% end %>
-                                </div>
-                              </div>
+                        <div class="col-md-6 text-right">
+                          <% if current_user.id == @user.id && @editable %>
+                            <%= link_to "Editar", edit_evaluation_path(inter.id), class:"btn btn-warning"  %>
+                            <%= link_to 'Borrar', destroy_evaluation_path(inter.id), method: :delete, data: { confirm: '¿Estás seguro de querer borrar esta evaluación?' },  class: 'btn btn-danger' %>
+                          <% elsif  current_user.role_id != 3 %>
+                            <%= link_to show_interview_url(inter.id), class:"btn btn-success" do %>
+                              <span><i class="fa fa-list-alt" aria-hidden="true"></i>   Evaluar</span>
                             <% end %>
                           <% end %>
+                        </div>
                     </div>
+                        <div role="tablist" class="tablist" aria-multiselectable="true">
+                          <% @competences.each do |c| %>
+                            <%
+
+                            @evaluation = (@evaluations.select { |eval| eval.competence_id == c.id && eval.interview_id == inter.id }).first
+
+                            @eval_evidences = EvaluationEvidence.where(evaluation_id: @evaluation.id)
+
+                            %>
+
+                            <% if @evaluation.desLevel != 0 %>
+
+                              <% if !@eval_evidences.empty?
+                                  @evidence_ids = @eval_evidences.map{ |e| e.evidence_id }
+                                else
+                                  @evidence_ids = []
+                                end
+
+                                  if @evaluation.desLevel == 0
+                                    @levelName = "No evaluar"
+                                    @levelId = 0
+                                  else
+                                    @desLevel = Level.find(@evaluation.desLevel)
+                                    @levelName = @desLevel.name
+                                    @levelId = @desLevel.id
+                                  end
+
+                                  @achLevel = "No evaluado"
+
+                                  if @evaluation.achLevel != nil
+                                    @achLevel = Level.find(@evaluation.achLevel).name
+                                  end
+
+                                  %>
+                                <div class="card evaluation-card-content" id="comp-<%= c.id %>" data-comp="<%= c.id %>">
+                                  <div class="card-header" role="tab" id="headingOne">
+                                    <div class="row">
+                                      <div class="col-md-2">
+                                        <h5 class="mb-0">
+                                            <p class="competence-name" data-parent="#accordion" aria-expanded="true" aria-controls="collapse">
+                                            <%= c.name %>
+                                            </p>
+                                        </h5>
+                                      </div>
+
+                                      <div class="col-md-5">
+                                        <label>Nivel deseado:</label>
+                                        <input class="form-control" value="<%= @levelName %>" disabled></input>
+                                      </div>
+                                      <div class="col-md-5 selector">
+                                        <label>Nivel logrado:</label>
+                                          <input class="form-control" value="<%= @achLevel %>" disabled></input>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div id="collapse-<%= c.id %>" role="tabpanel" aria-labelledby="heading">
+                                    <% if !@evaluation.achLevel.nil? %>
+                                      <div class="card-block competence-content">
+                                        <h5>Evaluadores</h5>
+                                        <div class="row">
+                                          <div class="col-md-12 col-xs-12">
+                                            <ul>
+                                              <% for u in @evaluation.users  do %>
+                                              <li><%= u.full_name %></li>
+                                              <% end %>
+                                            </ul>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    <% end %>
+                                    <div class="card-block competence-content">
+                                      <h5>Evidencias</h5>
+                                      <% if @eval_evidences.empty? %>
+                                        <p>Sin evidencias</p>
+                                      <% end %>
+                                      <div class="row">
+                                        <div class="col-md-12 col-xs-12">
+                                        <ul>
+                                          <% @evidence_ids.each do |e| %>
+                                          <% @evidence = Evidence.find(e) %>
+                                            <li><a target="_blank" href= <%= @evidence.url %> ><%= @evidence.name %></a></li>
+                                          <% end %>
+                                        </ul>
+                                      </div>
+                                    </div>
+                                    </div>
+                                    <% if current_user.role_id == 2 %>
+                                    <div class="card-block competence-content">
+                                      <h5>Retroalimentación</h5>
+                                      <label id=<%= 'successretro-' + @evaluation.id.to_s %>></label>
+                                      <div class="container">
+                                        <%= text_field :evaluation, :retro, class: "editRetro col-md-12", 'data-id': @evaluation.id, disabled: true %>
+                                      </div>
+                                    </div>
+                                    <% end %>
+                                  </div>
+                                </div>
+                              <% end %>
+                            <% end %>
+                      </div>
+                  </div>
                 </div>
               </div>
-            </div>
+              <% end %>
             <% end %>
         </div>
       </div>

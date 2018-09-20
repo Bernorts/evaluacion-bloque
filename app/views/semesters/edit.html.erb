@@ -35,7 +35,7 @@
           <div class="col-md-12">
             <%= f.collection_check_boxes :user_ids, User.all, :id, :full_name do |b| %>
               <div class="collection-check-box col-md-3 col-xs-12">
-                <%= b.check_box %>
+                <%= b.check_box%>
                 <%= b.label %>
               </div>
             <% end %>
