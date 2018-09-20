@@ -4,8 +4,8 @@ class UsersController < ApplicationController
 
   def index
     #this should change with the semester dropdown
-    @users = User.all
-    @users = Semester.find(session[:semester]).users
+    @professors = Semester.find(session[:semester]).users.where("role_id = ? OR role_id = ?", 1, 2)
+    @students = Semester.find(session[:semester]).users.where(role_id: 3)
   end
 
   def show

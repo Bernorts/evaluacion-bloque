@@ -2,7 +2,7 @@ class User < ApplicationRecord
 	has_many :evaluations_user
 	has_many :evaluations, through: :evaluations_user
 	has_and_belongs_to_many :semesters
-	has_many :evidences
+	has_many :evidences, :dependent => :destroy
   belongs_to :role
   before_save { self.email = email.downcase }
   validates :role_id, presence: true, numericality: { only_integer: true }
