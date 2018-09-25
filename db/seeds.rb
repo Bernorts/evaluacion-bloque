@@ -41,12 +41,14 @@ Competence.find_or_create_by(name: 'T3')
 Competence.find_or_create_by(name: 'T4')
 Competence.find_or_create_by(name: 'T5')
 
+=begin
 #Levels
 Level.find_or_create_by(name: 'No conoce la fuerza')
 Level.find_or_create_by(name: 'Padawan')
 Level.find_or_create_by(name: 'Jedi')
 Level.find_or_create_by(name: 'Maestro Jedi')
 Level.find_or_create_by(name: 'Sith')
+=end
 
 #Evidences
 Evidence.find_or_create_by(name: 'Documento de Especificación de requisitos', url: 'www.drf.com', user_id: 1)
