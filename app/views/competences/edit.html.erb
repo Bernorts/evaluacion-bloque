@@ -9,11 +9,12 @@
       <h2>Malla de evaluación</h2>
     </div>
   </div>
+
   <%= form_tag(save_competences_url(current_semester)) do %>
     <div class="row">
       <div class="col-md-12 col-xs-12">
-        <table class="table table-hover table-responsive" id="my-table">
-          <thead>
+        <table class="table table-hover table-responsive table-bordered" id="my-table">
+          <thead class="malla-head">
             <tr>
               <th>Competencias</th>
               <th>Evidencias</th>
@@ -22,7 +23,7 @@
                   <th><input name="levels_names[<%= level.id %>]" type='text' class="form-control" value='<%= level.name %>'></th>
                 <% end %>
               <% end %>
-              <th><button type="button" class="btn btn-success float-right" onclick="appendColumn()">Col</button></th>
+              <th><button type="button" class="btn btn-primary" onclick="appendColumn()">Nivel &nbsp<i class="fa fa-plus" aria-hidden="true"></i></button></th>
             </tr>
           </thead>
           <tbody>
@@ -37,16 +38,16 @@
                   <% competence.competence_level.order(:level_id).each do |c| %>
                     <td><textarea name="competence_levels[<%= c.competence.id.to_s + ',' + c.level.id.to_s %>]" class="form-control" placeholder="Descripción"><%= if !c.description.nil? then c.description end %></textarea></td>
                   <% end %>
-                  <td><button type="button" class="btn btn-warning" onclick="deleteRow(<%= i %>, '')">-</button></td>
+                  <td><button type="button" class="btn btn-danger btn-circle btn-lg" onclick="deleteRow(<%= i %>, '')"><i class="fa fa-minus" aria-hidden="true"></i></button></td>
                 </tr>
               <% end %>
             <% end %>
             <tr>
-              <td><button type="button" class="btn btn-success float-right" onclick="appendRow()">Row</button></td>
+              <td><button type="button" class="btn btn-primary" onclick="appendRow()">Competencia &nbsp<i class="fa fa-plus" aria-hidden="true"></i></button></td>
               <td></td>
               <% if @semester.competences.first != nil %>
                 <% @semester.competences.first.levels.each_with_index do |level, i| %>
-                  <td id="col<%= i %>"><button type="button" class="btn btn-warning" onclick="deleteColumn(<%= i %>, '')">-</button></td>
+                  <td id="col<%= i %>"><button type="button" class="btn btn-danger btn-circle btn-lg" onclick="deleteColumn(<%= i %>, '')"><i class="fa fa-minus" aria-hidden="true"></i></button></td>
                 <% end %>
               <% end %>
             </tr>
@@ -54,10 +55,21 @@
         </table>
       </div>
     </div>
+    <br><br><br>
     <div class="row">
+      <div class="col-md-2 col-sm-4 offset-md-4 offset-sm-2">
+        <br>
+        <%= link_to raw("<button class=\"btn btn-danger form-btn\">Cancelar</button>"),
+                   semester_competences_url%>
+      </div>
       <div class="col-md-2 col-sm-4">
+        <br>
         <%= button_tag "Guardar", class: "btn btn-success form-btn"%>
       </div>
     </div>
   <% end %>
 </div>
+
+
+
+

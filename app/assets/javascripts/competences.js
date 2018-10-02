@@ -11,7 +11,7 @@ function appendRow() {
     for (i = 2; i < tbl.rows[0].cells.length-1; i++) {
         createCell(row.insertCell(i), 'textarea', 'form-control', '', 'Descripción', 'new_competences_levels[' + countR + ',' + i + ']');
     }
-    createCell(row.insertCell(i), 'button', 'btn btn-warning', 'deleteRow', countR, '');
+    createCell(row.insertCell(i), 'button', 'btn btn-danger btn-circle btn-lg', 'deleteRow', countR, '');
     countR += 1;
 }
  
@@ -28,7 +28,7 @@ function createCell(cell, text, style, extra, placeholder, name) {
         }
         txt.setAttribute('onclick', extra + '(' + placeholder + ', "added")')
         txt.type = "button"
-        txt.innerHTML = '-'
+        txt.innerHTML = '<i class="fa fa-minus" aria-hidden="true"></i>'
     }
     if(extra == 'firstCol'){
       var ex = document.createElement('input')
@@ -55,7 +55,7 @@ function appendColumn() {
         createCell(tbl.rows[i].insertCell(tbl.rows[i].cells.length-1), 'textarea', 'form-control', '', 'Descripción', 'new_levels_competences[' + countC + ',' + i + ']');
     }
     countC += 1;
-    createCell(tbl.rows[i].insertCell(tbl.rows[i].cells.length), 'button', 'btn btn-warning', 'deleteColumn', countC, '');
+    createCell(tbl.rows[i].insertCell(tbl.rows[i].cells.length), 'button', 'btn btn-danger btn-circle btn-lg', 'deleteColumn', countC, '');
 }
 
 function deleteRow(id, extra) {

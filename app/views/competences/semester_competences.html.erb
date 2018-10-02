@@ -9,15 +9,19 @@
       <h2>Malla de evaluación</h2>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-2 col-sm-4">
-      <%= link_to "Editar", edit_competences_url(@semester), class: "btn btn-warning form-btn"%>
+  <% if current_user.role.id == 1  %>
+    <div class="row">
+      <div class="col-md-1 offset-md-11 col-sm-4 offset-sm-8 ">
+        <%= link_to edit_competences_url(@semester),class:"btn btn-warning pull-right" do %>
+          <i class="fa fa-pencil"></i>
+        <% end %>
+      </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12 col-xs-12">
-      <table class="table table-hover table-responsive" id="my-table">
-        <thead>
+  <% end %>
+  <br>
+  <div class="table-responsive" id="my-table-wrapper">
+      <table class="table table-hover table-bordered" id="my-table">
+        <thead class="malla-head">
           <tr>
             <th>Competencias</th>
             <th>Evidencias</th>
@@ -32,19 +36,19 @@
           <% if @semester.competences.first != nil %>
             <% @semester.competences.each_with_index do |competence, i| %>
               <tr id="row<%= i %>">
-                <td>
+                <td class="left-cell">
                   <%= competence.name %>
+                  <br>
                   <%= if !competence.description.nil? then competence.description end %>
                 </td>
-                <td>Evidencias</td>
+                <td class="left-cell">Evidencias</td>
                 <% competence.competence_level.order(:level_id).each do |c| %>
-                  <td><%= if !c.description.nil? then c.description end %></td>
+                  <td class="left-cell"><%= if !c.description.nil? then c.description end %></td>
                 <% end %>
               </tr>
             <% end %>
           <% end %>
         </tbody>
       </table>
-    </div>
   </div>
 </div>

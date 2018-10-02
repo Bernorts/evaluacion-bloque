@@ -4,9 +4,15 @@
 
 .table > tbody > tr > td{
   vertical-align: middle;
+  text-align: center;
 } 
 
 th{
   vertical-align: middle;
   text-align: center;
+}
+
+.add-competence-col{
+  display: flex;
+  justify-content: center;
 }

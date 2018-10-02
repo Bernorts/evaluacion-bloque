@@ -17,7 +17,7 @@
       <% if logged_in? %>
         <ul class="navbar-nav mr-auto">
             <li class="nav-item" id="nav-grid">
-                <a class="nav-link" href="/malla"><i class="fa fa-list-alt" aria-hidden="true"></i> Malla</a>
+                <a class="nav-link" href=<%= semester_competences_url(current_semester) %>><i class="fa fa-list-alt" aria-hidden="true"></i> Malla</a>
             </li>
             <% if current_user.role.id != 3  %>
               <li class="nav-item" id="nav-users">
@@ -25,14 +25,8 @@
               </li>
             <% end %>
             <% if current_user.role.id == 1  %>
-              <li class="nav-item dropdown" id="nav-config">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i>
-                    Configuración
-                  </a>
-                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href=<%= semesters_url %>><i class="fa fa-book" aria-hidden="true"></i> Semestres</a>
-                      <a class="dropdown-item" href=<%= semester_competences_url(current_semester) %>><i class="fa fa-list-alt" aria-hidden="true"></i> Malla</a>
-                  </div>
+              <li class="nav-item" id="nav-users">
+                <a class="nav-link" href=<%= semesters_url %>><i class="fa fa-book" aria-hidden="true"></i> Semestres</a>
               </li>
             <% end %>
         </ul>
