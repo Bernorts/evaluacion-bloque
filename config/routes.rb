@@ -42,6 +42,7 @@ Rails.application.routes.draw do
   patch '/usuario/:id', to: 'users#update', as: :update_user
   delete '/usuario/:id', to: 'users#destroy', as: :destroy_user
   get '/usuarios/', to: 'users#index', as: :all_semester_users
+  get '/calificaciones_personales/', to: 'users#personal_grades', as: :personal_grades
 
 	#sessions
   get    '/login',   to: 'sessions#new', as: :login

@@ -71,6 +71,49 @@ class UsersController < ApplicationController
     end
   end
 
+  def personal_grades
+    @student = current_user
+    @competences = Competence.select(:id, :name)
+    @header = []
+    @header.push('Matrícula')
+    @header.push('Nombre')
+    @count_competences = Competence.all.count
+    @competences.each do |c|
+      @header.push(c.name)
+    end
+    @evaluations_user  = {}
+    @temp_evals = Evaluation.where(user_id: @student.id).where.not(achLevel: nil)
+    @last_competences_level = []
+    if (@temp_evals.empty?)
+      i = 0
+      until i == @count_competences
+        @last_competences_level.push("No se han registrado evaluaciones")
+        i += 1
+      end
+    else
+      @competences.each do |c|
+        @last_record = @temp_evals.where(competence_id: c.id).last
+        if @last_record.nil?
+          @last_competences_level.push('No se ha registrado evaluación')
+        else
+          temp_level = Level.find(@last_record.achLevel)
+          @last_competences_level.push(temp_level.name)
+        end
+      end
+      @last_competences_level.unshift(@student.name)
+      matricula = @student.email.split('@')[0]
+      @last_competences_level.unshift(matricula)
+      @evaluations_user.merge!(@student.id => @last_competences_level)
+    end
+    respond_to do |format|
+      format.html
+      name = @student.name
+      format.xlsx {
+        response.headers['Content-Disposition'] = "attachment;" +  "filename=" + "#{name}.xlsx"
+      }
+    end
+  end
+
   def update_user
     @user = User.find(params[:id])
     if @user.update(user_params)
