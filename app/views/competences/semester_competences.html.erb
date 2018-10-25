@@ -41,7 +41,7 @@
                   <br>
                   <%= if !competence.description.nil? then competence.description end %>
                 </td>
-                <td class="left-cell">Evidencias</td>
+                <td class="left-cell"><%= competence.evidences %></td>
                 <% competence.competence_level.order(:level_id).each do |c| %>
                   <td class="left-cell"><%= if !c.description.nil? then c.description end %></td>
                 <% end %>

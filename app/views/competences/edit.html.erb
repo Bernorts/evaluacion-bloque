@@ -34,7 +34,7 @@
                     <input name="competences_names[<%= competence.id %>]" type="text" class="form-control" value="<%= competence.name %>">
                     <textarea name="competences_descriptions[<%= competence.id %>]" class="form-control" placeholder="Descripción"><%= if !competence.description.nil? then competence.description end %></textarea>
                   </td>
-                  <td><textarea class="form-control">Evidencias</textarea></td>
+                  <td><textarea name="competences_evidences[<%= competence.id %>]" class="form-control" placeholder="Evidencias"><%= competence.evidences %></textarea></td>
                   <% competence.competence_level.order(:level_id).each do |c| %>
                     <td><textarea name="competence_levels[<%= c.competence.id.to_s + ',' + c.level.id.to_s %>]" class="form-control" placeholder="Descripción"><%= if !c.description.nil? then c.description end %></textarea></td>
                   <% end %>
@@ -69,7 +69,3 @@
     </div>
   <% end %>
 </div>
-
-
-
-

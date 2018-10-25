@@ -34,8 +34,14 @@ class CompetencesController < ApplicationController
     @semester.competences.delete_all # this doesn't delete the competence from db, only sets semester_id to null
     unless params[:competences_names].nil?
       params[:competences_names].each do |k, v|
+        evidence = params[:competences_evidences][k]
+        if !evidence.nil?
+          @competence_evidences = params[:competences_evidences][k]
+        end
+
         unless v.empty?
           c = Competence.find(k.to_i)
+          c.evidences = @competence_evidences
           c.name = v
           unless params[:competences_descriptions][k].empty?
             c.description = params[:competences_descriptions][k]
@@ -60,8 +66,13 @@ class CompetencesController < ApplicationController
     # create new competences
     unless params[:new_competences_names].nil?
       params[:new_competences_names].each do |k, v|
+        evidence = params[:new_competences_evidences][k]
+        if !evidence.nil?
+          @competence_evidences = params[:new_competences_evidences][k]
+        end
         unless v.empty?
           c = Competence.new(name: v)
+          c.evidences = @competence_evidences
           unless params[:new_competences_descriptions][k].empty?
             c.description = params[:new_competences_descriptions][k]
           end
