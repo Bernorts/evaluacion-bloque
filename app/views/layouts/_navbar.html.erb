@@ -24,7 +24,7 @@
                   <a class="nav-link" href=<%= all_semester_users_url  %>><i class="fa fa-users" aria-hidden="true"></i> Usuarios</a>
               </li>
             <% end %>
-            <% if current_user.role.id == 1  %>
+            <% if current_user.role.id != 3  %>
               <li class="nav-item" id="nav-users">
                 <a class="nav-link" href=<%= semesters_url %>><i class="fa fa-book" aria-hidden="true"></i> Semestres</a>
               </li>

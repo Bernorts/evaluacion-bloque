@@ -8,9 +8,11 @@
     <div class="col-md-6 col-xs-12">
       <h2>Semestres</h2>
     </div>
+    <% if current_user.role.id == 1  %>
     <div class="col-md-6 col-xs-12">
        <%= link_to "Crear semestre", new_semester_url, class:"btn btn-success float-right" %>
     </div>
+    <% end %>
   </div>
   <div class="row">
     <% for semester in @semesters do %>
@@ -21,23 +23,29 @@
           <div class="col-md-6 col-sm-12">
            <%=link_to semester.name, show_semester_url(semester) %>
           </div>
+          <% if current_user.role.id == 1  %>
           <div class="col-md-2  col-sm-2">
            <%= link_to semester_grades_url(semester, format: "xlsx"),class:"btn btn-success" do %>
             <i class="fa fa-download"></i>
            <% end %>
           </div>
+          <% end %>
+          <% if current_user.role.id == 1  %>
            <div class="col-md-2 col-sm-2">
             <%= link_to edit_semester_url(semester),class:"btn btn-warning" do %>
               <i class="fa fa-pencil"></i>
             <% end %>
            </div>
+           <% end %>
+           <% if current_user.role.id == 1  %>
            <div class="col-md-2 col-sm-2">
             <%= link_to semester_url(semester), method: :delete, data: { confirm: '¿Estás seguro de querer borrar este semestre?' },  class: 'btn btn-danger' do %>
               <i class="fa fa-trash"></i>
             <% end %>
            </div>
+           <% end %>
         </div>
-         
+
         </h5>
         <div class="card-block">
           <div class="container">
@@ -47,7 +55,7 @@
             <p> Profesores registrados: <strong><%=semester.users.where(role_id: 2).count.to_s%></strong></p>
             <div class="row">
               <div class="col-md-12 col-xs-12 text-right">
-               
+
               </div>
             </div>
           </div>
