@@ -68,9 +68,12 @@ $( document ).on('ready turbolinks:load',function() {
       
       return row;
       */
-     if(window.location.href.indexOf("entrevista") > -1) {
-       window.location.reload();
-    }
+
+      interview_id = $("#current_int").text();
+      if((window.location.href.indexOf("entrevista") > -1) && (interview_id == data.interview_id)) {
+        console.log("Text de current int", interview_id);
+        window.location.reload();
+      }
 
 		},
 
@@ -92,8 +95,8 @@ $( document ).on('ready turbolinks:load',function() {
    		role = this.value;
    		competence_id = $(this).data("comp");
    		professor_id = $(this).data("evaluator");
-      	interview_id = $(this).data("interview");
-      	ev_id = $(this).data("evaluation");
+      interview_id = $(this).data("interview");
+      ev_id = $(this).data("evaluation");
    		if(role == 'true'){
    			$(this).attr('data-responsible', 'true');
    		} else{

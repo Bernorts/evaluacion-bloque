@@ -35,6 +35,7 @@ class InterviewsController < ApplicationController
           evaluation_level: @level.name,
           evaluation_competence_id: @competence_id,
           all_levels: @all_levels.to_json(),
+          interview_id: @interview.id,
           method: 'show'
       end
     end
