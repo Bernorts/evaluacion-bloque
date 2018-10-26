@@ -19,7 +19,17 @@ class SemestersController < ApplicationController
 
   def new
     @semester = Semester.new
-    @users = User.all
+    @users = User.where(role_id: 3)
+    @new_users = []
+    @old_users = []
+    @professors = User.where.not(role_id: 3)
+    @users.each do |user|
+      if user.semesters.empty?
+        @new_users.push(user)
+      else
+        @old_users.push(user)
+      end
+    end
   end
 
 
@@ -84,6 +94,17 @@ class SemestersController < ApplicationController
 
   def edit
     @semester = Semester.find(params[:id])
+    @users = User.where(role_id: 3)
+    @new_users = []
+    @old_users = []
+    @professors = User.where.not(role_id: 3)
+    @users.each do |user|
+      if user.semesters.empty?
+        @new_users.push(user)
+      else
+        @old_users.push(user)
+      end
+    end
   end
 
   def update

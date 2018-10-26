@@ -30,22 +30,31 @@
     <div class="row">
       <div class="col-md-12 col-xs-12">
         <ul class="nav nav-tabs">
-          <li class="nav-item">
-            <a class="nav-link active" href="#">Estudiantes nuevos</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Estudiantes anteriores</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Profesores</a>
-          </li>
+          <li class="nav-item"><a class="nav-link active pills" data-toggle="tab" href="#new-students-index" role="tab">Estudiantes Nuevos</a></li>
+          <li class="nav-item"><a class="nav-link pills" data-toggle="tab" href="#students-index" role="tab">Estudiantes Anteriores</a></li>
+          <li class="nav-item"><a class="nav-link pills" data-toggle="tab" href="#professors-index" role="tab">Profesores</a></li>
         </ul>
-        <br>
-        <h4>Usuarios</h4>
-        <br>
-        <div class="row">
-          <div class="col-md-12">
-            <%= f.collection_check_boxes :user_ids, User.all, :id, :full_name do |b| %>
+        <div class="tab-content" id="nav-tabContent-usersindex">
+          <div class="tab-pane fade show active" id="new-students-index" role="tabpanel" aria-labelledby="new-students-tab">
+            <%= f.collection_check_boxes :user_ids, @new_users, :id, :full_name do |b| %>
+              <div class="collection-check-box col-md-3 col-xs-12">
+                <%= b.check_box %>
+                <%= b.label %>
+              </div>
+            <% end %>
+          </div>
+
+          <div class="tab-pane fade show" id="students-index" role="tabpanel" aria-labelledby="students-tab">
+            <%= f.collection_check_boxes :user_ids, @old_users, :id, :full_name do |b| %>
+              <div class="collection-check-box col-md-3 col-xs-12">
+                <%= b.check_box %>
+                <%= b.label %>
+              </div>
+            <% end %>
+          </div>
+
+          <div class="tab-pane fade show" id="professors-index" role="tabpanel" aria-labelledby="professors-tab">
+            <%= f.collection_check_boxes :user_ids, @professors, :id, :full_name do |b| %>
               <div class="collection-check-box col-md-3 col-xs-12">
                 <%= b.check_box %>
                 <%= b.label %>
