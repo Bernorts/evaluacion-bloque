@@ -1,7 +1,7 @@
 // append row to the HTML table
 var countR = 0, countC = 0;
 function appendRow() {
-    var tbl = document.getElementById('my-table'), // table reference
+    var tbl = document.getElementById('comp-table'), // table reference
         row = tbl.insertRow(tbl.rows.length-1),      // append table row
         i;
     // insert table cells to the new row
@@ -20,7 +20,8 @@ function createCell(cell, text, style, extra, placeholder, name) {
     var div = document.createElement('div'), // create DIV element
         txt = document.createElement(text);
     if(text == 'input'){
-      txt.type = "text"
+      txt.type = "text";
+      cell.setAttribute('class', 'accept-drag');
     }
     if(text == 'button'){
         if(extra == 'deleteColumn'){
@@ -47,7 +48,7 @@ function createCell(cell, text, style, extra, placeholder, name) {
 
 // append column to the HTML table
 function appendColumn() {
-    var tbl = document.getElementById('my-table'), // table reference
+    var tbl = document.getElementById('comp-table'), // table reference
         i;
     // open loop for each row and append cell
     createCell(tbl.rows[0].insertCell(tbl.rows[0].cells.length-1), 'input', 'form-control', '', 'Nombre', 'new_levels_names[' + countC + ']');
@@ -59,13 +60,13 @@ function appendColumn() {
 }
 
 function deleteRow(id, extra) {
-    var tbl = document.getElementById('my-table'), // table reference
+    var tbl = document.getElementById('comp-table'), // table reference
     index = document.getElementById(extra + 'row' + id);
     tbl.deleteRow(index.rowIndex);
 }
  
 function deleteColumn(id, extra) {
-    var tbl = document.getElementById('my-table'), // table reference
+    var tbl = document.getElementById('comp-table'), // table reference
         lastCol = tbl.rows[0].cells.length - 1,    // set the last column index
         index = document.getElementById(extra + 'col' + id), i;
     // delete cells with index greater then 0 (for each row)
@@ -73,3 +74,63 @@ function deleteColumn(id, extra) {
         tbl.rows[i].deleteCell(index.cellIndex);
     }
 }
+
+
+$( document ).on('ready turbolinks:load',function() {
+
+  var draggable = false;
+
+
+  $('#toggle-drag').click(function(){
+    draggable = !draggable;
+    console.log("Toggle drag", draggable);
+    if(draggable){
+
+      $('#toggle-drag').addClass('active focus');
+
+      $('.level-header').each(function() {
+        $(this).addClass('accept-drag');
+        $(this).append('<i class="fa fa-arrows-h pull-right drag-icon"></i>');
+      });
+
+      $('#comp-table-show').dragtable({
+        persistState: function(table) { 
+          table.el.find('th[data-lvlid]').each(function(i) { 
+              table.sortOrder[this.dataset.lvlid]=i;  
+          }); 
+
+          console.log("Sort order", table.sortOrder);
+
+          var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
+
+          $.ajaxSetup({
+            headers: {
+              'X-CSRF-Token': AUTH_TOKEN
+            }
+          });
+
+          $.ajax({
+            url: '/levels/order',
+            method: "PUT",
+            data: {
+              order: table.sortOrder,
+            },
+              success: function(data) {
+                console.log("Orden modificado exitosamente");
+              }
+          });
+        }, 
+        dragaccept:'.accept-drag',
+      }); 
+
+    } else{
+      $('#toggle-drag').removeClass('active focus');
+
+      $('.level-header').each(function() {
+        $(this).removeClass('accept-drag');
+      });
+
+      $('.drag-icon').remove();
+    }
+  });
+});

@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20181025225502) do
     t.integer "competence_id"
     t.integer "level_id"
     t.text    "description"
+    t.integer "order"
     t.index ["competence_id"], name: "index_competence_levels_on_competence_id", using: :btree
     t.index ["level_id"], name: "index_competence_levels_on_level_id", using: :btree
   end
@@ -62,12 +63,21 @@ ActiveRecord::Schema.define(version: 20181025225502) do
   end
 
   create_table "evaluations_users", force: :cascade do |t|
-    t.integer "evaluation_id",  null: false
-    t.integer "user_id",        null: false
+    t.integer "evaluation_id"
+    t.integer "user_id"
     t.boolean "responsible"
     t.integer "temporal_level"
     t.string  "retro"
-    t.index ["user_id", "evaluation_id"], name: "index_evaluations_users_on_user_id_and_evaluation_id", unique: true, using: :btree
+    t.index ["evaluation_id", "user_id"], name: "index_evaluations_users_on_evaluation_id_and_user_id", unique: true, using: :btree
+  end
+
+  create_table "evidence_revisions", force: :cascade do |t|
+    t.integer  "evidence_id"
+    t.integer  "revision_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["evidence_id"], name: "index_evidence_revisions_on_evidence_id", using: :btree
+    t.index ["revision_id"], name: "index_evidence_revisions_on_revision_id", using: :btree
   end
 
   create_table "evidences", force: :cascade do |t|
@@ -78,6 +88,12 @@ ActiveRecord::Schema.define(version: 20181025225502) do
     t.datetime "updated_at", null: false
     t.integer  "user_id"
     t.index ["user_id"], name: "index_evidences_on_user_id", using: :btree
+  end
+
+  create_table "grids", force: :cascade do |t|
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "interviews", force: :cascade do |t|
@@ -91,6 +107,14 @@ ActiveRecord::Schema.define(version: 20181025225502) do
     t.text     "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "order"
+  end
+
+  create_table "revisions", force: :cascade do |t|
+    t.datetime "date"
+    t.boolean  "reviewed"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "roles", force: :cascade do |t|

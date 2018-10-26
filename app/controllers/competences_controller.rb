@@ -2,6 +2,7 @@ class CompetencesController < ApplicationController
   before_action :set_semester, only: %w[semester_competences save_competences edit]
 
   def semester_competences
+    @levels = @semester.competences.first.levels.sort_by &:order
   end
 
   def edit

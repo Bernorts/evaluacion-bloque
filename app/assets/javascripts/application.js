@@ -14,6 +14,8 @@
 //= require popper
 //= require bootstrap-sprockets
 //= require jquery_ujs
+//= require jquery-ui
+//= require jquery.dragtable
 //= require_tree ./channels
 //= require turbolinks
 //= require sweetalert.js
@@ -27,12 +29,12 @@ var ready;
 ready = function() {
   	var url = window.location.pathname;
   	console.log(url)
-  	if (url.includes('malla')){
+  	if (url.includes('semester_competences')){
   		$("#nav-grid").addClass('active');
   	} else if(url.includes('usuario')){
   		$("#nav-users").addClass('active');
-  	} else{
-  		$("#nav-config").addClass('active');
+  	} else if(url.includes('semesters')){
+  		$("#nav-semesters").addClass('active');
   	}
 }
 

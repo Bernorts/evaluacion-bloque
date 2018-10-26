@@ -28,6 +28,7 @@ gem 'aws-sdk', '~> 2.3.0'
 gem 'redis', '~> 3.3'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 gem 'redis-namespace'

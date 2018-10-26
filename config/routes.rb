@@ -59,4 +59,7 @@ Rails.application.routes.draw do
   get '/semester_competences/:id', to: 'competences#semester_competences', as: :semester_competences
   get '/semester_competences/edit/:id', to: 'competences#edit', as: :edit_competences
   post '/save_competences/:id', to: 'competences#save_competences', as: :save_competences
+
+  # levels
+  put '/levels/order', to: 'levels#update_order', as: :update_levels_order
 end

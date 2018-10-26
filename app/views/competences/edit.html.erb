@@ -13,14 +13,15 @@
   <%= form_tag(save_competences_url(current_semester)) do %>
     <div class="row">
       <div class="col-md-12 col-xs-12">
-        <table class="table table-hover table-responsive table-bordered" id="my-table">
+       <div class="table-responsive">
+        <table class="table table-hover table-bordered" id="comp-table">
           <thead class="malla-head">
             <tr>
               <th>Competencias</th>
               <th>Evidencias</th>
               <% if @semester.competences.first != nil %>
                 <% @semester.competences.first.levels.each do |level| %>
-                  <th><input name="levels_names[<%= level.id %>]" type='text' class="form-control" value='<%= level.name %>'></th>
+                  <th class="accept-drag"><input name="levels_names[<%= level.id %>]" type='text' class="form-control" value='<%= level.name %>'></th>
                 <% end %>
               <% end %>
               <th><button type="button" class="btn btn-primary" onclick="appendColumn()">Nivel &nbsp<i class="fa fa-plus" aria-hidden="true"></i></button></th>
@@ -53,6 +54,7 @@
             </tr>
           </tbody>
         </table>
+        </div>
       </div>
     </div>
     <br><br>
