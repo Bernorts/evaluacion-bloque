@@ -20,14 +20,15 @@
               <th>Competencias</th>
               <th>Evidencias</th>
               <% if @semester.competences.first != nil %>
-                <% @semester.competences.first.levels.each do |level| %>
-                  <th class="accept-drag"><input name="levels_names[<%= level.id %>]" type='text' class="form-control" value='<%= level.name %>'></th>
+                <% @levels.each do |level| %>
+                  <<th class="accept-drag"><input name="levels_names[<%= level.id %>]" type='text' class="form-control" value='<%= level.name %>'></th>
                 <% end %>
               <% end %>
               <th><button type="button" class="btn btn-primary" onclick="appendColumn()">Nivel &nbsp<i class="fa fa-plus" aria-hidden="true"></i></button></th>
             </tr>
           </thead>
           <tbody>
+
             <% if @semester.competences.first != nil %>
               <% @semester.competences.each_with_index do |competence, i| %>
                 <tr id="row<%= i %>">
@@ -36,7 +37,9 @@
                     <textarea name="competences_descriptions[<%= competence.id %>]" class="form-control" placeholder="Descripción"><%= if !competence.description.nil? then competence.description end %></textarea>
                   </td>
                   <td><textarea name="competences_evidences[<%= competence.id %>]" class="form-control" placeholder="Evidencias"><%= competence.evidences %></textarea></td>
-                  <% competence.competence_level.order(:level_id).each do |c| %>
+                  <% @levels.each do |level| 
+                    c = CompetenceLevel.find_by(level_id: level.id, competence_id: competence.id)
+                  %>
                     <td><textarea name="competence_levels[<%= c.competence.id.to_s + ',' + c.level.id.to_s %>]" class="form-control" placeholder="Descripción"><%= if !c.description.nil? then c.description end %></textarea></td>
                   <% end %>
                   <td><button type="button" class="btn btn-danger btn-circle btn-lg" onclick="deleteRow(<%= i %>, '')"><i class="fa fa-minus" aria-hidden="true"></i></button></td>

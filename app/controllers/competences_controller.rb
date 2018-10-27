@@ -6,6 +6,7 @@ class CompetencesController < ApplicationController
   end
 
   def edit
+    @levels = @semester.competences.first.levels.sort_by &:order
   end
 
   def save_competences

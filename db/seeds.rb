@@ -31,24 +31,22 @@ Evaluation.find_or_create_by(reqDate: '21-12-2017', eval_date: '21-12-2017', des
 
 
 #Competences
-Competence.find_or_create_by(name: 'D1')
-Competence.find_or_create_by(name: 'D2')
-Competence.find_or_create_by(name: 'D3')
-Competence.find_or_create_by(name: 'D4')
-Competence.find_or_create_by(name: 'T1')
-Competence.find_or_create_by(name: 'T2')
-Competence.find_or_create_by(name: 'T3')
-Competence.find_or_create_by(name: 'T4')
-Competence.find_or_create_by(name: 'T5')
+Competence.find_or_create_by(name: 'D1', semester_id: 1)
+Competence.find_or_create_by(name: 'D2', semester_id: 1)
+Competence.find_or_create_by(name: 'D3', semester_id: 1)
+Competence.find_or_create_by(name: 'D4', semester_id: 1)
+Competence.find_or_create_by(name: 'T1', semester_id: 1)
+Competence.find_or_create_by(name: 'T2', semester_id: 1)
+Competence.find_or_create_by(name: 'T3', semester_id: 1)
+Competence.find_or_create_by(name: 'T4', semester_id: 1)
+Competence.find_or_create_by(name: 'T5', semester_id: 1)
 
-=begin
 #Levels
-Level.find_or_create_by(name: 'No conoce la fuerza')
-Level.find_or_create_by(name: 'Padawan')
-Level.find_or_create_by(name: 'Jedi')
-Level.find_or_create_by(name: 'Maestro Jedi')
-Level.find_or_create_by(name: 'Sith')
-=end
+Level.find_or_create_by(name: 'No conoce la fuerza', order: 0)
+Level.find_or_create_by(name: 'Padawan', order: 1)
+Level.find_or_create_by(name: 'Jedi', order: 2)
+Level.find_or_create_by(name: 'Maestro Jedi', order: 3)
+Level.find_or_create_by(name: 'Sith', order: 4)
 
 #Evidences
 Evidence.find_or_create_by(name: 'Documento de Especificación de requisitos', url: 'www.drf.com', user_id: 1)
