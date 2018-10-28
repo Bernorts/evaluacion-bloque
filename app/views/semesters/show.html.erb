@@ -43,7 +43,9 @@
         <%= line_chart @competences.map { |competence|
           obj = {}
           @users_evaluations.where(competence_id: competence.id).order(:updated_at).each do |ev|
-            obj[ev.created_at] = ev.achLevel
+            if ev.achLevel != nil
+              obj[ev.created_at] = Level.find(ev.achLevel).order
+            end
           end
           {name: competence.name, data: obj}
           } , xtitle: "Fecha", ytitle: "Nivel"
