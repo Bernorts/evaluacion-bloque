@@ -7,8 +7,8 @@ default: &default
   #password: <%= ENV['PG_PASSWORD'] %>
   #port: 5433
 
-   username: bloque_production_admin
-   password: bloque_production_password
+  username: bloque_production_admin
+  password: bloque_production_password
 
 development:
   <<: *default
