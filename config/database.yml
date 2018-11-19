@@ -3,16 +3,13 @@ default: &default
   pool: 15
   timeout: 5000
   host: localhost
-  #username: <%= ENV['PG_USERNAME'] %>
-  #password: <%= ENV['PG_PASSWORD'] %>
   #port: 5433
-
-  username: bloque_production_admin
-  password: bloque_production_password
 
 development:
   <<: *default
   database: bloque_development_db
+  username: <%= ENV['PG_USERNAME'] %>
+  password: <%= ENV['PG_PASSWORD'] %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -24,3 +21,6 @@ test:
 production:
   <<: *default
   database: bloque_production_db
+
+  username: bloque_production_admin
+  password: bloque_production_password

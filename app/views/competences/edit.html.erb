@@ -21,7 +21,7 @@
               <th>Evidencias</th>
               <% if @semester.competences.first != nil %>
                 <% @levels.each do |level| %>
-                  <<th class="accept-drag"><input name="levels_names[<%= level.id %>]" type='text' class="form-control" value='<%= level.name %>'></th>
+                  <th class="accept-drag"><input name="levels_names[<%= level.id %>]" type='text' class="form-control" value='<%= level.name %>'></th>
                 <% end %>
               <% end %>
               <th><button type="button" class="btn btn-primary" onclick="appendColumn()">Nivel &nbsp<i class="fa fa-plus" aria-hidden="true"></i></button></th>

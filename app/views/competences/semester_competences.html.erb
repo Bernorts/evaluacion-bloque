@@ -44,7 +44,9 @@
                   <br>
                   <%= if !competence.description.nil? then competence.description end %>
                 </td>
-                <td class="left-cell">Evidencias</td>
+                <td class="left-cell">
+                  <%= competence.evidences %>
+                </td>
                 <% @levels.each do |level| 
                   complev = CompetenceLevel.find_by(level_id: level.id, competence_id: competence.id)
                 %>
