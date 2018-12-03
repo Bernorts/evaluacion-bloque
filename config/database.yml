@@ -3,12 +3,12 @@ default: &default
   pool: 15
   timeout: 5000
   host: localhost
-  #username: <%= ENV['PG_USERNAME'] %>
-  #password: <%= ENV['PG_PASSWORD'] %>
+  username: <%= ENV['PG_USERNAME'] %>
+  password: <%= ENV['PG_PASSWORD'] %>
   #port: 5433
 
-  username: bloque_production_admin
-  password: bloque_production_password
+  #username: bloque_production_admin
+  #password: bloque_production_password
 
 development:
   <<: *default

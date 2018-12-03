@@ -59,7 +59,7 @@ class SemestersController < ApplicationController
     end
     @evaluations_user  = {}
     @students.each do |student|
-      @temp_evals = Evaluation.where(user_id: student.id).where.not(achLevel: nil)
+      @temp_evals = Evaluation.where(user_id: student.id).where.not(achLevel: nil, desLevel: 0)
       @last_competences_level = []
       if (@temp_evals.empty?)
         i = 0
