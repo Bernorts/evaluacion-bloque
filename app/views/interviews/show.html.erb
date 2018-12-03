@@ -44,6 +44,15 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="inline-content">
+                    <h5>Nivel actual: </h5>
+                    <p id="current-level-<%= eval.id %>" data-eval=<%= eval.id %>><%= Level.find(Evaluation.where(user_id: @student, competence_id: @competence.id).where.not(achLevel: nil, desLevel: 0).last.achLevel).name %></p>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="inline-content">
                     <h5>Nivel deseado: </h5>
                     <p><%= Level.find(eval.desLevel).name %></p>
                   </div>

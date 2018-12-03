@@ -11,7 +11,7 @@ class CompetencesController < ApplicationController
   end
 
   def authorize
-    if current_user.role_id != 1
+    if logged_in? && current_user.role_id != 1
       flash[:error] = "Acceso no autorizado"
       redirect_to show_user_url(current_user)
     end

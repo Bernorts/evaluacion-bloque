@@ -1,5 +1,12 @@
 class SessionsController < ApplicationController
   def new
+    if logged_in?
+      if current_user.role_id == 3
+        redirect_to show_user_url(current_user)
+      else
+        redirect_to all_semester_users_url
+      end
+    end
   end
 
   def create

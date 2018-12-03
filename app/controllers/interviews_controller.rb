@@ -77,6 +77,7 @@ class InterviewsController < ApplicationController
           professor: @evaluation_user,
           evaluation_level: @new_level,
           competence: @evaluation.competence_id,
+          levelName: @new_level.name,
           method: 'update_level'
   end
 
@@ -87,9 +88,6 @@ class InterviewsController < ApplicationController
     @retro = params[:retro]
     @evaluation_user.update_attribute(:retro, @retro)
     @evaluation_user.save!
-
-    puts 'AAAAAAAAAAAAAAa'
-    puts @evaluation_user.retro
    
     ActionCable.server.broadcast 'interviews',
           evaluation: @evaluation.id,
@@ -108,7 +106,7 @@ class InterviewsController < ApplicationController
       @responsible = @responsibles_evaluations.first
       @evaluation.achLevel = @responsible.temporal_level
       @evaluation.save
-      render :json => { :success => true }
+      render :json => { :success => true, :levelName => Level.find(@evaluation.achLevel).name }
     else
       render :json => { :success => false }
     end

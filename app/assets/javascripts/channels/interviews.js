@@ -84,10 +84,10 @@ $( document ).on('ready turbolinks:load',function() {
 
 		updateLevel: function(data){
 			let level = data.evaluation_level.id;
-			$(`select[data-evaluation="${data.evaluation}"][data-evaluator="${data.professor.user_id}"][data-select="level"]`).val(level);
+      $(`select[data-evaluation="${data.evaluation}"][data-evaluator="${data.professor.user_id}"][data-select="level"]`).val(level);
 		},
 		updateRetro: function(data){
-			$(`#retro-${data.evaluation}-${data.evaluator}`).val(data.retro);
+      $(`#retro-${data.evaluation}-${data.evaluator}`).val(data.retro);
 		}
 	});
 
@@ -141,7 +141,7 @@ $( document ).on('ready turbolinks:load',function() {
         		evaluation: ev_id
 			},
 		    success: function(data) {
-		      console.log("Buen cambio nivel");
+		      console.log("Buen cambio nivel", data);
 		    }
 		});
 
@@ -197,6 +197,7 @@ $( document ).on('ready turbolinks:load',function() {
         retro: retro
 			},
 			success: function(data) {
+        $(`#current-level-${ev_id}`).text(data.levelName);
 				if (data.success){
 					swal({
 	          title: "Registro de nivel exitoso",
