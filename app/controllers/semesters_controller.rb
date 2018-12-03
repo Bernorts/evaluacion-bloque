@@ -1,7 +1,10 @@
 class SemestersController < ApplicationController
+  before_action :authorize
+
   def index
     @semesters = Semester.all
   end
+
   def show
     @semester = Semester.find(params[:id])
     @users = @semester.users
@@ -133,6 +136,13 @@ class SemestersController < ApplicationController
 
   def semester_params
     params.require(:semester).permit(:name, :start_date, :end_date, user_ids: [])
+  end
+
+  def authorize
+    if current_user.role_id != 1 && current_user.role_id != 2
+      flash[:error] = "Acceso no autorizado"
+      redirect_to show_user_url(current_user)
+    end
   end
 
 end

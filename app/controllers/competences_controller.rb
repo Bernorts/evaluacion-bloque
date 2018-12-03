@@ -1,5 +1,6 @@
 class CompetencesController < ApplicationController
   before_action :set_semester, only: %w[semester_competences save_competences edit]
+  before_action :authorize, only: [:edit]
 
   def semester_competences
     @levels = @semester.competences.first.levels.sort_by &:order
@@ -7,6 +8,13 @@ class CompetencesController < ApplicationController
 
   def edit
     @levels = @semester.competences.first.levels.sort_by &:order
+  end
+
+  def authorize
+    if current_user.role_id != 1
+      flash[:error] = "Acceso no autorizado"
+      redirect_to show_user_url(current_user)
+    end
   end
 
   def save_competences

@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   before_action :logged_in_user, only: [:new, :index, :editUser, :update]
   before_action :correct_user,   only: [:edit]
+  before_action :authorize_profile, only: [:show, :update_user, :destroy]
+  before_action :authorize_index, only: [:index]
 
   def index
     #this should change with the semester dropdown
@@ -140,7 +142,7 @@ class UsersController < ApplicationController
 
   def logged_in_user
     unless logged_in?
-      flash[:danger] = "Por favor inicia sesión"
+      flash[:error] = "Por favor inicia sesión"
       redirect_to login_url
     end
   end
@@ -148,7 +150,27 @@ class UsersController < ApplicationController
   # Confirms the correct user.
   def correct_user
     @user = User.find(params[:id])
-    redirect_to(login_url) unless @user == current_user
+    unless @user == current_user
+      flash[:error] = "Acceso no autorizado"
+      redirect_to(login_url)
+    end
+  end
+
+  def authorize_profile
+    @user = User.find(params[:id])
+    if @user != current_user
+      if current_user.role_id != 1 && current_user.role_id != 2
+        flash[:error] = "Acceso no autorizado"
+        redirect_to show_user_url(current_user)
+      end
+    end
+  end
+
+  def authorize_index
+    if current_user.role_id != 1 && current_user.role_id != 2
+      flash[:error] = "Acceso no autorizado"
+      redirect_to show_user_url(current_user)
+    end
   end
 
 
