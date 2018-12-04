@@ -1,4 +1,10 @@
-Crear Bases de Datos
+# Sistema de Evaluación - Semestre i
+
+Este sistema fue desarrollado durante los semestres Enero-Mayo y Agosto-Diciembre de 2018 como servicio becario para la carrera de ISC del Tecnológico de Monterrey Campus Querétaro por Bernardo Ortega Septién, Martin Molinero Morales y Moisés Montaño Copca. 
+
+This work is licensed under a Creative Commons Attribution 4.0 International License: http://creativecommons.org/licenses/by/4.0/
+
+## Crear Bases de Datos
 
 Desarrollo
 
