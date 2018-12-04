@@ -45,7 +45,11 @@
                 <div class="col-md-12">
                   <div class="inline-content">
                     <h5>Nivel actual: </h5>
-                    <p id="current-level-<%= eval.id %>" data-eval=<%= eval.id %>><%= Level.find(Evaluation.where(user_id: @student, competence_id: @competence.id).where.not(achLevel: nil, desLevel: 0).last.achLevel).name %></p>
+                    <% if Evaluation.where(user_id: @student, competence_id: @competence.id).where.not(achLevel: nil, desLevel: 0).last != nil %>
+                      <p id="current-level-<%= eval.id %>" data-eval=<%= eval.id %>><%= Level.find(Evaluation.where(user_id: @student, competence_id: @competence.id).where.not(achLevel: nil, desLevel: 0).last.achLevel).name %></p>
+                    <% else %>
+                      <p id="current-level-<%= eval.id %>" data-eval=<%= eval.id %>> No se ha evaluado</p>
+                    <% end %>
                   </div>
                 </div>
               </div>
