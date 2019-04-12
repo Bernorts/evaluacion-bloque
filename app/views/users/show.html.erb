@@ -155,11 +155,11 @@
                         <%
                         @competence_evaluations = Evaluation.where(user_id: @user.id, competence_id: c.id)
 
-                        @competence_evaluations = @competence_evaluations.drop(1)
+                        #@competence_evaluations = @competence_evaluations.drop(1)
                         %>
 
                         <% @competence_evaluations.each do |eval| %>
-                          <% if eval.desLevel != 0 %>
+                          <% if eval.desLevel != 0 && !eval.reqDate.nil? %>
                             <h4 class="competence-name"><%= eval.reqDate%></h4>
                             <div class="container">
                               <div class="row">
