@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:new, :index, :editUser, :update]
+  before_action :logged_in_user, only: %i[new index editUser update]
   before_action :correct_user,   only: [:edit]
-  before_action :authorize_profile, only: [:show, :update_user, :destroy]
+  before_action :authorize_profile, only: %i[show update_user destroy]
   before_action :authorize_index, only: [:index]
 
   def index
-    #this should change with the semester dropdown
-    @professors = Semester.find(session[:semester]).users.where("role_id = ? OR role_id = ?", 1, 2)
+    # this should change with the semester dropdown
+    @professors = Semester.find(session[:semester]).users.where('role_id = ? OR role_id = ?', 1, 2)
     @students = Semester.find(session[:semester]).users.where(role_id: 3)
   end
 
@@ -14,12 +16,10 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @user_evaluations = Evaluation.where(user_id: @user.id)
     @interviews = []
-    @inter_evaluations = Evaluation.where(user_id: @user.id).select("DISTINCT ON (interview_id) *")
-    @interviews_ids = (@inter_evaluations.map{ |eval| eval.interview_id }).reverse
+    @inter_evaluations = Evaluation.where(user_id: @user.id).select('DISTINCT ON (interview_id) *')
+    @interviews_ids = @inter_evaluations.map(&:interview_id).reverse
     @interviews_ids.each do |id|
-      if id != nil
-        @interviews.push(Interview.find(id))
-      end
+      @interviews.push(Interview.find(id)) unless id.nil?
     end
     @evidence = Evidence.new
     @evidences = @user.evidences
@@ -46,7 +46,7 @@ class UsersController < ApplicationController
         @evaluation = Evaluation.new(achLevel: 1, competence_id: competence.id, user_id: @user.id)
         @evaluation.save
       end
-      flash[:success] = "Usuario creado correctamente"
+      flash[:success] = 'Usuario creado correctamente'
       redirect_to show_user_path(@user)
     else
       render 'new'
@@ -66,7 +66,7 @@ class UsersController < ApplicationController
     @user.password = params[:user][:password]
     @user.password_confirmation = params[:user][:password_confirmation]
     if @user.save(context: :password)
-      flash[:success] = "Contraseña modificada correctamente"
+      flash[:success] = 'Contraseña modificada correctamente'
       redirect_to show_user_path(@user)
     else
       render 'edit'
@@ -83,13 +83,13 @@ class UsersController < ApplicationController
     @competences.each do |c|
       @header.push(c.name)
     end
-    @evaluations_user  = {}
+    @evaluations_user = {}
     @temp_evals = Evaluation.where(user_id: @student.id).where.not(achLevel: nil)
     @last_competences_level = []
-    if (@temp_evals.empty?)
+    if @temp_evals.empty?
       i = 0
       until i == @count_competences
-        @last_competences_level.push("No se han registrado evaluaciones")
+        @last_competences_level.push('No se han registrado evaluaciones')
         i += 1
       end
     else
@@ -105,21 +105,21 @@ class UsersController < ApplicationController
       @last_competences_level.unshift(@student.name)
       matricula = @student.email.split('@')[0]
       @last_competences_level.unshift(matricula)
-      @evaluations_user.merge!(@student.id => @last_competences_level)
+      @evaluations_user[@student.id] = @last_competences_level
     end
     respond_to do |format|
       format.html
       name = @student.name
-      format.xlsx {
-        response.headers['Content-Disposition'] = "attachment;" +  "filename=" + "#{name}.xlsx"
-      }
+      format.xlsx do
+        response.headers['Content-Disposition'] = 'attachment;' + 'filename=' + "#{name}.xlsx"
+      end
     end
   end
 
   def update_user
     @user = User.find(params[:id])
     if @user.update(user_params)
-      flash[:success] = "Usuario modificado correctamente"
+      flash[:success] = 'Usuario modificado correctamente'
       redirect_to show_user_path(@user)
     else
       render 'editUser'
@@ -128,7 +128,7 @@ class UsersController < ApplicationController
 
   def destroy
     User.find(params[:id]).destroy
-    flash[:success] = "Usuario eliminado exitosamente"
+    flash[:success] = 'Usuario eliminado exitosamente'
     redirect_to users_url
   end
 
@@ -142,7 +142,7 @@ class UsersController < ApplicationController
 
   def logged_in_user
     unless logged_in?
-      flash[:error] = "Por favor inicia sesión"
+      flash[:error] = 'Por favor inicia sesión'
       redirect_to login_url
     end
   end
@@ -151,7 +151,7 @@ class UsersController < ApplicationController
   def correct_user
     @user = User.find(params[:id])
     unless @user == current_user
-      flash[:error] = "Acceso no autorizado"
+      flash[:error] = 'Acceso no autorizado'
       redirect_to(login_url)
     end
   end
@@ -160,7 +160,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     if @user != current_user
       if current_user.role_id != 1 && current_user.role_id != 2
-        flash[:error] = "Acceso no autorizado"
+        flash[:error] = 'Acceso no autorizado'
         redirect_to show_user_url(current_user)
       end
     end
@@ -168,10 +168,8 @@ class UsersController < ApplicationController
 
   def authorize_index
     if current_user.role_id != 1 && current_user.role_id != 2
-      flash[:error] = "Acceso no autorizado"
+      flash[:error] = 'Acceso no autorizado'
       redirect_to show_user_url(current_user)
     end
   end
-
-
 end

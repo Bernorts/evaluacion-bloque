@@ -1,6 +1,7 @@
+# frozen_string_literal: true
+
 class AddRevisionId < ActiveRecord::Migration[5.0]
   def change
-  	add_column :evaluations, :revision_id, :integer
+    add_column :evaluations, :revision_id, :integer
   end
-
 end

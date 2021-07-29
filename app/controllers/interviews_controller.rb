@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class InterviewsController < ApplicationController
   def show
     @interview = Interview.find(params[:id])
@@ -5,39 +7,38 @@ class InterviewsController < ApplicationController
     @levels = Level.all
     @all_levels = {}
     @current_int = params[:id]
-      @levels.each do |l|
-        @all_levels.merge!({l.id => l.name})
-      end
-    
+    @levels.each do |l|
+      @all_levels.merge!(l.id => l.name)
+    end
+
     @student = @evaluations.first.user_id
 
     @evaluations.each do |ev|
       @evaluation_user = EvaluationsUser.new(evaluation_id: ev.id, user_id: current_user.id, responsible: false, temporal_level: 1)
       @user = User.find(@evaluation_user.user_id)
-      @user_name = @user.name.to_s + ' ' +  @user.last_name.to_s
+      @user_name = @user.name.to_s + ' ' + @user.last_name.to_s
       @level = Level.find(@evaluation_user.temporal_level)
       @competence_id = ev.competence_id
 
-
       @aux_responsible = ''
-      if @evaluation_user.responsible == false
-        @aux_responsible = 'Evaluador'
-      else
-        @aux_responsible = 'Responsable'
-      end
+      @aux_responsible = if @evaluation_user.responsible == false
+                           'Evaluador'
+                         else
+                           'Responsable'
+                         end
 
-      if (!EvaluationsUser.find_by(evaluation_id: ev.id, user_id: @user.id) && @evaluation_user.save!)
-        ActionCable.server.broadcast 'interviews',
-          evaluation: @evaluation_user.evaluation_id,
-          evaluation_user: @user_name,
-          evaluation_user_id: @user.id,
-          evaluation_responsible: @aux_responsible,
-          evaluation_level: @level.name,
-          evaluation_competence_id: @competence_id,
-          all_levels: @all_levels.to_json(),
-          interview_id: @interview.id,
-          method: 'show'
-      end
+      next unless !EvaluationsUser.find_by(evaluation_id: ev.id, user_id: @user.id) && @evaluation_user.save!
+
+      ActionCable.server.broadcast 'interviews',
+                                   evaluation: @evaluation_user.evaluation_id,
+                                   evaluation_user: @user_name,
+                                   evaluation_user_id: @user.id,
+                                   evaluation_responsible: @aux_responsible,
+                                   evaluation_level: @level.name,
+                                   evaluation_competence_id: @competence_id,
+                                   all_levels: @all_levels.to_json,
+                                   interview_id: @interview.id,
+                                   method: 'show'
     end
 
     @evaluators_ids = EvaluationsUser.where(evaluation_id: @evaluations[0])
@@ -46,7 +47,6 @@ class InterviewsController < ApplicationController
     @evaluators_ids.each do |evals|
       @inter_evaluators.push(User.find(evals.user_id))
     end
-
   end
 
   def update_responsible
@@ -57,12 +57,12 @@ class InterviewsController < ApplicationController
     @evaluation_user.save
     @evaluation_user.update(responsible: @new_role)
 
-     ActionCable.server.broadcast 'interviews',
-          evaluation: @evaluation_user.evaluation_id,
-          professor: @evaluation_user,
-          evaluation_role: @new_role,
-          competence: @evaluation.competence_id,
-          method: 'update_responsible'
+    ActionCable.server.broadcast 'interviews',
+                                 evaluation: @evaluation_user.evaluation_id,
+                                 professor: @evaluation_user,
+                                 evaluation_role: @new_role,
+                                 competence: @evaluation.competence_id,
+                                 method: 'update_responsible'
   end
 
   def update_level
@@ -73,12 +73,12 @@ class InterviewsController < ApplicationController
     @evaluation_user.save
 
     ActionCable.server.broadcast 'interviews',
-          evaluation: @evaluation_user.evaluation_id,
-          professor: @evaluation_user,
-          evaluation_level: @new_level,
-          competence: @evaluation.competence_id,
-          levelName: @new_level.name,
-          method: 'update_level'
+                                 evaluation: @evaluation_user.evaluation_id,
+                                 professor: @evaluation_user,
+                                 evaluation_level: @new_level,
+                                 competence: @evaluation.competence_id,
+                                 levelName: @new_level.name,
+                                 method: 'update_level'
   end
 
   def update_retro
@@ -88,12 +88,12 @@ class InterviewsController < ApplicationController
     @retro = params[:retro]
     @evaluation_user.update_attribute(:retro, @retro)
     @evaluation_user.save!
-   
+
     ActionCable.server.broadcast 'interviews',
-          evaluation: @evaluation.id,
-          evaluator: @evaluator.id,
-          retro: @retro,
-          method: 'update_retro'
+                                 evaluation: @evaluation.id,
+                                 evaluator: @evaluator.id,
+                                 retro: @retro,
+                                 method: 'update_retro'
   end
 
   def final_evaluation
@@ -106,10 +106,9 @@ class InterviewsController < ApplicationController
       @responsible = @responsibles_evaluations.first
       @evaluation.achLevel = @responsible.temporal_level
       @evaluation.save
-      render :json => { :success => true, :levelName => Level.find(@evaluation.achLevel).name }
+      render json: { success: true, levelName: Level.find(@evaluation.achLevel).name }
     else
-      render :json => { :success => false }
+      render json: { success: false }
     end
   end
-
 end

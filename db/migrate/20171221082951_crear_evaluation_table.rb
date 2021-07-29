@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class CrearEvaluationTable < ActiveRecord::Migration[5.0]
   def change
-  	drop_table :evaluations
+    drop_table :evaluations
 
-  	create_table :evaluations do |t|
+    create_table :evaluations do |t|
       t.date :reqDate
       t.date :evalDate
       t.integer :desLevel
@@ -10,6 +12,5 @@ class CrearEvaluationTable < ActiveRecord::Migration[5.0]
       t.text :retro
       t.timestamps
     end
-
   end
 end

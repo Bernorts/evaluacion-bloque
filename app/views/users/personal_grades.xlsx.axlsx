@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 wb = xlsx_package.workbook
 
-wb.add_worksheet(name: "Calificaciones personales") do |sheet|
+wb.add_worksheet(name: 'Calificaciones personales') do |sheet|
   # this is the head row of your spreadsheet
   sheet.add_row @header
-  @evaluations_user.each do |key, value|
+  @evaluations_user.each do |_key, value|
     sheet.add_row value
   end
 end

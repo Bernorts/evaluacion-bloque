@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class EvidencesController < ApplicationController
   def new
     @new_evidence = Evidence.new
@@ -5,13 +7,13 @@ class EvidencesController < ApplicationController
 
   def create
     @evidence = Evidence.new(evidence_params)
-    @evidence.date = DateTime.parse(Date.today.to_s).in_time_zone()+12*60*60
+    @evidence.date = DateTime.parse(Date.today.to_s).in_time_zone + 12 * 60 * 60
     @evidence.user = current_user
     if @evidence.save
-      flash[:success] = "Evidencia creada correctamente"
+      flash[:success] = 'Evidencia creada correctamente'
       redirect_to show_user_path(current_user)
     else
-      flash[:error] = "No fue posible crear la evidencia"
+      flash[:error] = 'No fue posible crear la evidencia'
       redirect_to show_user_path(current_user)
     end
   end
@@ -19,24 +21,24 @@ class EvidencesController < ApplicationController
   def edit
     @evidence = Evidence.find(params[:id])
     respond_to do |format|
-        format.html { render layout: !request.xhr? } #renders naked html if ajax
+      format.html { render layout: !request.xhr? } # renders naked html if ajax
     end
   end
 
   def update
     @evidence = Evidence.find(params[:id])
-		if @evidence.update_attributes(evidence_params)
-		    flash[:success] = 'Evidencia modificada exitosamente'
-		    redirect_to show_user_path(current_user)
-  	else
-      flash[:error] = "No fue posible modificar la evidencia"
+    if @evidence.update_attributes(evidence_params)
+      flash[:success] = 'Evidencia modificada exitosamente'
       redirect_to show_user_path(current_user)
-  	end
+    else
+      flash[:error] = 'No fue posible modificar la evidencia'
+      redirect_to show_user_path(current_user)
+    end
   end
 
   def destroy
     Evidence.find(params[:id]).destroy
-    flash[:success] = "Evidencia eliminada exitosamente"
+    flash[:success] = 'Evidencia eliminada exitosamente'
     redirect_to show_user_path(current_user)
   end
 

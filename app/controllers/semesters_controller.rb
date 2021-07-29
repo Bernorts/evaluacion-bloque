@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SemestersController < ApplicationController
   before_action :authorize
 
@@ -16,7 +18,7 @@ class SemestersController < ApplicationController
     @users.each do |user|
       @users_arr.push(user.id)
     end
-    @users_evaluations = Evaluation.where(user_id: @users_arr).where("created_at >= ?", @semester.start_date)
+    @users_evaluations = Evaluation.where(user_id: @users_arr).where('created_at >= ?', @semester.start_date)
     puts @users_evaluations.inspect
   end
 
@@ -35,13 +37,14 @@ class SemestersController < ApplicationController
     end
   end
 
-
   def create
+    @last_competences = Semester.last.competences
     @semester = Semester.new(semester_params)
+    @semester.competences = @last_competences
     @users = params[:semester][:user_ids]
-    @users = @users.delete_if { |x| x.empty? }
+    @users = @users.delete_if(&:empty?)
     if @semester.save
-      flash[:success] = "Semestre creado correctamente"
+      flash[:success] = 'Semestre creado correctamente'
       redirect_to semesters_path
     else
 
@@ -60,14 +63,14 @@ class SemestersController < ApplicationController
     @competences.each do |c|
       @header.push(c.name)
     end
-    @evaluations_user  = {}
+    @evaluations_user = {}
     @students.each do |student|
       @temp_evals = Evaluation.where(user_id: student.id).where.not(achLevel: nil, desLevel: 0)
       @last_competences_level = []
-      if (@temp_evals.empty?)
+      if @temp_evals.empty?
         i = 0
         until i == @count_competences
-          @last_competences_level.push("No se han registrado evaluaciones")
+          @last_competences_level.push('No se han registrado evaluaciones')
           i += 1
         end
       else
@@ -89,9 +92,9 @@ class SemestersController < ApplicationController
     respond_to do |format|
       format.html
       name = @semester.name
-      format.xlsx {
-        response.headers['Content-Disposition'] = "attachment;" +  "filename=" + "#{name}.xlsx"
-      }
+      format.xlsx do
+        response.headers['Content-Disposition'] = 'attachment;' + 'filename=' + "#{name}.xlsx"
+      end
     end
   end
 
@@ -113,9 +116,9 @@ class SemestersController < ApplicationController
   def update
     @semester = Semester.find(params[:id])
     @users = params[:semester][:user_ids]
-    @users = @users.delete_if { |x| x.empty? }
+    @users = @users.delete_if(&:empty?)
     if @semester.update_attributes(semester_params)
-      flash[:success] = "Semestre editado correctamente"
+      flash[:success] = 'Semestre editado correctamente'
       redirect_to semesters_path
     else
       render 'edit'
@@ -124,15 +127,14 @@ class SemestersController < ApplicationController
 
   def destroy
     @semester = Semester.find(params[:id])
-    #delete every evidence created during the semester of the users signed up for it
-    for u in @semester.users do
-      u.evidences.where(:created_at => @semester.start_date.beginning_of_day..@semester.end_date.end_of_day).destroy_all
+    # delete every evidence created during the semester of the users signed up for it
+    @semester.users.each do |u|
+      u.evidences.where(created_at: @semester.start_date.beginning_of_day..@semester.end_date.end_of_day).destroy_all
     end
     @semester.destroy
-    flash[:success] = "Semestre eliminado exitosamente"
+    flash[:success] = 'Semestre eliminado exitosamente'
     redirect_to semesters_url
   end
-
 
   def semester_params
     params.require(:semester).permit(:name, :start_date, :end_date, user_ids: [])
@@ -140,9 +142,8 @@ class SemestersController < ApplicationController
 
   def authorize
     if current_user.role_id != 1 && current_user.role_id != 2
-      flash[:error] = "Acceso no autorizado"
+      flash[:error] = 'Acceso no autorizado'
       redirect_to show_user_url(current_user)
     end
   end
-
 end

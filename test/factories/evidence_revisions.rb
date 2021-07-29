@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 FactoryGirl.define do
   factory :evidence_revision do
-    evidence_id ""
+    evidence_id ''
     revision_id 1
   end
 end

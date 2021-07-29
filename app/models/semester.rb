@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
 class Semester < ApplicationRecord
   has_and_belongs_to_many :users
-  has_many :competences
+  has_many :competence_semester
+  has_many :competences, through: :competence_semester
 
   validates :name, presence: true
   validates :start_date, presence: true
@@ -10,10 +13,10 @@ class Semester < ApplicationRecord
 
   def correct_dates?
     if end_date.nil? || start_date.nil?
-      errors.add :start_date, "no puede estar vacías"
+      errors.add :start_date, 'no puede estar vacías'
     else
       if end_date < start_date
-        errors.add :end_date, "debe ser después de la fecha de inicio"
+        errors.add :end_date, 'debe ser después de la fecha de inicio'
       end
     end
   end

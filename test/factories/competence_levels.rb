@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 FactoryGirl.define do
   factory :competence_level do
-    description "MyText"
+    description 'MyText'
   end
 end

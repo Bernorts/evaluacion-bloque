@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'boot'
 
 require 'rails/all'
@@ -14,7 +16,7 @@ module Bloque
     config.time_zone = 'Mexico City'
     config.active_record.default_timezone = :local
     config.i18n.load_path += Dir[Rails.root.join('en', 'es', '*.{rb,yml}').to_s]
-	config.i18n.default_locale = :es
-    config.exceptions_app = self.routes
+    config.i18n.default_locale = :es
+    config.exceptions_app = routes
   end
 end

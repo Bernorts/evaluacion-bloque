@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SessionsController < ApplicationController
   def new
     if logged_in?
@@ -11,9 +13,9 @@ class SessionsController < ApplicationController
 
   def create
     user = User.find_by(email: params[:session][:email].downcase)
-    if user && user.authenticate(params[:session][:password])
+    if user&.authenticate(params[:session][:password])
       log_in user
-      set_semester (current_user.semesters.last.id)
+      set_semester current_user.semesters.last.id
       if user.role_id == 3
         redirect_to show_user_url(user)
       else

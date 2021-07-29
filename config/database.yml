@@ -13,6 +13,8 @@ default: &default
 development:
   <<: *default
   database: bloque_development_db
+  username: bloque_development_admin
+  password: password
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -20,6 +22,8 @@ development:
 test:
   <<: *default
   database: bloque_test_db
+  username: bloque_test_admin
+  password: password
 
 production:
   <<: *default
