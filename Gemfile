@@ -22,6 +22,10 @@ gem 'coffee-rails', '~> 4.2'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 #
+
+gem 'execjs' 
+gem 'therubyracer'
+
 gem 'aws-sdk', '~> 2.3.0'
 gem 'byebug'
 gem 'haml'
