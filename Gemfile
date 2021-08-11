@@ -23,8 +23,8 @@ gem 'coffee-rails', '~> 4.2'
 # gem 'therubyracer', platforms: :ruby
 #
 
-gem 'execjs' 
-gem 'therubyracer'
+# gem 'execjs' 
+# gem 'therubyracer'
 
 gem 'aws-sdk', '~> 2.3.0'
 gem 'byebug'
