@@ -19,23 +19,23 @@
 //= require_tree ./channels
 //= require turbolinks
 //= require sweetalert.js
-//= require Chart.bundle
 //= require chartkick
+//= require highcharts
+//= require Chart.bundle
 //= require_tree .
-
 
 var ready;
 
-ready = function() {
-  	var url = window.location.pathname;
-  	console.log(url)
-  	if (url.includes('semester_competences')){
-  		$("#nav-grid").addClass('active');
-  	} else if(url.includes('usuario')){
-  		$("#nav-users").addClass('active');
-  	} else if(url.includes('semesters')){
-  		$("#nav-semesters").addClass('active');
-  	}
-}
+ready = function () {
+  var url = window.location.pathname;
+  console.log(url);
+  if (url.includes('semester_competences')) {
+    $('#nav-grid').addClass('active');
+  } else if (url.includes('usuario')) {
+    $('#nav-users').addClass('active');
+  } else if (url.includes('semesters')) {
+    $('#nav-semesters').addClass('active');
+  }
+};
 
 $(document).on('ready turbolinks:load', ready);
