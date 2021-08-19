@@ -1,4 +1,7 @@
-<%= javascript_include_tag "https://www.gstatic.com/charts/loader.js" %>
+
+ <%= javascript_include_tag "https://www.gstatic.com/charts/loader.js" %> 
+
+
 <% content_for :stylesheet do %>
     <%= stylesheet_link_tag    "styles", :media => "all" %>
 <% end %>
@@ -62,7 +65,7 @@
           puts "AAAAAAAAAA"
           puts obj
           {name: competence.name, data: obj}
-          } , xtitle: "Fecha", ytitle: "Nivel"
+          } , xtitle: "Fecha", ytitle: "Nivel",  adapter: "highcharts"
         %>
       </div>
     </div>
