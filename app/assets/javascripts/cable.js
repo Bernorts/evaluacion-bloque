@@ -8,5 +8,5 @@
 (function () {
   this.App || (this.App = {});
 
-  App.cable = ActionCable.createConsumer('wss://app.gladio.com.mx/cable');
+  App.cable = ActionCable.createConsumer('/cable');
 }.call(this));
