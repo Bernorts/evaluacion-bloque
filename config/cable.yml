@@ -6,5 +6,4 @@ test:
 
 production:
   adapter: redis
-  url: rediss://localhost:6379/1
-  ssl_params: { verify_mode: <%= OpenSSL::SSL::VERIFY_NONE %> }
+  url: redis://localhost:6379/1
