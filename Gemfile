@@ -123,7 +123,7 @@ source 'https://rails-assets.org' do
 end
 
 gem 'bh'
-gem 'bootstrap', '~> 4.0.0.beta'
+gem 'bootstrap', '~> 4.3.1'
 gem 'ckeditor'
 gem 'dateslices'
 gem 'font-awesome-rails', '~> 4.7', '>= 4.7.0.2'
